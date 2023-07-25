@@ -9,19 +9,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.adminLogin = void 0;
-const adminLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const admin = req.body;
-        console.log(admin.name);
-        if (admin.name == "maxarshu7560@gmail.com") {
-            res.status(200).json({ message: "admin login successfully" });
-        }
-        else {
-            res.status(200).json({ message: "admin login failed" });
-        }
-    }
-    catch (error) {
-    }
-});
-exports.adminLogin = adminLogin;
+const student_1 = require("../../database/model/student/student");
+const studentRepositoryImpl = (StudentModel) => {
+    const createStudent = (studentData) => __awaiter(void 0, void 0, void 0, function* () {
+        const newStudent = yield student_1.studentModel.create(studentData);
+        return newStudent;
+    });
+    const findStudentByEmail = (email) => __awaiter(void 0, void 0, void 0, function* () {
+        const student = yield student_1.studentModel.findOne({ email });
+        return student;
+    });
+    return { createStudent, findStudentByEmail };
+};
+exports.default = studentRepositoryImpl;

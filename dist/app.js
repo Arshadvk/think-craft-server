@@ -11,17 +11,22 @@ const body_parser_1 = __importDefault(require("body-parser"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const dbConfig_1 = __importDefault(require("./infra/database/dbConfig"));
 const admin_1 = __importDefault(require("./interface/routes/admin"));
+const advisor_1 = __importDefault(require("./interface/routes/advisor"));
+const reviewer_1 = __importDefault(require("./interface/routes/reviewer"));
+const student_1 = __importDefault(require("./interface/routes/student"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 // Enable CORS for all routes
 app.use((0, cors_1.default)());
 app.use((0, morgan_1.default)('dev'));
-app.use(body_parser_1.default.json());
 app.use(body_parser_1.default.urlencoded({ extended: false }));
 dotenv_1.default.config({ path: path_1.default.resolve(__dirname, '../.env') });
 //mogodb connection
 (0, dbConfig_1.default)(process.env.MONGODB_CONNECTION_URL || "");
 //setup routes
-app.use('/', admin_1.default);
-const PORT = 3000;
+app.use('/admin', admin_1.default);
+app.use('/advisor', advisor_1.default);
+app.use('/reviewer', reviewer_1.default);
+app.use('/', student_1.default);
+const PORT = Number(3000 || process.env.PORT);
 const server = app.listen(3000, () => console.log(`server is runnin on port ${PORT}`));
