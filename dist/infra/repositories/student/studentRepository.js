@@ -19,6 +19,10 @@ const studentRepositoryImpl = (StudentModel) => {
         const student = yield student_1.studentModel.findOne({ email });
         return student;
     });
-    return { createStudent, findStudentByEmail };
+    const setStudentPassword = (email, password) => __awaiter(void 0, void 0, void 0, function* () {
+        const student = yield student_1.studentModel.updateOne({ email: email }, { $set: { password: password } });
+        return student;
+    });
+    return { createStudent, findStudentByEmail, setStudentPassword };
 };
 exports.default = studentRepositoryImpl;

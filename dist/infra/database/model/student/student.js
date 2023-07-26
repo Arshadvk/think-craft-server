@@ -37,7 +37,6 @@ const studentSchema = new mongoose_1.Schema({
     motherNumber: { type: String, },
     guardianName: { type: String, },
     guardianNumber: { type: String, },
-    age: { type: String, },
     dob: { type: Date },
     address: { type: String, },
     sex: { type: String, enum: ['male', 'female'] },
