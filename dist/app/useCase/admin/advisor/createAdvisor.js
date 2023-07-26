@@ -9,19 +9,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createStudentUsecase = void 0;
+exports.createAdvisorUsecase = void 0;
 const error_1 = require("../../../../utils/error");
 const nodemailer_1 = require("../../../../utils/nodemailer");
-const createStudentUsecase = (studentRepository) => {
-    return (studentData) => __awaiter(void 0, void 0, void 0, function* () {
-        console.log(studentData);
-        const isStudent = yield studentRepository.findStudentByEmail(studentData.email);
-        if (isStudent)
-            throw new error_1.AppError("Student is already exist", 409);
-        const newStudent = yield studentRepository.createStudent(studentData);
-        const sendMail = (0, nodemailer_1.SendMail)(studentData, "student");
-        console.log(sendMail);
-        return newStudent;
-    });
+const createAdvisorUsecase = (advisorRepository) => {
+    return function (advisorData) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log('hfbhsfb');
+            const isAdvisor = yield advisorRepository.findAdvisorByEmail(advisorData.email);
+            console.log(isAdvisor);
+            if (isAdvisor)
+                throw new error_1.AppError("Advisor is already exist", 409);
+            const newAdvisor = yield advisorRepository.createAdvisor(advisorData);
+            console.log(newAdvisor);
+            const sendMail = (0, nodemailer_1.SendMail)(advisorData, "advisor");
+            console.log(sendMail);
+        });
+    };
 };
-exports.createStudentUsecase = createStudentUsecase;
+exports.createAdvisorUsecase = createAdvisorUsecase;

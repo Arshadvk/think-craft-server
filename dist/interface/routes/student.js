@@ -6,4 +6,5 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const studentRoute = express_1.default.Router();
 studentRoute.post('/login');
+studentRoute.post('/setpassword');
 exports.default = studentRoute;

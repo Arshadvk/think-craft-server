@@ -6,10 +6,10 @@ export type MongoDBAdvisor = Model<Document<any, any, any>>;
 const advisorSchema = new Schema({
     name: { type: String, required: true },
     email: { type: String, required: true },
-    number: { type: String, required: true },
-    password: { type: String, required: true },
-    image: { type: String, required: true },
-    age: { type: String, required: true },
+    number: { type: String,  },
+    password: { type: String,  },
+    image: { type: String },
+    age: { type: String, },
     dob: { type: Date },
     sex: { type: String, enum: ['male', 'female'] },
     isMailVarified: { type: Boolean, default: false },
@@ -18,4 +18,4 @@ const advisorSchema = new Schema({
     timestamps : {createdAt:true}
 });
 
-export const reviewerModel : MongoDBAdvisor = mongoose.connection.model<Document<any,any,any>>('advisor' , advisorSchema);
+export const advisorModel : MongoDBAdvisor = mongoose.connection.model<Document<any,any,any>>('advisor' , advisorSchema);

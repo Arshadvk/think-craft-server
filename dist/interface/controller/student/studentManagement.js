@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createStudentController = void 0;
+exports.createPassword = exports.createStudentController = void 0;
 const createStudent_1 = require("../../../app/useCase/admin/student/createStudent");
 const studentRepository_1 = __importDefault(require("../../../infra/repositories/student/studentRepository"));
 const student_1 = require("../../../infra/database/model/student/student");
@@ -29,3 +29,10 @@ const createStudentController = (req, res) => __awaiter(void 0, void 0, void 0, 
     }
 });
 exports.createStudentController = createStudentController;
+const createPassword = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+    }
+    catch (error) {
+    }
+});
+exports.createPassword = createPassword;

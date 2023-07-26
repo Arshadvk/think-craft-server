@@ -12,9 +12,17 @@ export const createStudentController = async (req: Request, res: Response) => {
         console.log(studentData);
         const newStudent = await createStudentUsecase(studentRepository)(studentData)
         console.log(newStudent)
-        res.status(200).send({message:"Student Created Successfully"})
-        
+        res.status(200).send({ message: "Student Created Successfully" })
+
     } catch (error) {
 
+    }
+}
+
+export const createPassword = async (req: Request, res: Response) => {
+    try {
+
+    } catch (error) {
+        
     }
 }

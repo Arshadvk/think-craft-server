@@ -23,15 +23,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.reviewerModel = void 0;
+exports.advisorModel = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const advisorSchema = new mongoose_1.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true },
-    number: { type: String, required: true },
-    password: { type: String, required: true },
-    image: { type: String, required: true },
-    age: { type: String, required: true },
+    number: { type: String, },
+    password: { type: String, },
+    image: { type: String },
+    age: { type: String, },
     dob: { type: Date },
     sex: { type: String, enum: ['male', 'female'] },
     isMailVarified: { type: Boolean, default: false },
@@ -39,4 +39,4 @@ const advisorSchema = new mongoose_1.Schema({
 }, {
     timestamps: { createdAt: true }
 });
-exports.reviewerModel = mongoose_1.default.connection.model('advisor', advisorSchema);
+exports.advisorModel = mongoose_1.default.connection.model('advisor', advisorSchema);

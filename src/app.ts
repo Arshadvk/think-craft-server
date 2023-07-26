@@ -31,5 +31,5 @@ app.use('/reviewer', reviewerRoute)
 app.use('/', studentRoute)
 
 // port setting
-const PORT: number = Number(3000 || process.env.PORT)
-const server: Server = app.listen(3000, () => console.log(`server is runnin on port ${PORT}`))
+const PORT: number = Number(4000 || process.env.PORT)
+const server: Server = app.listen(4000, () => console.log(`server is runnin on port ${PORT}`))

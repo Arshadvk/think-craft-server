@@ -9,19 +9,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createStudentUsecase = void 0;
+exports.createReviewerUsecase = void 0;
 const error_1 = require("../../../../utils/error");
 const nodemailer_1 = require("../../../../utils/nodemailer");
-const createStudentUsecase = (studentRepository) => {
-    return (studentData) => __awaiter(void 0, void 0, void 0, function* () {
-        console.log(studentData);
-        const isStudent = yield studentRepository.findStudentByEmail(studentData.email);
-        if (isStudent)
-            throw new error_1.AppError("Student is already exist", 409);
-        const newStudent = yield studentRepository.createStudent(studentData);
-        const sendMail = (0, nodemailer_1.SendMail)(studentData, "student");
+const createReviewerUsecase = (reviewerRepository) => {
+    return (reviwerData) => __awaiter(void 0, void 0, void 0, function* () {
+        console.log("fgasdvg");
+        const isReviewer = yield reviewerRepository.findReviewerByEmail(reviwerData.email);
+        if (isReviewer)
+            throw new error_1.AppError("Revieweer is already exist", 409);
+        const newReviewer = yield reviewerRepository.createReviewer(reviwerData);
+        console.log(newReviewer);
+        const sendMail = (0, nodemailer_1.SendMail)(reviwerData, "reviewer");
         console.log(sendMail);
-        return newStudent;
     });
 };
-exports.createStudentUsecase = createStudentUsecase;
+exports.createReviewerUsecase = createReviewerUsecase;
