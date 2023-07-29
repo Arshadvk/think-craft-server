@@ -9,19 +9,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.adminLogin = void 0;
-const adminLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const admin = req.body;
-        console.log(admin);
-        if (admin.email == "maxarshu7560@gmail.com") {
-            res.status(200).json({ message: "admin login successfully" });
-        }
-        else {
-            res.status(200).json({ message: "admin login failed" });
-        }
-    }
-    catch (error) {
-    }
-});
-exports.adminLogin = adminLogin;
+exports.setPasswordUsecaseReviewer = void 0;
+const hashing_1 = require("../../../domain/service/hashing");
+const setPasswordUsecaseReviewer = (reviewerRepository) => {
+    return (reviewerData) => __awaiter(void 0, void 0, void 0, function* () {
+        const password = yield (0, hashing_1.passwordHashing)(reviewerData.password);
+        const reviewer = yield reviewerRepository.setReviewerPassword(reviewerData.email, password);
+        return reviewer;
+    });
+};
+exports.setPasswordUsecaseReviewer = setPasswordUsecaseReviewer;

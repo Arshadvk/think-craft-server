@@ -1,6 +1,6 @@
+import { sendMail } from "../../../../domain/service/email_send";
 import { StudentRepository } from "../../../../infra/repositories/student/studentRepository"
 import { AppError } from "../../../../utils/error";
-import { SendMail } from "../../../../utils/nodemailer";
 
 
 export const createStudentUsecase = (studentRepository: StudentRepository) => {
@@ -14,9 +14,7 @@ export const createStudentUsecase = (studentRepository: StudentRepository) => {
         const isStudent = await studentRepository.findStudentByEmail(studentData.email)
         if (isStudent) throw new AppError("Student is already exist", 409)
         const newStudent = await studentRepository.createStudent(studentData)
-        const sendMail = SendMail(studentData,"student")
-        console.log(sendMail);
-        
+        const sended = sendMail(studentData,"")
         return newStudent
     }
 

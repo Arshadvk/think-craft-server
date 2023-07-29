@@ -12,10 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createReviewerController = void 0;
+exports.passwordCreationReviewer = exports.createReviewerController = void 0;
 const reviewerRepository_1 = __importDefault(require("../../../infra/repositories/reviewer/reviewerRepository"));
 const createReviewer_1 = require("../../../app/useCase/admin/reviewer/createReviewer");
 const reviewer_1 = require("../../../infra/database/model/reviewer/reviewer");
+const setPassword_1 = require("../../../app/useCase/reviewer/setPassword");
 const reviewerRepository = (0, reviewerRepository_1.default)(reviewer_1.reviewerModel);
 const createReviewerController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -29,3 +30,13 @@ const createReviewerController = (req, res) => __awaiter(void 0, void 0, void 0,
     }
 });
 exports.createReviewerController = createReviewerController;
+const passwordCreationReviewer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const reviewerData = req.body;
+        const newPassword = yield (0, setPassword_1.setPasswordUsecaseReviewer)(reviewerRepository)(reviewerData);
+        res.status(200).send({ message: "password change successfully" });
+    }
+    catch (error) {
+    }
+});
+exports.passwordCreationReviewer = passwordCreationReviewer;

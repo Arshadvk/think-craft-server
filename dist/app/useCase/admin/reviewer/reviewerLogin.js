@@ -9,20 +9,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createAdvisorUsecase = void 0;
-const email_send_1 = require("../../../../domain/service/email_send");
+exports.loginReviewer = void 0;
+const reviewer_1 = require("../../../../domain/entities/reviewer/reviewer");
 const error_1 = require("../../../../utils/error");
-const createAdvisorUsecase = (advisorRepository) => {
-    return function (advisorData) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const isAdvisor = yield advisorRepository.findAdvisorByEmail(advisorData.email);
-            if (isAdvisor)
-                throw new error_1.AppError("Advisor is already exist", 409);
-            const newAdvisor = yield advisorRepository.createAdvisor(advisorData);
-            console.log(newAdvisor);
-            const sended = (0, email_send_1.sendMail)(advisorData, "/advisor");
-            console.log(sended);
-        });
-    };
+const loginReviewer = (reviewerRepository) => {
+    return (reviewer) => __awaiter(void 0, void 0, void 0, function* () {
+        const isReviewerExist = yield reviewerRepository.findReviewerByEmail(reviewer.email);
+        if (!isReviewerExist)
+            throw new error_1.AppError("user is not exist", 404);
+        const ReviewerToken = yield (0, reviewer_1.reviewerLoginValidate)(reviewer, isReviewerExist);
+        const verifiedReviewer = {
+            token: ReviewerToken,
+            status: "Login success"
+        };
+        return verifiedReviewer;
+    });
 };
-exports.createAdvisorUsecase = createAdvisorUsecase;
+exports.loginReviewer = loginReviewer;

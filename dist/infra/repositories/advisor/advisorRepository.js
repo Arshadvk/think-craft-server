@@ -12,16 +12,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const advisor_1 = require("../../database/model/advisor/advisor");
 const AdvisorRepositoryImpl = (AdvisorModel) => {
     const createAdvisor = (advisorData) => __awaiter(void 0, void 0, void 0, function* () {
-        console.log("bhdgfha");
         const newAdvisor = yield advisor_1.advisorModel.create(advisorData);
-        console.log(newAdvisor);
         return newAdvisor;
     });
     const findAdvisorByEmail = (email) => __awaiter(void 0, void 0, void 0, function* () {
-        console.log("bhdgfhahhhhhhhhh");
-        const advisor = yield advisor_1.advisorModel.find({ email });
+        const advisor = yield advisor_1.advisorModel.findOne({ email });
         return advisor;
     });
-    return { createAdvisor, findAdvisorByEmail };
+    const setAdvisorPassword = (email, password) => __awaiter(void 0, void 0, void 0, function* () {
+        const advisor = yield advisor_1.advisorModel.updateOne({ email: email }, { $set: { password: password } });
+        return advisor;
+    });
+    return { createAdvisor, findAdvisorByEmail, setAdvisorPassword };
 };
 exports.default = AdvisorRepositoryImpl;

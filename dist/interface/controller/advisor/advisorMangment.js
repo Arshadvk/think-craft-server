@@ -12,8 +12,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createAdvisorController = void 0;
+exports.passwordCreationAdvisor = exports.createAdvisorController = void 0;
 const createAdvisor_1 = require("../../../app/useCase/admin/advisor/createAdvisor");
+const setPassword_1 = require("../../../app/useCase/advisor/setPassword");
 const advisor_1 = require("../../../infra/database/model/advisor/advisor");
 const advisorRepository_1 = __importDefault(require("../../../infra/repositories/advisor/advisorRepository"));
 const advisorRepository = (0, advisorRepository_1.default)(advisor_1.advisorModel);
@@ -28,3 +29,13 @@ const createAdvisorController = (req, res) => __awaiter(void 0, void 0, void 0, 
     }
 });
 exports.createAdvisorController = createAdvisorController;
+const passwordCreationAdvisor = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const advisorData = req.body;
+        const newPassword = yield (0, setPassword_1.setPasswordUsecaseAdvisor)(advisorRepository)(advisorData);
+        res.status(200).send({ message: "password change successfully" });
+    }
+    catch (error) {
+    }
+});
+exports.passwordCreationAdvisor = passwordCreationAdvisor;

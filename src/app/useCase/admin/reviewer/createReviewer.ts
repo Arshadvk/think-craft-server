@@ -1,6 +1,7 @@
+import { sendMail } from "../../../../domain/service/email_send";
 import { ReviewerRepository } from "../../../../infra/repositories/reviewer/reviewerRepository";
 import { AppError } from "../../../../utils/error";
-import { SendMail } from "../../../../utils/nodemailer";
+
 
 
 export const createReviewerUsecase = (reviewerRepository : ReviewerRepository)=>{
@@ -12,8 +13,8 @@ export const createReviewerUsecase = (reviewerRepository : ReviewerRepository)=>
         const newReviewer  = await reviewerRepository.createReviewer(reviwerData)
         console.log(newReviewer);
         
-        const sendMail = SendMail(reviwerData , "reviewer")
-        console.log(sendMail);
+        const sended = sendMail(reviwerData , "/reviewer")
+        
         
     }
 }
