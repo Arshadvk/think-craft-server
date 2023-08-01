@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createStudentUsecase = void 0;
+exports.getAllStudentUseCase = exports.createStudentUsecase = void 0;
 const email_send_1 = require("../../../../domain/service/email_send");
 const error_1 = require("../../../../utils/error");
 const createStudentUsecase = (studentRepository) => {
@@ -24,3 +24,10 @@ const createStudentUsecase = (studentRepository) => {
     });
 };
 exports.createStudentUsecase = createStudentUsecase;
+const getAllStudentUseCase = (studentRepository) => {
+    return () => __awaiter(void 0, void 0, void 0, function* () {
+        const allStudent = yield studentRepository.getAllStudents();
+        return allStudent;
+    });
+};
+exports.getAllStudentUseCase = getAllStudentUseCase;

@@ -9,4 +9,5 @@ const studentLoginController_1 = require("../controller/student/studentLoginCont
 const studentRoute = express_1.default.Router();
 studentRoute.post('/login', studentLoginController_1.studentLogin);
 studentRoute.put('/setpassword', studentManagement_1.passwordCreation);
+studentRoute.put('/edit-profile');
 exports.default = studentRoute;

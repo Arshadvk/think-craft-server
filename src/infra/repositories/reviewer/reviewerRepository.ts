@@ -4,7 +4,7 @@ export type ReviewerRepository ={
     createReviewer:(reviewerData:any)=>Promise<any | null>
     findReviewerByEmail:(email:string)=>Promise<any | null>
     setReviewerPassword:(email:string,password:string)=>Promise<any | null>
-    
+    getAllReviewer:()=>Promise<object[]>
 }
 const reviewerRepositoryImpl=(ReviewerModel:MongoDBReviewer):ReviewerRepository=>{
     const createReviewer = async (reviewerData:any):Promise<any | null >=>{
@@ -22,7 +22,11 @@ const reviewerRepositoryImpl=(ReviewerModel:MongoDBReviewer):ReviewerRepository=
         const reviewer = await reviewerModel.updateOne({email:email},{$set:{password:password}})
         return reviewer
     }
-    return {createReviewer, findReviewerByEmail , setReviewerPassword }
+    const getAllReviewer = async ():Promise<object[]> =>{
+        const allReviewer  = reviewerModel.find()
+        return allReviewer
+    }
+    return {createReviewer, findReviewerByEmail , setReviewerPassword , getAllReviewer }
 }
 
 export default reviewerRepositoryImpl

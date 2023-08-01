@@ -12,11 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.passwordCreation = exports.createStudentController = void 0;
-const createStudent_1 = require("../../../app/useCase/admin/student/createStudent");
+exports.getAllStudentSearchFilterSortController = exports.passwordCreation = exports.createStudentController = void 0;
 const studentRepository_1 = __importDefault(require("../../../infra/repositories/student/studentRepository"));
 const student_1 = require("../../../infra/database/model/student/student");
-const setPassword_1 = require("../../../app/useCase/student/setPassword");
+const setPassword_1 = require("../../../app/usecase/student/setPassword");
+const createStudent_1 = require("../../../app/usecase/admin/student/createStudent");
 const studentRepository = (0, studentRepository_1.default)(student_1.studentModel);
 const createStudentController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -41,3 +41,12 @@ const passwordCreation = (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 exports.passwordCreation = passwordCreation;
+const getAllStudentSearchFilterSortController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const studentList = yield (0, createStudent_1.getAllStudentUseCase)(studentRepository)();
+        res.status(200).json(studentList);
+    }
+    catch (error) {
+    }
+});
+exports.getAllStudentSearchFilterSortController = getAllStudentSearchFilterSortController;

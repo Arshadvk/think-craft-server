@@ -12,20 +12,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.reviewerLoginController = void 0;
-const reviewerLogin_1 = require("../../../app/usecase/reviewer/reviewerLogin");
-const reviewer_1 = require("../../../infra/database/model/reviewer/reviewer");
-const reviewerRepository_1 = __importDefault(require("../../../infra/repositories/reviewer/reviewerRepository"));
-const reviewerRepository = (0, reviewerRepository_1.default)(reviewer_1.reviewerModel);
-const reviewerLoginController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.advisorLogin = void 0;
+const advisorLogin_1 = require("../../../app/usecase/advisor/advisorLogin");
+const advisor_1 = require("../../../infra/database/model/advisor/advisor");
+const advisorRepository_1 = __importDefault(require("../../../infra/repositories/advisor/advisorRepository"));
+const advisorRepository = (0, advisorRepository_1.default)(advisor_1.advisorModel);
+const advisorLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const reviewer = req.body;
-        console.log(reviewer);
-        const ReviewerToken = yield (0, reviewerLogin_1.loginReviewer)(reviewerRepository)(reviewer);
-        console.log(ReviewerToken);
-        res.status(200).json({ message: ReviewerToken });
+        const advisor = req.body;
+        const advisorToken = yield (0, advisorLogin_1.loginAdvisor)(advisorRepository)(advisor);
+        res.status(200).json({ message: advisorToken });
     }
     catch (error) {
     }
 });
-exports.reviewerLoginController = reviewerLoginController;
+exports.advisorLogin = advisorLogin;

@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken"
 import { isPasswordCorrect } from "../../service/hashing";
 
 export type Student ={
-    name?:string;
+    name:string;
     email:string;
     password:string;
     number:string;

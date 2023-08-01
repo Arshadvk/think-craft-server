@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createAdvisorUsecase = void 0;
+exports.getAllAdvisorUsecase = exports.createAdvisorUsecase = void 0;
 const email_send_1 = require("../../../../domain/service/email_send");
 const error_1 = require("../../../../utils/error");
 const createAdvisorUsecase = (advisorRepository) => {
@@ -26,3 +26,10 @@ const createAdvisorUsecase = (advisorRepository) => {
     };
 };
 exports.createAdvisorUsecase = createAdvisorUsecase;
+const getAllAdvisorUsecase = (advisorRepository) => {
+    return () => __awaiter(void 0, void 0, void 0, function* () {
+        const allAdvisor = yield advisorRepository.getAllAdvisor();
+        return allAdvisor;
+    });
+};
+exports.getAllAdvisorUsecase = getAllAdvisorUsecase;

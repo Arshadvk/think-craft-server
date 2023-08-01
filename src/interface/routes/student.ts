@@ -7,5 +7,5 @@ const studentRoute = express.Router()
 
 studentRoute.post('/login' ,studentLogin )
 studentRoute.put('/setpassword', passwordCreation)
-
+studentRoute.put('/edit-profile' ,)
 export default studentRoute

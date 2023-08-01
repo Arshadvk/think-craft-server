@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createReviewerUsecase = void 0;
+exports.getAllReviewerUsecase = exports.createReviewerUsecase = void 0;
 const email_send_1 = require("../../../../domain/service/email_send");
 const error_1 = require("../../../../utils/error");
 const createReviewerUsecase = (reviewerRepository) => {
@@ -24,3 +24,10 @@ const createReviewerUsecase = (reviewerRepository) => {
     });
 };
 exports.createReviewerUsecase = createReviewerUsecase;
+const getAllReviewerUsecase = (reviewerRepository) => {
+    return () => __awaiter(void 0, void 0, void 0, function* () {
+        const allReviewer = yield reviewerRepository.getAllReviewer();
+        return allReviewer;
+    });
+};
+exports.getAllReviewerUsecase = getAllReviewerUsecase;

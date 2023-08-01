@@ -5,6 +5,7 @@ export type StudentRepository = {
     createStudent:(studentData:any)=>Promise<any | null>
     findStudentByEmail:(email:string)=>Promise<any | null>
     setStudentPassword:(email:string,password:string)=>Promise<any | null>
+    getAllStudents:()=>Promise<object[]>
 }
 
 
@@ -20,8 +21,12 @@ const studentRepositoryImpl=(StudentModel : MongoDBStudent):StudentRepository=>{
     const setStudentPassword = async (email:string , password:string)=>{
         const student = await studentModel.updateOne({email:email},{$set:{password:password}})
         return student
-    }   
-    return { createStudent , findStudentByEmail ,setStudentPassword }
+    } 
+    const getAllStudents = async ():Promise<object[]>=>{
+        const allStudent = await StudentModel.find()
+        return allStudent
+    }  
+    return { createStudent , findStudentByEmail ,setStudentPassword , getAllStudents }
 }
 
 export default studentRepositoryImpl

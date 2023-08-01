@@ -1,8 +1,8 @@
 import { Request , Response } from "express"
 import reviewerRepositoryImpl from "../../../infra/repositories/reviewer/reviewerRepository"
-import { createReviewerUsecase } from "../../../app/useCase/admin/reviewer/createReviewer"
 import { reviewerModel } from "../../../infra/database/model/reviewer/reviewer"
-import { setPasswordUsecaseReviewer } from "../../../app/useCase/reviewer/setPassword"
+import { createReviewerUsecase, getAllReviewerUsecase } from "../../../app/usecase/admin/reviewer/createReviewer"
+import { setPasswordUsecaseReviewer } from "../../../app/usecase/reviewer/setPassword"
 
 
 const reviewerRepository = reviewerRepositoryImpl(reviewerModel)
@@ -27,4 +27,13 @@ export const passwordCreationReviewer =async (req:Request , res : Response) => {
     } catch (error) {
         
     }
+}
+
+export const getAllReviewerSearchFilterSortController =async (req:Request , res :Response) => {
+    try {
+        const reviewerList = await getAllReviewerUsecase(reviewerRepository)()
+        res.status(200).json(reviewerList)
+    } catch (error) {
+        
+    }    
 }

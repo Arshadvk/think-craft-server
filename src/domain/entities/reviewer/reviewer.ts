@@ -28,19 +28,19 @@ export const reviewerLogin = (passwordCompare:Function , createToken:Function)=>
         }
         console.log(isPasswordCorrect);
         
-        const token:string = createAdvisorToken(reviewerData)
+        const token:string = createReviewerToken(reviewerData)
         console.log(token);
         
         return token
     }
 }
-export const createAdvisorToken = (advisor : reviewerLoginType):string=>{
+export const createReviewerToken = (reviewer : reviewerLoginType):string=>{
     const secretKey : string | undefined = process.env.JWT_SECRET_KEY_REVIEWER
     if ( !secretKey) {
         throw new Error('jwt secret key  is not defined')
         
     }
-    const token = jwt.sign({advisor},secretKey as string , {expiresIn:'1h'})
+    const token = jwt.sign({reviewer},secretKey as string , {expiresIn:'1h'})
         return token
 }
-export const reviewerLoginValidate = reviewerLogin(isPasswordCorrect,createAdvisorToken)
+export const reviewerLoginValidate = reviewerLogin(isPasswordCorrect,createReviewerToken)

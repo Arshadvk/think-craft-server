@@ -6,6 +6,7 @@ export type AdvisorRepository = {
     createAdvisor: (advisorData: any) => Promise<any | null>
     findAdvisorByEmail: (email: string) => Promise<any | null>
     setAdvisorPassword:(email:string, password:string)=>Promise<any|null>
+    getAllAdvisor:()=>Promise<object[]>
 }
 
 const AdvisorRepositoryImpl = (AdvisorModel: MongoDBAdvisor): AdvisorRepository => {
@@ -21,6 +22,10 @@ const AdvisorRepositoryImpl = (AdvisorModel: MongoDBAdvisor): AdvisorRepository 
         const advisor = await advisorModel.updateOne({email:email},{$set:{password:password}})
         return advisor
     }
-    return { createAdvisor, findAdvisorByEmail ,setAdvisorPassword }
+    const getAllAdvisor = async():Promise<object[]>=>{
+        const allAdvisors = await advisorModel.find()
+        return allAdvisors
+    }
+    return { createAdvisor, findAdvisorByEmail ,setAdvisorPassword  , getAllAdvisor}
 }
 export default AdvisorRepositoryImpl

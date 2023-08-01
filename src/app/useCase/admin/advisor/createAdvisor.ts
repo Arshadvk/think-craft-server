@@ -20,3 +20,10 @@ export const createAdvisorUsecase = (advisorRepository: AdvisorRepository) => {
         
     }
 }
+
+export const getAllAdvisorUsecase = (advisorRepository : AdvisorRepository)=>{
+    return async ():Promise <Object[]>=>{
+        const allAdvisor = await advisorRepository.getAllAdvisor()
+        return allAdvisor
+    }
+}

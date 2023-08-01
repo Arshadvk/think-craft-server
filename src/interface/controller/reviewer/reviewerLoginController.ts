@@ -1,5 +1,5 @@
-import { loginReviewer } from "../../../app/useCase/admin/reviewer/reviewerLogin"
 import { Reviewer } from "../../../domain/entities/reviewer/reviewer"
+import { loginReviewer } from "../../../app/usecase/reviewer/reviewerLogin"
 import { reviewerModel } from "../../../infra/database/model/reviewer/reviewer"
 import reviewerRepositoryImpl from "../../../infra/repositories/reviewer/reviewerRepository"
 import { Request , Response } from "express" 

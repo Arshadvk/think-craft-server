@@ -12,9 +12,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.passwordCreationAdvisor = exports.createAdvisorController = void 0;
-const createAdvisor_1 = require("../../../app/useCase/admin/advisor/createAdvisor");
-const setPassword_1 = require("../../../app/useCase/advisor/setPassword");
+exports.getAllAdvisorSearchFilterSortController = exports.passwordCreationAdvisor = exports.createAdvisorController = void 0;
+const createAdvisor_1 = require("../../../app/usecase/admin/advisor/createAdvisor");
+const setPassword_1 = require("../../../app/usecase/advisor/setPassword");
 const advisor_1 = require("../../../infra/database/model/advisor/advisor");
 const advisorRepository_1 = __importDefault(require("../../../infra/repositories/advisor/advisorRepository"));
 const advisorRepository = (0, advisorRepository_1.default)(advisor_1.advisorModel);
@@ -39,3 +39,12 @@ const passwordCreationAdvisor = (req, res) => __awaiter(void 0, void 0, void 0, 
     }
 });
 exports.passwordCreationAdvisor = passwordCreationAdvisor;
+const getAllAdvisorSearchFilterSortController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const advisorList = yield (0, createAdvisor_1.getAllAdvisorUsecase)(advisorRepository)();
+        res.status(200).json(advisorList);
+    }
+    catch (error) {
+    }
+});
+exports.getAllAdvisorSearchFilterSortController = getAllAdvisorSearchFilterSortController;

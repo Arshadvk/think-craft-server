@@ -1,5 +1,5 @@
-import { createAdvisorUsecase } from "../../../app/useCase/admin/advisor/createAdvisor"
-import { setPasswordUsecaseAdvisor } from "../../../app/useCase/advisor/setPassword"
+import { createAdvisorUsecase, getAllAdvisorUsecase } from "../../../app/usecase/admin/advisor/createAdvisor"
+import { setPasswordUsecaseAdvisor } from "../../../app/usecase/advisor/setPassword"
 import { advisorModel } from "../../../infra/database/model/advisor/advisor"
 import AdvisorRepositoryImpl from "../../../infra/repositories/advisor/advisorRepository"
 import { Request,Response } from "express"
@@ -25,4 +25,14 @@ export const passwordCreationAdvisor = async (req:Request , res: Response)=>{
      } catch (error) {
         
     }
+}
+
+
+export const getAllAdvisorSearchFilterSortController =async (req:Request , res : Response) => {
+    try {
+        const advisorList = await getAllAdvisorUsecase(advisorRepository)()
+        res.status(200).json(advisorList)
+    } catch (error) {
+        
+    }    
 }

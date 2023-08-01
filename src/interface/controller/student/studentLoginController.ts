@@ -1,8 +1,8 @@
 import { Request , Response } from "express"
 import { Student } from "../../../domain/entities/student/student"
-import { loginStudent } from "../../../app/useCase/admin/student/studentLogin"
 import studentRepositoryImpl from "../../../infra/repositories/student/studentRepository"
 import { studentModel } from "../../../infra/database/model/student/student"
+import { loginStudent } from "../../../app/usecase/student/studentLogin"
 
 export type studentLoginType={
     email:string

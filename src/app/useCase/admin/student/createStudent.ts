@@ -20,3 +20,10 @@ export const createStudentUsecase = (studentRepository: StudentRepository) => {
 
 
 }
+
+export const getAllStudentUseCase = (studentRepository: StudentRepository)=>{
+    return async ():Promise <Object[]>=>{
+        const allStudent = await studentRepository.getAllStudents()
+        return allStudent
+    }
+}

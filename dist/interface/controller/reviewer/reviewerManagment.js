@@ -12,11 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.passwordCreationReviewer = exports.createReviewerController = void 0;
+exports.getAllReviewerSearchFilterSortController = exports.passwordCreationReviewer = exports.createReviewerController = void 0;
 const reviewerRepository_1 = __importDefault(require("../../../infra/repositories/reviewer/reviewerRepository"));
-const createReviewer_1 = require("../../../app/useCase/admin/reviewer/createReviewer");
 const reviewer_1 = require("../../../infra/database/model/reviewer/reviewer");
-const setPassword_1 = require("../../../app/useCase/reviewer/setPassword");
+const createReviewer_1 = require("../../../app/usecase/admin/reviewer/createReviewer");
+const setPassword_1 = require("../../../app/usecase/reviewer/setPassword");
 const reviewerRepository = (0, reviewerRepository_1.default)(reviewer_1.reviewerModel);
 const createReviewerController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -40,3 +40,12 @@ const passwordCreationReviewer = (req, res) => __awaiter(void 0, void 0, void 0,
     }
 });
 exports.passwordCreationReviewer = passwordCreationReviewer;
+const getAllReviewerSearchFilterSortController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const reviewerList = yield (0, createReviewer_1.getAllReviewerUsecase)(reviewerRepository)();
+        res.status(200).json(reviewerList);
+    }
+    catch (error) {
+    }
+});
+exports.getAllReviewerSearchFilterSortController = getAllReviewerSearchFilterSortController;

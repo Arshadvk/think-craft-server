@@ -1,7 +1,7 @@
-import { reviewerLoginValidate } from "../../../../domain/entities/reviewer/reviewer";
-import { ReviewerRepository } from "../../../../infra/repositories/reviewer/reviewerRepository";
-import { reviewerLoginType } from "../../../../interface/controller/reviewer/reviewerLoginController";
-import { AppError } from "../../../../utils/error";
+import { reviewerLoginValidate } from "../../../domain/entities/reviewer/reviewer";
+import { ReviewerRepository } from "../../../infra/repositories/reviewer/reviewerRepository";
+import { reviewerLoginType } from "../../../interface/controller/reviewer/reviewerLoginController";
+import { AppError } from "../../../utils/error";
 
 type reviewerReturnType = {
     token:string,

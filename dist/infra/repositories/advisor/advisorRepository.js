@@ -23,6 +23,10 @@ const AdvisorRepositoryImpl = (AdvisorModel) => {
         const advisor = yield advisor_1.advisorModel.updateOne({ email: email }, { $set: { password: password } });
         return advisor;
     });
-    return { createAdvisor, findAdvisorByEmail, setAdvisorPassword };
+    const getAllAdvisor = () => __awaiter(void 0, void 0, void 0, function* () {
+        const allAdvisors = yield advisor_1.advisorModel.find();
+        return allAdvisors;
+    });
+    return { createAdvisor, findAdvisorByEmail, setAdvisorPassword, getAllAdvisor };
 };
 exports.default = AdvisorRepositoryImpl;

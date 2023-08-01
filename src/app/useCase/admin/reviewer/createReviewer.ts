@@ -1,6 +1,7 @@
 import { sendMail } from "../../../../domain/service/email_send";
 import { ReviewerRepository } from "../../../../infra/repositories/reviewer/reviewerRepository";
 import { AppError } from "../../../../utils/error";
+import { Reviewer } from "../../../../domain/entities/reviewer/reviewer";
 
 
 
@@ -16,5 +17,11 @@ export const createReviewerUsecase = (reviewerRepository : ReviewerRepository)=>
         const sended = sendMail(reviwerData , "/reviewer")
         
         
+    }
+}
+export const getAllReviewerUsecase = (reviewerRepository:ReviewerRepository)=>{
+    return async ():Promise <Object[]>=>{
+        const allReviewer = await reviewerRepository.getAllReviewer()
+        return allReviewer
     }
 }

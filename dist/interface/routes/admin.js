@@ -13,4 +13,7 @@ adminRoute.post('/login', adminLogin_1.adminLogin);
 adminRoute.post('/add-student', studentManagement_1.createStudentController);
 adminRoute.post('/add-reviewer', reviewerManagment_1.createReviewerController);
 adminRoute.post('/add-advisor', advisorMangment_1.createAdvisorController);
+adminRoute.get('/all-student', studentManagement_1.getAllStudentSearchFilterSortController);
+adminRoute.get('/all-reviewer', reviewerManagment_1.getAllReviewerSearchFilterSortController);
+adminRoute.get('/all-advisor', advisorMangment_1.getAllAdvisorSearchFilterSortController);
 exports.default = adminRoute;

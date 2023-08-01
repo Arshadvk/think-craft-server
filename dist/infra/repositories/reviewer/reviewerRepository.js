@@ -25,6 +25,10 @@ const reviewerRepositoryImpl = (ReviewerModel) => {
         const reviewer = yield reviewer_1.reviewerModel.updateOne({ email: email }, { $set: { password: password } });
         return reviewer;
     });
-    return { createReviewer, findReviewerByEmail, setReviewerPassword };
+    const getAllReviewer = () => __awaiter(void 0, void 0, void 0, function* () {
+        const allReviewer = reviewer_1.reviewerModel.find();
+        return allReviewer;
+    });
+    return { createReviewer, findReviewerByEmail, setReviewerPassword, getAllReviewer };
 };
 exports.default = reviewerRepositoryImpl;

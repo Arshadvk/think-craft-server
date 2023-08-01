@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
-import { createStudentUsecase } from "../../../app/useCase/admin/student/createStudent";
 import studentRepositoryImpl from "../../../infra/repositories/student/studentRepository";
 import { studentModel } from "../../../infra/database/model/student/student";
-import { setPasswordUsecase } from "../../../app/useCase/student/setPassword";
+import { setPasswordUsecase } from "../../../app/usecase/student/setPassword";
+import { createStudentUsecase, getAllStudentUseCase } from "../../../app/usecase/admin/student/createStudent";
+
 
 
 const studentRepository = studentRepositoryImpl(studentModel)
@@ -28,6 +29,15 @@ export const passwordCreation = async (req: Request, res: Response) => {
         res.status(200).send({message:"password change successfully"})
 
 
+    } catch (error) {
+        
+    }
+}
+
+export const getAllStudentSearchFilterSortController = async (req : Request , res : Response)=>{
+    try {
+        const studentList = await getAllStudentUseCase(studentRepository)()
+        res.status(200).json(studentList)
     } catch (error) {
         
     }

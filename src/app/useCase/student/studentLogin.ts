@@ -1,7 +1,7 @@
-import { studentLoginUserValidate } from "../../../../domain/entities/student/student";
-import { StudentRepository } from "../../../../infra/repositories/student/studentRepository";
-import { studentLoginType } from "../../../../interface/controller/student/studentLoginController";
-import { AppError } from "../../../../utils/error";
+import { studentLoginUserValidate } from "../../../domain/entities/student/student";
+import { StudentRepository } from "../../../infra/repositories/student/studentRepository";
+import { studentLoginType } from "../../../interface/controller/student/studentLoginController";
+import { AppError } from "../../../utils/error";
 
 type studentReturnType={
     token:string

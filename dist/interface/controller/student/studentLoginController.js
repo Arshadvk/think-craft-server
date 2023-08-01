@@ -13,9 +13,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.studentLogin = void 0;
-const studentLogin_1 = require("../../../app/useCase/admin/student/studentLogin");
 const studentRepository_1 = __importDefault(require("../../../infra/repositories/student/studentRepository"));
 const student_1 = require("../../../infra/database/model/student/student");
+const studentLogin_1 = require("../../../app/usecase/student/studentLogin");
 const studentRepository = (0, studentRepository_1.default)(student_1.studentModel);
 const studentLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
