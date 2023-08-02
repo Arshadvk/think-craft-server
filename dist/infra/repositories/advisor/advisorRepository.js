@@ -27,6 +27,15 @@ const AdvisorRepositoryImpl = (AdvisorModel) => {
         const allAdvisors = yield advisor_1.advisorModel.find();
         return allAdvisors;
     });
-    return { createAdvisor, findAdvisorByEmail, setAdvisorPassword, getAllAdvisor };
+    const updateIsBlock = (userId, action) => __awaiter(void 0, void 0, void 0, function* () {
+        let isBlocked;
+        if (action === "block")
+            isBlocked = true;
+        if (action === "unblock")
+            isBlocked = false;
+        const advisor = yield advisor_1.advisorModel.findByIdAndUpdate(userId, { isBlocked }, { new: true });
+        return isBlocked;
+    });
+    return { createAdvisor, findAdvisorByEmail, setAdvisorPassword, getAllAdvisor, updateIsBlock };
 };
 exports.default = AdvisorRepositoryImpl;

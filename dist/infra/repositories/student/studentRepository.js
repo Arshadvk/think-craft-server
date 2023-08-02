@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const error_1 = require("../../../utils/error");
 const student_1 = require("../../database/model/student/student");
 const studentRepositoryImpl = (StudentModel) => {
     const createStudent = (studentData) => __awaiter(void 0, void 0, void 0, function* () {
@@ -27,6 +28,17 @@ const studentRepositoryImpl = (StudentModel) => {
         const allStudent = yield StudentModel.find();
         return allStudent;
     });
-    return { createStudent, findStudentByEmail, setStudentPassword, getAllStudents };
+    const updateIsBlock = (userId, action) => __awaiter(void 0, void 0, void 0, function* () {
+        let isBlocked;
+        if (action === "block")
+            isBlocked = true;
+        if (action === "unblock")
+            isBlocked = false;
+        const student = yield student_1.studentModel.findByIdAndUpdate(userId, { isBlocked }, { new: true });
+        if (!student)
+            throw new error_1.AppError('somthing went wrong when block the user ', 500);
+        return isBlocked;
+    });
+    return { createStudent, findStudentByEmail, setStudentPassword, getAllStudents, updateIsBlock };
 };
 exports.default = studentRepositoryImpl;

@@ -7,6 +7,7 @@ export type AdvisorRepository = {
     findAdvisorByEmail: (email: string) => Promise<any | null>
     setAdvisorPassword:(email:string, password:string)=>Promise<any|null>
     getAllAdvisor:()=>Promise<object[]>
+    updateIsBlock:(userId : string , action : string) => Promise <boolean | undefined >
 }
 
 const AdvisorRepositoryImpl = (AdvisorModel: MongoDBAdvisor): AdvisorRepository => {
@@ -26,6 +27,13 @@ const AdvisorRepositoryImpl = (AdvisorModel: MongoDBAdvisor): AdvisorRepository 
         const allAdvisors = await advisorModel.find()
         return allAdvisors
     }
-    return { createAdvisor, findAdvisorByEmail ,setAdvisorPassword  , getAllAdvisor}
+    const updateIsBlock = async(userId : string , action : string):Promise<boolean | undefined >=>{
+        let isBlocked : boolean | undefined 
+        if(action === "block") isBlocked = true
+        if(action === "unblock" ) isBlocked = false
+        const advisor = await advisorModel.findByIdAndUpdate(userId , {isBlocked} , {new : true})
+        return isBlocked
+    }
+    return { createAdvisor, findAdvisorByEmail ,setAdvisorPassword  , getAllAdvisor , updateIsBlock}
 }
 export default AdvisorRepositoryImpl

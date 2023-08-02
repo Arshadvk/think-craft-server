@@ -36,6 +36,7 @@ const advisorSchema = new mongoose_1.Schema({
     sex: { type: String, enum: ['male', 'female'] },
     isMailVarified: { type: Boolean, default: false },
     education: { type: String },
+    isBlocked: { type: Boolean }
 }, {
     timestamps: { createdAt: true }
 });

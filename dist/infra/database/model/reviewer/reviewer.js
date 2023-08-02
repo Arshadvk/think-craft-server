@@ -36,7 +36,8 @@ const reviwerSchema = new mongoose_1.Schema({
     sex: { type: String, enum: ['male', 'female'] },
     isMailVarified: { type: Boolean, default: false },
     education: { type: String },
-    company: { type: String }
+    company: { type: String },
+    isBlocked: { type: Boolean }
 }, {
     timestamps: { createdAt: true }
 });

@@ -4,10 +4,11 @@ import jwt from "jsonwebtoken"
 import { isPasswordCorrect } from "../../service/hashing";
 
 export type Student ={
+    _id : string
     name:string;
     email:string;
-    password:string;
     number:string;
+    password:string;
     image:string;
     address:string;
     dob:Date;
@@ -20,6 +21,7 @@ export type Student ={
     motherNumber:string;
     guardianName:string;
     guardianNumber:string;
+    isMailVarified:boolean;
 }
 
 export const vaildateStudent =(passwordHashing:Function)=>{
@@ -51,7 +53,7 @@ export const createToken =(student:string):string=>{
     if (!secretKey) {
         throw new Error('JWT secret key is not defined')
     }
-    const token = jwt.sign({student},secretKey as string ,{expiresIn:'1h'})
+    const token = jwt.sign({student,role:'student'},secretKey as string ,{expiresIn:'1h'})
     return token
 }
 export const studentLoginUserValidate = studentLogin(isPasswordCorrect,createToken)

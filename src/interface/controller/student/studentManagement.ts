@@ -2,7 +2,10 @@ import { Request, Response } from "express";
 import studentRepositoryImpl from "../../../infra/repositories/student/studentRepository";
 import { studentModel } from "../../../infra/database/model/student/student";
 import { setPasswordUsecase } from "../../../app/usecase/student/setPassword";
-import { createStudentUsecase, getAllStudentUseCase } from "../../../app/usecase/admin/student/createStudent";
+import { createStudentUsecase} from "../../../app/usecase/admin/student/createStudent";
+import { getAllStudentUseCase } from "../../../app/usecase/admin/student/getAllStudent";
+import { AppError } from "../../../utils/error";
+import { blockStudentUseCase } from "../../../app/usecase/admin/student/block-unblock";
 
 
 
@@ -40,5 +43,27 @@ export const getAllStudentSearchFilterSortController = async (req : Request , re
         res.status(200).json(studentList)
     } catch (error) {
         
+    }
+}
+
+export const blockStudentController = async (req:Request , res : Response) => {
+    try {
+        const userId:string | undefined = req.body.id as string
+        const action:string | undefined = req.body.action as string
+        console.log(userId+"uhyugy");
+        
+        if(!userId || !action) throw new AppError("Not found" , 404)
+
+        const blocked = await blockStudentUseCase(studentRepository)(userId , action)
+        if(blocked === null) throw new AppError("somthing went wrong while fetch the users" ,500)
+        if(blocked === true){
+            res.status(200).json({ message: 'User blocked succesfully' })
+            return
+        }else if(blocked===false){
+            res.status(200).json({ message: 'User unblocked succesfully' })
+            return
+        }
+    } catch (error : any) {
+        res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' })
     }
 }

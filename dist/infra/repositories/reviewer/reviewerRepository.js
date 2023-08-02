@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const error_1 = require("../../../utils/error");
 const reviewer_1 = require("../../database/model/reviewer/reviewer");
 const reviewerRepositoryImpl = (ReviewerModel) => {
     const createReviewer = (reviewerData) => __awaiter(void 0, void 0, void 0, function* () {
@@ -29,6 +30,17 @@ const reviewerRepositoryImpl = (ReviewerModel) => {
         const allReviewer = reviewer_1.reviewerModel.find();
         return allReviewer;
     });
-    return { createReviewer, findReviewerByEmail, setReviewerPassword, getAllReviewer };
+    const updateIsBlock = (userId, action) => __awaiter(void 0, void 0, void 0, function* () {
+        let isBlocked;
+        if (action === "block")
+            isBlocked = true;
+        if (action === "unblock")
+            isBlocked = false;
+        const reviewer = yield reviewer_1.reviewerModel.findByIdAndUpdate(userId, { isBlocked }, { new: true });
+        if (!reviewer)
+            throw new error_1.AppError("somthing went worng when block the reviwer", 500);
+        return isBlocked;
+    });
+    return { createReviewer, findReviewerByEmail, setReviewerPassword, getAllReviewer, updateIsBlock };
 };
 exports.default = reviewerRepositoryImpl;

@@ -9,16 +9,20 @@ const studentSchema = new Schema({
     number: { type: String, },
     password: { type: String,},
     image: { type: String,  },
+    address: { type: String,  },
+    dob: { type: Date },
+    isBlocked : {type: Boolean } ,
+    sex: { type: String, enum: ['male', 'female'] },
+    domain : {type:String} , 
     fatherName: { type: String, },
     motherName: { type: String, },
     fatherNumber: { type: String,  },
     motherNumber: { type: String,  },
     guardianName: { type: String,  },
     guardianNumber: { type: String,  },
-    dob: { type: Date },
-    address: { type: String,  },
-    sex: { type: String, enum: ['male', 'female'] },
     isMailVarified: { type: Boolean, default: false },
+   
+
     
 },{
     timestamps : {createdAt:true}

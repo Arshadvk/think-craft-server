@@ -41,6 +41,7 @@ const studentSchema = new mongoose_1.Schema({
     address: { type: String, },
     sex: { type: String, enum: ['male', 'female'] },
     isMailVarified: { type: Boolean, default: false },
+    isBlocked: { type: Boolean }
 }, {
     timestamps: { createdAt: true }
 });
