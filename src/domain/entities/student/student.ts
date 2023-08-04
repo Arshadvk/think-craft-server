@@ -49,7 +49,7 @@ export const studentLogin =(passwordCompare:Function , createToken:Function)=>{
 
 export const createToken =(student:string):string=>{
 
-    const secretKey:string | undefined = process.env.JWT_SECRET_KEY
+    const secretKey:string | undefined = process.env.JWT_SECRET_KEY_STUDENT
     if (!secretKey) {
         throw new Error('JWT secret key is not defined')
     }

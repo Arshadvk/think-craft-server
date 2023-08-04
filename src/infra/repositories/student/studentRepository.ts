@@ -8,7 +8,7 @@ export type StudentRepository = {
     setStudentPassword:(email:string,password:string)=>Promise<any | null>
     getAllStudents:()=>Promise<object[]>
     updateIsBlock :( userId:string , action : string ) => Promise < boolean | undefined >
-    updateStudentProfile:( userId: string ,studentData : Student )=>Promise <any | null >
+    updateStudentProfile:( userId: string ,studentData : object )=>Promise <any | null >
 }
 
 
@@ -38,8 +38,8 @@ const studentRepositoryImpl=(StudentModel : MongoDBStudent):StudentRepository=>{
         if (!student) throw new AppError('somthing went wrong when block the user ' , 500)
         return isBlocked
     }  
-    const updateStudentProfile = async ( userId: string ,studentData : Student ):Promise <any | null >=>{
-        const student = await studentModel.findByIdAndUpdate(userId ,{studentData}, {new: true})
+    const updateStudentProfile = async ( userId: string ,studentData : object ):Promise <any | null >=>{
+        const student = await studentModel.findByIdAndUpdate(userId ,studentData , {new: true})
         if(!student) throw new AppError('somthing went wrong when block the user ' , 500)
         return student
     }

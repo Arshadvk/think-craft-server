@@ -6,6 +6,8 @@ import { createStudentUsecase} from "../../../app/usecase/admin/student/createSt
 import { getAllStudentUseCase } from "../../../app/usecase/admin/student/getAllStudent";
 import { AppError } from "../../../utils/error";
 import { blockStudentUseCase } from "../../../app/usecase/admin/student/block-unblock";
+import { studentProfileUsecase } from "../../../app/usecase/student/studentProfile";
+import { Date } from "mongoose";
 
 
 
@@ -66,4 +68,29 @@ export const blockStudentController = async (req:Request , res : Response) => {
     } catch (error : any) {
         res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' })
     }
+}
+
+export const studentProfileController =async (req:Request , res: Response) => {
+    try {
+        const userId:string | undefined = req.body.id as string 
+        const studentData : Object ={
+            name : req.body.name as string ,
+            number : req.body.number as string , 
+            address :  req.body.address as string ,
+            fatherName : req.body.fatherName as string ,
+            motherName : req.body.motherName as string ,
+            fatherNumber : req.body.fatherNumber as string , 
+            motherNumber : req.body.motherNumber as string, 
+            guardianName : req.body.guardianName as string ,
+            guardianNumber : req.body.guardianNumber as string 
+        }
+        const student = await studentProfileUsecase(studentRepository)(userId , studentData)
+       console.log(student);
+       
+        if(student)  res.status(200).json({ message: 'update' })
+
+        else  res.status(200).json({ message: 'User failed' })
+    } catch (error) {
+        
+    }    
 }

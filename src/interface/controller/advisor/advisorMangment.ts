@@ -5,6 +5,7 @@ import AdvisorRepositoryImpl from "../../../infra/repositories/advisor/advisorRe
 import { Request,Response } from "express"
 import { AppError } from "../../../utils/error"
 import { blockAdvisorUsecase } from "../../../app/usecase/admin/advisor/block-unblock"
+import { advisorProfileUsecase } from "../../../app/usecase/advisor/advisorProfile"
 const advisorRepository = AdvisorRepositoryImpl(advisorModel)
 
 export const createAdvisorController = async(req:Request, res:Response)=>{
@@ -57,4 +58,29 @@ export const blockAdvisorController =async (req:Request , res : Response) => {
     } catch (error : any) {
         res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' })
     }
+}
+
+export const advisorProfileController =async (req:Request , res : Response) => {
+    try {
+        const userId : string | undefined = req.body.id as string
+        const advisorData : Object = {
+            name : req.body.name as string ,
+            number : req.body.number as string , 
+            address :  req.body.address as string ,
+            dob : req.body.dob as Date , 
+            sex : req.body.sex as string , 
+            education: req.body.education as string , 
+        }
+        const advisor = await advisorProfileUsecase(advisorRepository)(userId , advisorData)
+        console.log(advisor);
+        if(advisor)  res.status(200).json(advisor)
+
+        else  res.status(200).json({ message: 'User failed' })
+        
+
+
+    } catch (error) {
+        
+    }
+    
 }

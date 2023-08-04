@@ -9,4 +9,5 @@ const reviewerLoginController_1 = require("../controller/reviewer/reviewerLoginC
 const reviewerRoute = express_1.default.Router();
 reviewerRoute.post('/login', reviewerLoginController_1.reviewerLoginController);
 reviewerRoute.put('/setpassword', reviewerManagment_1.passwordCreationReviewer);
+reviewerRoute.put('/edit-profile', reviewerManagment_1.reviewerProfileController);
 exports.default = reviewerRoute;

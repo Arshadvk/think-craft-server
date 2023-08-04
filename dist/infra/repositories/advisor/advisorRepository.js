@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const error_1 = require("../../../utils/error");
 const advisor_1 = require("../../database/model/advisor/advisor");
 const AdvisorRepositoryImpl = (AdvisorModel) => {
     const createAdvisor = (advisorData) => __awaiter(void 0, void 0, void 0, function* () {
@@ -36,6 +37,12 @@ const AdvisorRepositoryImpl = (AdvisorModel) => {
         const advisor = yield advisor_1.advisorModel.findByIdAndUpdate(userId, { isBlocked }, { new: true });
         return isBlocked;
     });
-    return { createAdvisor, findAdvisorByEmail, setAdvisorPassword, getAllAdvisor, updateIsBlock };
+    const uodateAdvisorProfile = (userId, reviwerData) => __awaiter(void 0, void 0, void 0, function* () {
+        const advisor = yield advisor_1.advisorModel.findByIdAndUpdate(userId, reviwerData, { new: true });
+        if (!advisor)
+            throw new error_1.AppError('somthing went wrong when block the user ', 500);
+        return advisor;
+    });
+    return { createAdvisor, findAdvisorByEmail, setAdvisorPassword, getAllAdvisor, updateIsBlock, uodateAdvisorProfile };
 };
 exports.default = AdvisorRepositoryImpl;

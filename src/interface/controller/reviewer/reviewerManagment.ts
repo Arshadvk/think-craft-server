@@ -5,6 +5,7 @@ import { createReviewerUsecase, getAllReviewerUsecase } from "../../../app/useca
 import { setPasswordUsecaseReviewer } from "../../../app/usecase/reviewer/setPassword"
 import { AppError } from "../../../utils/error"
 import { blockReviewerUsecase } from "../../../app/usecase/admin/reviewer/block-unblock"
+import { reviewerProfileUsecase } from "../../../app/usecase/reviewer/reviewerProfile"
 
 
 const reviewerRepository = reviewerRepositoryImpl(reviewerModel)
@@ -61,4 +62,26 @@ export const blockReviewerController =async (req:Request , res : Response) => {
         
     }
     
+}
+
+export const reviewerProfileController =async (req:Request , res : Response) => {
+    try {
+        const userId : string | undefined = req.body.id as string
+        const reviewerData : Object ={
+            name : req.body.name as string ,
+            number : req.body.number as string , 
+            address :  req.body.address as string ,
+            age : req.body.age , 
+            dob : req.body.dob , 
+            sex : req.body.sex , 
+            education : req.body.education ,
+            company : req.body.company 
+        }
+        const reviewer = await reviewerProfileUsecase(reviewerRepository)(userId , reviewerData)
+        if(reviewer)  res.status(200).json(reviewer)
+
+        else  res.status(200).json({ message: 'User failed' })
+    } catch (error) {
+        
+    }
 }

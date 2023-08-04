@@ -9,4 +9,5 @@ const advisorLoginController_1 = require("../controller/advisor/advisorLoginCont
 const advisorRoute = express_1.default.Router();
 advisorRoute.post('/login', advisorLoginController_1.advisorLogin);
 advisorRoute.put('/setpassword', advisorMangment_1.passwordCreationAdvisor);
+advisorRoute.put('/edit-profile', advisorMangment_1.advisorProfileController);
 exports.default = advisorRoute;

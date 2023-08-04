@@ -1,5 +1,1 @@
-
-
-export const loginAdmin=()=>{
-    
-}
+export const changePasswordUsecase = (adminRepository)

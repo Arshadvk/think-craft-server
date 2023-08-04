@@ -8,6 +8,7 @@ const adminLogin_1 = require("../controller/admin/adminLogin");
 const studentManagement_1 = require("../controller/student/studentManagement");
 const reviewerManagment_1 = require("../controller/reviewer/reviewerManagment");
 const advisorMangment_1 = require("../controller/advisor/advisorMangment");
+const domainController_1 = require("../controller/admin/domain/domainController");
 const adminRoute = express_1.default.Router();
 adminRoute.post('/login', adminLogin_1.adminLogin);
 adminRoute.post('/add-student', studentManagement_1.createStudentController);
@@ -19,4 +20,5 @@ adminRoute.get('/all-advisor', advisorMangment_1.getAllAdvisorSearchFilterSortCo
 adminRoute.patch('/block-unblock-student', studentManagement_1.blockStudentController);
 adminRoute.patch('/block-unblock-reviewer', reviewerManagment_1.blockReviewerController);
 adminRoute.patch('/block-unblock-advisor', advisorMangment_1.blockAdvisorController);
+adminRoute.post('/add-domain', domainController_1.addDomainController);
 exports.default = adminRoute;

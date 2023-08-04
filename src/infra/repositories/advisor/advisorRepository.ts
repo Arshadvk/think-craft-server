@@ -1,3 +1,4 @@
+import { AppError } from "../../../utils/error"
 import { MongoDBAdvisor, advisorModel, } from "../../database/model/advisor/advisor"
 
 
@@ -8,6 +9,7 @@ export type AdvisorRepository = {
     setAdvisorPassword:(email:string, password:string)=>Promise<any|null>
     getAllAdvisor:()=>Promise<object[]>
     updateIsBlock:(userId : string , action : string) => Promise <boolean | undefined >
+    uodateAdvisorProfile :(userId : string , advisorData : object) => Promise <any | null >
 }
 
 const AdvisorRepositoryImpl = (AdvisorModel: MongoDBAdvisor): AdvisorRepository => {
@@ -34,6 +36,11 @@ const AdvisorRepositoryImpl = (AdvisorModel: MongoDBAdvisor): AdvisorRepository 
         const advisor = await advisorModel.findByIdAndUpdate(userId , {isBlocked} , {new : true})
         return isBlocked
     }
-    return { createAdvisor, findAdvisorByEmail ,setAdvisorPassword  , getAllAdvisor , updateIsBlock}
+    const uodateAdvisorProfile =async (userId:string  , reviwerData : object):Promise<any| null> => {
+        const advisor = await advisorModel.findByIdAndUpdate(userId , reviwerData ,{new : true})
+        if (!advisor) throw new AppError('somthing went wrong when block the user ' , 500)
+        return advisor                
+    }
+    return { createAdvisor, findAdvisorByEmail ,setAdvisorPassword  , getAllAdvisor , updateIsBlock , uodateAdvisorProfile}
 }
 export default AdvisorRepositoryImpl

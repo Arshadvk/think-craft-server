@@ -41,6 +41,12 @@ const reviewerRepositoryImpl = (ReviewerModel) => {
             throw new error_1.AppError("somthing went worng when block the reviwer", 500);
         return isBlocked;
     });
-    return { createReviewer, findReviewerByEmail, setReviewerPassword, getAllReviewer, updateIsBlock };
+    const updateReviewerProfile = (userId, reviewerData) => __awaiter(void 0, void 0, void 0, function* () {
+        const reviewer = yield reviewer_1.reviewerModel.findByIdAndUpdate(userId, reviewerData, { new: true });
+        if (!reviewer)
+            throw new error_1.AppError('somthing went wrong when block the user ', 500);
+        return reviewer;
+    });
+    return { createReviewer, findReviewerByEmail, setReviewerPassword, getAllReviewer, updateIsBlock, updateReviewerProfile };
 };
 exports.default = reviewerRepositoryImpl;

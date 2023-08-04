@@ -23,27 +23,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.studentModel = void 0;
+exports.domainModel = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
-const studentSchema = new mongoose_1.Schema({
-    name: { type: String, required: true },
-    email: { type: String, required: true },
-    number: { type: String, },
-    password: { type: String, },
-    image: { type: String, },
-    address: { type: String, },
-    dob: { type: Date },
-    isBlocked: { type: Boolean },
-    sex: { type: String, enum: ['male', 'female'] },
-    domain: { type: String },
-    fatherName: { type: String, },
-    motherName: { type: String, },
-    fatherNumber: { type: String, },
-    motherNumber: { type: String, },
-    guardianName: { type: String, },
-    guardianNumber: { type: String, },
-    isMailVarified: { type: Boolean, default: false },
+const domainSchema = new mongoose_1.Schema({
+    name: { type: String, required: true }
 }, {
     timestamps: { createdAt: true }
 });
-exports.studentModel = mongoose_1.default.connection.model('student', studentSchema);
+exports.domainModel = mongoose_1.default.connection.model('domain', domainSchema);

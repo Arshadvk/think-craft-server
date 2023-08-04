@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.blockStudentController = exports.getAllStudentSearchFilterSortController = exports.passwordCreation = exports.createStudentController = void 0;
+exports.studentProfileController = exports.blockStudentController = exports.getAllStudentSearchFilterSortController = exports.passwordCreation = exports.createStudentController = void 0;
 const studentRepository_1 = __importDefault(require("../../../infra/repositories/student/studentRepository"));
 const student_1 = require("../../../infra/database/model/student/student");
 const setPassword_1 = require("../../../app/usecase/student/setPassword");
@@ -20,6 +20,7 @@ const createStudent_1 = require("../../../app/usecase/admin/student/createStuden
 const getAllStudent_1 = require("../../../app/usecase/admin/student/getAllStudent");
 const error_1 = require("../../../utils/error");
 const block_unblock_1 = require("../../../app/usecase/admin/student/block-unblock");
+const studentProfile_1 = require("../../../app/usecase/student/studentProfile");
 const studentRepository = (0, studentRepository_1.default)(student_1.studentModel);
 const createStudentController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -77,3 +78,28 @@ const blockStudentController = (req, res) => __awaiter(void 0, void 0, void 0, f
     }
 });
 exports.blockStudentController = blockStudentController;
+const studentProfileController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userId = req.body.id;
+        const studentData = {
+            name: req.body.name,
+            number: req.body.number,
+            address: req.body.address,
+            fatherName: req.body.fatherName,
+            motherName: req.body.motherName,
+            fatherNumber: req.body.fatherNumber,
+            motherNumber: req.body.motherNumber,
+            guardianName: req.body.guardianName,
+            guardianNumber: req.body.guardianNumber
+        };
+        const student = yield (0, studentProfile_1.studentProfileUsecase)(studentRepository)(userId, studentData);
+        console.log(student);
+        if (student)
+            res.status(200).json({ message: 'update' });
+        else
+            res.status(200).json({ message: 'User failed' });
+    }
+    catch (error) {
+    }
+});
+exports.studentProfileController = studentProfileController;
