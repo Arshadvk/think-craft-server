@@ -45,6 +45,20 @@ const studentRepositoryImpl = (StudentModel) => {
             throw new error_1.AppError('somthing went wrong when block the user ', 500);
         return student;
     });
-    return { createStudent, findStudentByEmail, setStudentPassword, getAllStudents, updateIsBlock, updateStudentProfile };
+    const findStudentById = (userId) => __awaiter(void 0, void 0, void 0, function* () {
+        console.log('isfh');
+        const student = yield student_1.studentModel.findById(userId);
+        console.log(student);
+        return student;
+    });
+    return {
+        createStudent,
+        findStudentByEmail,
+        setStudentPassword,
+        getAllStudents,
+        updateIsBlock,
+        updateStudentProfile,
+        findStudentById
+    };
 };
 exports.default = studentRepositoryImpl;

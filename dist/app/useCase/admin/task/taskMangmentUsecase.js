@@ -9,19 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getStudentProfileUsecase = exports.studentProfileUsecase = void 0;
-const studentProfileUsecase = (studentRepository) => {
-    return (userId, studentData) => __awaiter(void 0, void 0, void 0, function* () {
-        const student = yield studentRepository.updateStudentProfile(userId, studentData);
-        return student;
+exports.addTaskUsecase = void 0;
+const addTaskUsecase = (taskRepository) => {
+    return (task) => __awaiter(void 0, void 0, void 0, function* () {
+        const newTask = yield taskRepository.createNewTask(task);
+        return newTask;
     });
 };
-exports.studentProfileUsecase = studentProfileUsecase;
-const getStudentProfileUsecase = (studentRepository) => {
-    return (userId) => __awaiter(void 0, void 0, void 0, function* () {
-        console.log("kdsfj");
-        const student = yield studentRepository.findStudentById(userId);
-        return student;
-    });
-};
-exports.getStudentProfileUsecase = getStudentProfileUsecase;
+exports.addTaskUsecase = addTaskUsecase;

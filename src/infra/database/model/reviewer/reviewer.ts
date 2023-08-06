@@ -11,6 +11,7 @@ const reviwerSchema = new Schema({
     image: { type: String,  },
     age: { type: String, },
     dob: { type: Date },
+    domain:{type: Schema.Types.ObjectId, ref: 'domain'},
     sex: { type: String, enum: ['male', 'female'] },
     isMailVarified: { type: Boolean, default: false },
     education:{type:String},
