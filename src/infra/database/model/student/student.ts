@@ -12,7 +12,7 @@ const studentSchema = new Schema({
     address: { type: String,  },
     dob: { type: Date },
     isBlocked : {type: Boolean } ,
-    sex: { type: String, enum: ['male', 'female'] },
+    gender: { type: String, enum: ['male', 'female'] },
     domain : {type:String} , 
     fatherName: { type: String, },
     motherName: { type: String, },

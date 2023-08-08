@@ -42,9 +42,11 @@ export const getAllAdvisorSearchFilterSortController =async (req:Request , res :
 
 export const blockAdvisorController =async (req:Request , res : Response) => {
     try {
-        const userId:string | undefined = req.query.id as string
-        const action:string | undefined = req.query.action as string
-
+        const userId:string | undefined = req.body.id as string
+        const action:string | undefined = req.body.action as string
+        console.log(userId , action);
+        
+        
         if(!userId || !action) throw new AppError("Not found" , 404)
         const blocked = await blockAdvisorUsecase(advisorRepository)(userId , action)
         if(blocked === null) throw new AppError("somthing went wrong while fetch the users" ,500)

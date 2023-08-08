@@ -23,23 +23,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.reviewerModel = void 0;
+exports.slotModel = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
-const reviwerSchema = new mongoose_1.Schema({
-    name: { type: String, required: true },
-    email: { type: String, required: true },
-    number: { type: String, },
-    password: { type: String, },
-    image: { type: String, },
-    age: { type: String, },
-    dob: { type: Date },
-    domain: { type: mongoose_1.Schema.Types.ObjectId, ref: 'domain' },
-    sex: { type: String, enum: ['male', 'female'] },
-    isMailVarified: { type: Boolean, default: false },
-    education: { type: String },
-    company: { type: String },
-    isBlocked: { type: Boolean }
+const slotSchema = new mongoose_1.Schema({
+    timeForPerReview: { type: String, required: true },
+    reviewer: { type: mongoose_1.Schema.Types.ObjectId, ref: 'reviewer' },
+    timeStart: { type: String },
+    timeEnd: { type: String },
+    date: { type: Date }
 }, {
     timestamps: { createdAt: true }
 });
-exports.reviewerModel = mongoose_1.default.connection.model('reviewer', reviwerSchema);
+exports.slotModel = mongoose_1.default.connection.model("slot", slotSchema);

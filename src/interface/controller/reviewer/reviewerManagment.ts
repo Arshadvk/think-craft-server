@@ -43,8 +43,9 @@ export const getAllReviewerSearchFilterSortController =async (req:Request , res 
 
 export const blockReviewerController =async (req:Request , res : Response) => {
     try {
-        const userId:string | undefined = req.query.id as string
-        const action:string | undefined = req.query.action as string
+        const userId:string | undefined = req.body.id as string
+        const action:string | undefined = req.body.action as string
+
 
         if(!userId || !action) throw new AppError("not found" ,404)
 

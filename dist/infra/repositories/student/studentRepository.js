@@ -20,8 +20,8 @@ const studentRepositoryImpl = (StudentModel) => {
         const student = yield student_1.studentModel.findOne({ email });
         return student;
     });
-    const setStudentPassword = (email, password) => __awaiter(void 0, void 0, void 0, function* () {
-        const student = yield student_1.studentModel.updateOne({ email: email }, { $set: { password: password } });
+    const setStudentPassword = (id, password) => __awaiter(void 0, void 0, void 0, function* () {
+        const student = yield student_1.studentModel.findByIdAndUpdate({ _id: id }, { $set: { password: password } });
         return student;
     });
     const getAllStudents = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -47,6 +47,7 @@ const studentRepositoryImpl = (StudentModel) => {
     });
     const findStudentById = (userId) => __awaiter(void 0, void 0, void 0, function* () {
         console.log('isfh');
+        console.log(userId);
         const student = yield student_1.studentModel.findById(userId);
         console.log(student);
         return student;

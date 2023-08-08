@@ -19,18 +19,25 @@ const studentRepository_1 = __importDefault(require("../../../infra/repositories
 const studentRepository = (0, studentRepository_1.default)(student_1.studentModel);
 const studentProfileController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const userId = req.body.id;
+        const userId = req.params.id;
+        console.log(userId);
+        const data = req.body.values;
         const studentData = {
-            name: req.body.name,
-            number: req.body.number,
-            address: req.body.address,
-            fatherName: req.body.fatherName,
-            motherName: req.body.motherName,
-            fatherNumber: req.body.fatherNumber,
-            motherNumber: req.body.motherNumber,
-            guardianName: req.body.guardianName,
-            guardianNumber: req.body.guardianNumber
+            name: data.name,
+            number: data.number,
+            address: data.address,
+            fatherName: data.fatherName,
+            motherName: data.motherName,
+            fatherNumber: data.fatherNumber,
+            motherNumber: data.motherNumber,
+            guardianName: data.guardianName,
+            guardianNumber: data.guardianNumber,
+            gender: data.gender,
+            qualification: data.qualification,
+            dob: data.dob
         };
+        console.log(req.body);
+        console.log(studentData);
         const student = yield (0, studentProfile_1.studentProfileUsecase)(studentRepository)(userId, studentData);
         console.log(student);
         if (student)
@@ -45,7 +52,7 @@ const studentProfileController = (req, res) => __awaiter(void 0, void 0, void 0,
 exports.studentProfileController = studentProfileController;
 const getStudentProfileController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const studentId = req.body.id;
+        const studentId = req.params.id;
         console.log(studentId);
         const student = yield (0, studentProfile_1.getStudentProfileUsecase)(studentRepository)(studentId);
         res.status(200).json({ data: student });

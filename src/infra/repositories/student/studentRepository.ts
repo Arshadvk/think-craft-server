@@ -1,3 +1,4 @@
+import { ObjectId } from "mongoose";
 import { Student } from "../../../domain/entities/student/student";
 import { AppError } from "../../../utils/error";
 import { MongoDBStudent, studentModel } from "../../database/model/student/student";
@@ -5,7 +6,7 @@ import { MongoDBStudent, studentModel } from "../../database/model/student/stude
 export type StudentRepository = {
     createStudent: (studentData: any) => Promise<any | null>
     findStudentByEmail: (email: string) => Promise<any | null>
-    setStudentPassword: (email: string, password: string) => Promise<any | null>
+    setStudentPassword: (id: string, password: string) => Promise<any | null>
     getAllStudents: () => Promise<object[]>
     updateIsBlock: (userId: string, action: string) => Promise<boolean | undefined>
     updateStudentProfile: (userId: string, studentData: object) => Promise<any | null>
@@ -22,8 +23,8 @@ const studentRepositoryImpl = (StudentModel: MongoDBStudent): StudentRepository 
         const student = await studentModel.findOne({ email })
         return student
     }
-    const setStudentPassword = async (email: string, password: string) => {
-        const student = await studentModel.updateOne({ email: email }, { $set: { password: password } })
+    const setStudentPassword = async (id: string, password: string) => {
+        const student = await studentModel.findByIdAndUpdate({ _id: id}, { $set: { password: password } })
         return student
     }
     const getAllStudents = async (): Promise<object[]> => {
@@ -47,6 +48,7 @@ const studentRepositoryImpl = (StudentModel: MongoDBStudent): StudentRepository 
     const findStudentById = async (userId: string): Promise<any> => {
         
         console.log('isfh');
+        console.log(userId);
         
         const student = await studentModel.findById(userId )
       

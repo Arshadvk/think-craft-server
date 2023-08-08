@@ -54,8 +54,8 @@ const getAllReviewerSearchFilterSortController = (req, res) => __awaiter(void 0,
 exports.getAllReviewerSearchFilterSortController = getAllReviewerSearchFilterSortController;
 const blockReviewerController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const userId = req.query.id;
-        const action = req.query.action;
+        const userId = req.body.id;
+        const action = req.body.action;
         if (!userId || !action)
             throw new error_1.AppError("not found", 404);
         const blocked = yield (0, block_unblock_1.blockReviewerUsecase)(reviewerRepository)(userId, action);

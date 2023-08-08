@@ -9,7 +9,7 @@ const studentLoginController_1 = require("../controller/student/studentLoginCont
 const studentProfileController_1 = require("../controller/student/studentProfileController");
 const studentRoute = express_1.default.Router();
 studentRoute.post('/login', studentLoginController_1.studentLogin);
-studentRoute.put('/setpassword', studentManagement_1.passwordCreation);
-studentRoute.put('/edit-profile', studentProfileController_1.studentProfileController);
-studentRoute.get('/profile', studentProfileController_1.getStudentProfileController);
+studentRoute.put('/setpassword/:id', studentManagement_1.passwordCreation);
+studentRoute.put('/edit-profile/:id', studentProfileController_1.studentProfileController);
+studentRoute.get('/profile/:id', studentProfileController_1.getStudentProfileController);
 exports.default = studentRoute;

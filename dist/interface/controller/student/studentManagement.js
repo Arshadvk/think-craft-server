@@ -36,8 +36,10 @@ const createStudentController = (req, res) => __awaiter(void 0, void 0, void 0, 
 exports.createStudentController = createStudentController;
 const passwordCreation = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const userId = req.params.id;
         const studentData = req.body;
-        const newPassword = yield (0, setPassword_1.setPasswordUsecase)(studentRepository)(studentData);
+        console.log(studentData);
+        const newPassword = yield (0, setPassword_1.setPasswordUsecase)(studentRepository)(studentData, userId);
         res.status(200).send({ message: "password change successfully" });
     }
     catch (error) {

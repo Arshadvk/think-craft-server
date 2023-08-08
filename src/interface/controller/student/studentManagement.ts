@@ -28,8 +28,11 @@ export const createStudentController = async (req: Request, res: Response) => {
 
 export const passwordCreation = async (req: Request, res: Response) => {
     try {
+        const userId = req.params.id
         const studentData = req.body
-        const newPassword = await setPasswordUsecase(studentRepository)(studentData)
+        console.log(studentData);
+        
+        const newPassword = await setPasswordUsecase(studentRepository)(studentData ,userId)
         res.status(200).send({ message: "password change successfully" })
 
 

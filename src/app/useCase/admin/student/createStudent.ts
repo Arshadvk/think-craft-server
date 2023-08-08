@@ -8,7 +8,9 @@ export const createStudentUsecase = (studentRepository: StudentRepository) => {
         const isStudent = await studentRepository.findStudentByEmail(studentData.email)
         if (isStudent) throw new AppError("Student is already exist", 409)
         const newStudent = await studentRepository.createStudent(studentData)
-        const sended = sendMail(studentData, "")
+        console.log(newStudent._id+"hgfj");
+        
+        const sended = sendMail(newStudent, "")
         return newStudent
     }
 }

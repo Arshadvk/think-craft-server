@@ -8,7 +8,7 @@ import StudentAuthenticateToken from "../middlewares/authMiddleware";
 const studentRoute = express.Router()
 
 studentRoute.post('/login' ,studentLogin )
-studentRoute.put('/setpassword', passwordCreation)
-studentRoute.put('/edit-profile' , studentProfileController)
-studentRoute.get('/profile' , getStudentProfileController)
+studentRoute.put('/setpassword/:id', passwordCreation)
+studentRoute.put('/edit-profile/:id' , studentProfileController)
+studentRoute.get('/profile/:id' , getStudentProfileController)
 export default studentRoute

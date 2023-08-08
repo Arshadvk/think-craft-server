@@ -5,9 +5,13 @@ import { StudentRepository } from "../../../infra/repositories/student/studentRe
 
 
 export const setPasswordUsecase = (studentRepository: StudentRepository) => {
-    return async (studentData: any): Promise<Student | null> => {
+    return async (studentData: any , userId:string ): Promise<Student | null> => {
+        
+        
         const password = await passwordHashing(studentData.password)
-        const student = await studentRepository.setStudentPassword(studentData.email, password)
+        console.log(password);
+        
+        const student = await studentRepository.setStudentPassword(userId, password)
         return student
     }
 }

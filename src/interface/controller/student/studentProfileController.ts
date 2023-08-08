@@ -8,18 +8,28 @@ const studentRepository = studentRepositoryImpl(studentModel)
 
 export const studentProfileController = async (req: Request, res: Response) => {
     try {
-        const userId: string | undefined = req.body.id as string
-        const studentData: Object = {
-            name: req.body.name as string,
-            number: req.body.number as string,
-            address: req.body.address as string,
-            fatherName: req.body.fatherName as string,
-            motherName: req.body.motherName as string,
-            fatherNumber: req.body.fatherNumber as string,
-            motherNumber: req.body.motherNumber as string,
-            guardianName: req.body.guardianName as string,
-            guardianNumber: req.body.guardianNumber as string
+        const userId: string | undefined = req.params.id as string
+        console.log(userId);
+        const data : object | any  = req.body.values as object | any
+        const studentData: object = {
+            name: data.name as string,
+            number: data.number as string,
+            address: data.address as string,
+            fatherName: data.fatherName as string,
+            motherName: data.motherName as string,
+            fatherNumber: data.fatherNumber as string,
+            motherNumber: data.motherNumber as string,
+            guardianName: data.guardianName as string,
+            guardianNumber: data.guardianNumber as string ,
+            gender: data.gender as string ,
+            qualification: data.qualification,
+            dob:data.dob
+    
         }
+        console.log(req.body);
+        
+        console.log(studentData);
+        
         const student = await studentProfileUsecase(studentRepository)(userId, studentData)
         console.log(student);
 
@@ -37,7 +47,8 @@ export const studentProfileController = async (req: Request, res: Response) => {
 export const getStudentProfileController =async (req:CustomRequest , res: Response) => {
 
     try {
-        const studentId =  req.body.id as string
+        const studentId:string =  req.params.id 
+
         console.log(studentId);
         
         

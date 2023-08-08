@@ -9,18 +9,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createStudentUsecase = void 0;
-const email_send_1 = require("../../../../domain/service/email_send");
-const error_1 = require("../../../../utils/error");
-const createStudentUsecase = (studentRepository) => {
-    return (studentData) => __awaiter(void 0, void 0, void 0, function* () {
-        const isStudent = yield studentRepository.findStudentByEmail(studentData.email);
-        if (isStudent)
-            throw new error_1.AppError("Student is already exist", 409);
-        const newStudent = yield studentRepository.createStudent(studentData);
-        console.log(newStudent._id + "hgfj");
-        const sended = (0, email_send_1.sendMail)(newStudent, "");
-        return newStudent;
+const slot_1 = require("../../../database/model/reviewer/slot/slot");
+const slotRepositoryImpl = (SlotModel) => {
+    const createSlot = (slotData) => __awaiter(void 0, void 0, void 0, function* () {
+        const newSlot = yield slot_1.slotModel.create(slotData);
+        return newSlot;
     });
+    return {
+        createSlot
+    };
 };
-exports.createStudentUsecase = createStudentUsecase;
+exports.default = slotRepositoryImpl;

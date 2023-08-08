@@ -53,8 +53,9 @@ const getAllAdvisorSearchFilterSortController = (req, res) => __awaiter(void 0, 
 exports.getAllAdvisorSearchFilterSortController = getAllAdvisorSearchFilterSortController;
 const blockAdvisorController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const userId = req.query.id;
-        const action = req.query.action;
+        const userId = req.body.id;
+        const action = req.body.action;
+        console.log(userId, action);
         if (!userId || !action)
             throw new error_1.AppError("Not found", 404);
         const blocked = yield (0, block_unblock_1.blockAdvisorUsecase)(advisorRepository)(userId, action);
