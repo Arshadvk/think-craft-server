@@ -4,7 +4,7 @@ export type MongoDBTask = Model<Document<any,any,any>>
 
 const taskSchema = new Schema({
     weekNo:{type :Number },
-    domain:{type:String},
+    domain:{ type: Schema.Types.ObjectId, ref: 'domain' },
     personalDevelopmentWorkout:{type:Array},
     technicalWorkouts:{type:Array},
     miscellaneousWorkouts:{type:Array}

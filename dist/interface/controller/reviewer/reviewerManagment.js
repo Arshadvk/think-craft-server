@@ -12,14 +12,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.reviewerProfileController = exports.blockReviewerController = exports.getAllReviewerSearchFilterSortController = exports.passwordCreationReviewer = exports.createReviewerController = void 0;
+exports.blockReviewerController = exports.getAllReviewerSearchFilterSortController = exports.passwordCreationReviewer = exports.createReviewerController = void 0;
 const reviewerRepository_1 = __importDefault(require("../../../infra/repositories/reviewer/reviewerRepository"));
 const reviewer_1 = require("../../../infra/database/model/reviewer/reviewer");
 const createReviewer_1 = require("../../../app/usecase/admin/reviewer/createReviewer");
 const setPassword_1 = require("../../../app/usecase/reviewer/setPassword");
 const error_1 = require("../../../utils/error");
 const block_unblock_1 = require("../../../app/usecase/admin/reviewer/block-unblock");
-const reviewerProfile_1 = require("../../../app/usecase/reviewer/reviewerProfile");
 const reviewerRepository = (0, reviewerRepository_1.default)(reviewer_1.reviewerModel);
 const createReviewerController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -75,26 +74,3 @@ const blockReviewerController = (req, res) => __awaiter(void 0, void 0, void 0, 
     }
 });
 exports.blockReviewerController = blockReviewerController;
-const reviewerProfileController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const userId = req.body.id;
-        const reviewerData = {
-            name: req.body.name,
-            number: req.body.number,
-            address: req.body.address,
-            age: req.body.age,
-            dob: req.body.dob,
-            sex: req.body.sex,
-            education: req.body.education,
-            company: req.body.company
-        };
-        const reviewer = yield (0, reviewerProfile_1.reviewerProfileUsecase)(reviewerRepository)(userId, reviewerData);
-        if (reviewer)
-            res.status(200).json(reviewer);
-        else
-            res.status(200).json({ message: 'User failed' });
-    }
-    catch (error) {
-    }
-});
-exports.reviewerProfileController = reviewerProfileController;

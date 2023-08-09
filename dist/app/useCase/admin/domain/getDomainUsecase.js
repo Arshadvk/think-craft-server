@@ -9,15 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addDomainUseCase = void 0;
-const domain_1 = require("../../../../domain/entities/admin/domain");
-const addDomainUseCase = (domainRepository) => {
-    return (domainName) => __awaiter(void 0, void 0, void 0, function* () {
-        console.log("ksifj");
-        const domainNameValidate = (0, domain_1.validateDomainData)(domainName);
-        console.log(domainNameValidate);
-        const newDomain = yield domainRepository.createNewDomain(domainNameValidate);
-        return newDomain;
+exports.getAllDomainUsecase = void 0;
+const getAllDomainUsecase = (domainRepository) => {
+    return () => __awaiter(void 0, void 0, void 0, function* () {
+        const allDomain = yield domainRepository.findAllDomain();
+        return allDomain;
     });
 };
-exports.addDomainUseCase = addDomainUseCase;
+exports.getAllDomainUsecase = getAllDomainUsecase;

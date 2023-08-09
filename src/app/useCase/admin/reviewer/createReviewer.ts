@@ -14,7 +14,7 @@ export const createReviewerUsecase = (reviewerRepository : ReviewerRepository)=>
         const newReviewer  = await reviewerRepository.createReviewer(reviwerData)
         console.log(newReviewer);
         
-        const sended = sendMail(reviwerData , "/reviewer")
+        const sended = sendMail(newReviewer , "/reviewer")
         
         
     }

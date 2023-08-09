@@ -3,6 +3,7 @@ import { getStudentProfileUsecase, studentProfileUsecase } from "../../../app/us
 import { studentModel } from "../../../infra/database/model/student/student";
 import studentRepositoryImpl from "../../../infra/repositories/student/studentRepository";
 import { CustomRequest } from "../../middlewares/authMiddleware";
+import { Date, ObjectId } from "mongoose";
 
 const studentRepository = studentRepositoryImpl(studentModel)
 
@@ -23,7 +24,9 @@ export const studentProfileController = async (req: Request, res: Response) => {
             guardianNumber: data.guardianNumber as string ,
             gender: data.gender as string ,
             qualification: data.qualification,
-            dob:data.dob
+            dob:data.dob as Date,
+            domain:data.domain as ObjectId ,
+            isProfileVarified: true 
     
         }
         console.log(req.body);

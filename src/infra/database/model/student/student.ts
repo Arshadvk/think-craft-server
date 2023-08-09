@@ -12,15 +12,11 @@ const studentSchema = new Schema({
     address: { type: String,  },
     dob: { type: Date },
     isBlocked : {type: Boolean } ,
-    gender: { type: String, enum: ['male', 'female'] },
-    domain : {type:String} , 
-    fatherName: { type: String, },
-    motherName: { type: String, },
-    fatherNumber: { type: String,  },
-    motherNumber: { type: String,  },
-    guardianName: { type: String,  },
-    guardianNumber: { type: String,  },
-    isMailVarified: { type: Boolean, default: false },
+    qualification:{ type: String,  },
+    domain:{type: Schema.Types.ObjectId, ref: 'domain'},
+    gender: { type: String, enum: ['male', 'female'] }, 
+    isProfileVarified: { type: Boolean, default: false },
+    week: {type:Number  , default:1} 
    
 
     

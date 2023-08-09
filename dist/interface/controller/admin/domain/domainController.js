@@ -12,15 +12,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addDomainController = void 0;
+exports.getAllDomainController = exports.addDomainController = void 0;
 const addDomain_1 = require("../../../../app/usecase/admin/domain/addDomain");
 const domainRepository_1 = __importDefault(require("../../../../infra/repositories/domain/domainRepository"));
 const domain_1 = require("../../../../infra/database/model/domain/domain");
+const getDomainUsecase_1 = require("../../../../app/usecase/admin/domain/getDomainUsecase");
 const domainRepository = (0, domainRepository_1.default)(domain_1.domainModel);
 const addDomainController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const domainName = req.body.domainName;
-        const newDomain = yield (0, addDomain_1.addDomainUseCase)(domainRepository)(domainName);
+        const name = req.body;
+        console.log(name);
+        const newDomain = yield (0, addDomain_1.addDomainUseCase)(domainRepository)(name);
         if (!newDomain)
             res.status(500).json({ message: 'Somthing went wrong' });
         else
@@ -31,3 +33,16 @@ const addDomainController = (req, res) => __awaiter(void 0, void 0, void 0, func
     }
 });
 exports.addDomainController = addDomainController;
+const getAllDomainController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        console.log("jkh");
+        const domains = yield (0, getDomainUsecase_1.getAllDomainUsecase)(domainRepository)();
+        if (!domains)
+            res.status(500).json({ message: "no domain found" });
+        else
+            res.status(200).json({ data: domains });
+    }
+    catch (error) {
+    }
+});
+exports.getAllDomainController = getAllDomainController;

@@ -35,7 +35,8 @@ const createToken = (admin) => {
     const secretKey = process.env.JWT_SECRET_KEY_ADMIN;
     if (!secretKey)
         throw new error_1.AppError("JWT secret key is not defiend", 401);
-    const token = jsonwebtoken_1.default.sign({ admin, role: "admin" }, secretKey, { expiresIn: "1h" });
+    console.log(secretKey);
+    const token = jsonwebtoken_1.default.sign({ admin, role: "admin" }, secretKey, { expiresIn: "1day" });
     return token;
 };
 exports.createToken = createToken;

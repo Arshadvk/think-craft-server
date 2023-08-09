@@ -12,14 +12,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.advisorProfileController = exports.blockAdvisorController = exports.getAllAdvisorSearchFilterSortController = exports.passwordCreationAdvisor = exports.createAdvisorController = void 0;
+exports.blockAdvisorController = exports.getAllAdvisorSearchFilterSortController = exports.passwordCreationAdvisor = exports.createAdvisorController = void 0;
 const createAdvisor_1 = require("../../../app/usecase/admin/advisor/createAdvisor");
 const setPassword_1 = require("../../../app/usecase/advisor/setPassword");
 const advisor_1 = require("../../../infra/database/model/advisor/advisor");
 const advisorRepository_1 = __importDefault(require("../../../infra/repositories/advisor/advisorRepository"));
 const error_1 = require("../../../utils/error");
 const block_unblock_1 = require("../../../app/usecase/admin/advisor/block-unblock");
-const advisorProfile_1 = require("../../../app/usecase/advisor/advisorProfile");
 const advisorRepository = (0, advisorRepository_1.default)(advisor_1.advisorModel);
 const createAdvisorController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -29,6 +28,7 @@ const createAdvisorController = (req, res) => __awaiter(void 0, void 0, void 0, 
         res.status(200).send({ message: "advisor created succussfully" });
     }
     catch (error) {
+        res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' });
     }
 });
 exports.createAdvisorController = createAdvisorController;
@@ -39,6 +39,7 @@ const passwordCreationAdvisor = (req, res) => __awaiter(void 0, void 0, void 0, 
         res.status(200).send({ message: "password change successfully" });
     }
     catch (error) {
+        res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' });
     }
 });
 exports.passwordCreationAdvisor = passwordCreationAdvisor;
@@ -48,6 +49,7 @@ const getAllAdvisorSearchFilterSortController = (req, res) => __awaiter(void 0, 
         res.status(200).json(advisorList);
     }
     catch (error) {
+        res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' });
     }
 });
 exports.getAllAdvisorSearchFilterSortController = getAllAdvisorSearchFilterSortController;
@@ -75,25 +77,3 @@ const blockAdvisorController = (req, res) => __awaiter(void 0, void 0, void 0, f
     }
 });
 exports.blockAdvisorController = blockAdvisorController;
-const advisorProfileController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const userId = req.body.id;
-        const advisorData = {
-            name: req.body.name,
-            number: req.body.number,
-            address: req.body.address,
-            dob: req.body.dob,
-            sex: req.body.sex,
-            education: req.body.education,
-        };
-        const advisor = yield (0, advisorProfile_1.advisorProfileUsecase)(advisorRepository)(userId, advisorData);
-        console.log(advisor);
-        if (advisor)
-            res.status(200).json(advisor);
-        else
-            res.status(200).json({ message: 'User failed' });
-    }
-    catch (error) {
-    }
-});
-exports.advisorProfileController = advisorProfileController;

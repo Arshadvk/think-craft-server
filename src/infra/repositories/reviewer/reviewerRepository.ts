@@ -8,9 +8,11 @@ export type ReviewerRepository ={
     getAllReviewer:()=>Promise<object[]>
     updateIsBlock:(userId:string , action:string)=>Promise <boolean | undefined>
     updateReviewerProfile :( userId: string, reviewerData : any)=> Promise <any|null>
+    findReviewerById:(userId : string )=> Promise <any>
 }
 const reviewerRepositoryImpl=(ReviewerModel:MongoDBReviewer):ReviewerRepository=>{
     const createReviewer = async (reviewerData:any):Promise<any | null >=>{
+
         console.log(reviewerData);
         console.log("dfsdafg");
         
@@ -42,7 +44,21 @@ const reviewerRepositoryImpl=(ReviewerModel:MongoDBReviewer):ReviewerRepository=
          if(!reviewer) throw new AppError('somthing went wrong when block the user ' , 500)
          return reviewer
     }
-    return {createReviewer, findReviewerByEmail , setReviewerPassword , getAllReviewer , updateIsBlock , updateReviewerProfile }
+    const findReviewerById =async (userId:string):Promise <any> => {
+        const reviewer = await reviewerModel.findById(userId).populate('domain')
+        console.log(reviewer);
+        return reviewer
+        
+    }
+    return {
+        createReviewer, 
+        findReviewerByEmail , 
+        setReviewerPassword , 
+        getAllReviewer , 
+        updateIsBlock , 
+        updateReviewerProfile ,
+        findReviewerById 
+    }
 }
 
 export default reviewerRepositoryImpl

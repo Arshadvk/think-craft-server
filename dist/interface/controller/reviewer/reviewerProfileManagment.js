@@ -1,0 +1,60 @@
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getReviewerProfileController = exports.reviewerProfileController = void 0;
+const reviewerProfile_1 = require("../../../app/usecase/reviewer/reviewerProfile");
+const reviewerRepository_1 = __importDefault(require("../../../infra/repositories/reviewer/reviewerRepository"));
+const reviewer_1 = require("../../../infra/database/model/reviewer/reviewer");
+const reviewerRepository = (0, reviewerRepository_1.default)(reviewer_1.reviewerModel);
+const reviewerProfileController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userId = req.params.id;
+        console.log(userId);
+        console.log(req.body);
+        const data = req.body.values;
+        const reviewerData = {
+            number: data.number,
+            address: data.address,
+            age: data.age,
+            dob: data.dob,
+            gender: data.gender,
+            education: data.qualification,
+            domain: data.domain
+        };
+        console.log(reviewerData);
+        const reviewer = yield (0, reviewerProfile_1.reviewerProfileUsecase)(reviewerRepository)(userId, reviewerData);
+        if (reviewer)
+            res.status(200).json(reviewer);
+        else
+            res.status(200).json({ message: 'User failed' });
+    }
+    catch (error) {
+        res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' });
+    }
+});
+exports.reviewerProfileController = reviewerProfileController;
+const getReviewerProfileController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        console.log("jdufhdsg");
+        const reviewerId = req.params.id;
+        console.log(reviewerId);
+        const reviewer = yield (0, reviewerProfile_1.getReviewerProfileUsecase)(reviewerRepository)(reviewerId);
+        console.log(reviewer);
+        res.status(200).json({ data: reviewer });
+    }
+    catch (error) {
+        res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' });
+    }
+});
+exports.getReviewerProfileController = getReviewerProfileController;

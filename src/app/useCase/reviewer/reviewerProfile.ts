@@ -6,3 +6,10 @@ export const reviewerProfileUsecase = (reviewerRepository : ReviewerRepository)=
         return reviewer
     }
 }
+
+export const getReviewerProfileUsecase = (reviewerRepository: ReviewerRepository)=>{
+    return async (userId:string):Promise<any>=>{
+        const reviewer = await reviewerRepository.findReviewerById(userId)
+        return reviewer
+    }
+}

@@ -34,15 +34,11 @@ const studentSchema = new mongoose_1.Schema({
     address: { type: String, },
     dob: { type: Date },
     isBlocked: { type: Boolean },
+    qualification: { type: String, },
+    domain: { type: mongoose_1.Schema.Types.ObjectId, ref: 'domain' },
     gender: { type: String, enum: ['male', 'female'] },
-    domain: { type: String },
-    fatherName: { type: String, },
-    motherName: { type: String, },
-    fatherNumber: { type: String, },
-    motherNumber: { type: String, },
-    guardianName: { type: String, },
-    guardianNumber: { type: String, },
-    isMailVarified: { type: Boolean, default: false },
+    isProfileVarified: { type: Boolean, default: false },
+    week: { type: Number, default: 1 }
 }, {
     timestamps: { createdAt: true }
 });

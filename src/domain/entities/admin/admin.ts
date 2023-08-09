@@ -23,7 +23,9 @@ export const adminLogin = (passwordCompare:Function , createToken:Function)=>{
 export const createToken = (admin:string):string=>{
     const secretKey:string | undefined = process.env.JWT_SECRET_KEY_ADMIN
     if (!secretKey) throw new AppError("JWT secret key is not defiend" ,401);
-    const token = jwt.sign({admin , role:"admin"},secretKey as string ,{expiresIn:"1h"})
+    console.log(secretKey);
+    
+    const token = jwt.sign({admin , role:"admin"},secretKey as string ,{expiresIn:"1day"})
     return token
     
 }

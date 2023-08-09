@@ -15,7 +15,7 @@ export const createAdvisorUsecase = (advisorRepository: AdvisorRepository) => {
         const newAdvisor = await advisorRepository.createAdvisor(advisorData);
         console.log(newAdvisor);
         
-        const sended = sendMail(advisorData,"/advisor");
+        const sended = sendMail(newAdvisor,"/advisor");
         console.log(sended);
         
     }

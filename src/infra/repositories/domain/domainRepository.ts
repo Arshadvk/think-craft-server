@@ -3,23 +3,29 @@ import { MongoDBDomain, domainModel } from "../../database/model/domain/domain";
 
 
 export type DomainRepository = {
-    createNewDomain:(domainName:string)=>Promise<any>
-    findDomainByName:(domainName:string)=>Promise<Domain| any>
-
+    createNewDomain:(name:string)=>Promise<any>
+    findDomainByName:(name:string)=>Promise<Domain| any>
+    findAllDomain:()=> Promise <Domain | any>
 }
 
 const domainRepositoryIMPL = (DomainModel:MongoDBDomain):DomainRepository=>{
-    const createNewDomain =async (domainName:string):Promise<Domain | any> => {
-        const newDomain = new DomainModel({
-            name : domainName,
-        })
-        const createdDomain = await newDomain.save()
-        return createdDomain
+    const createNewDomain =async (name:string):Promise<Domain | any> => {
+        console.log("mgjfsngj");
+        
+        const newDomain = await domainModel.create(name)
+        console.log(newDomain);
+        
+        return newDomain
     }
-    const findDomainByName =async (domainName:string):Promise<Domain|any> => {
-      const domainExist : Domain | any = await domainModel.find({domainName}) 
+    const findDomainByName =async (name:string):Promise<Domain|any> => {
+      const domainExist : Domain | any = await domainModel.findOne() 
       return domainExist 
     }
-    return{createNewDomain , findDomainByName}
+
+    const findAllDomain =async ():Promise <Domain | any> => {
+        const domain = await domainModel.find()
+        return domain 
+    }
+    return{createNewDomain , findDomainByName ,findAllDomain }
 }
 export default domainRepositoryIMPL

@@ -34,7 +34,7 @@ const reviwerSchema = new mongoose_1.Schema({
     age: { type: String, },
     dob: { type: Date },
     domain: { type: mongoose_1.Schema.Types.ObjectId, ref: 'domain' },
-    sex: { type: String, enum: ['male', 'female'] },
+    gender: { type: String, enum: ['male', 'female'] },
     isMailVarified: { type: Boolean, default: false },
     education: { type: String },
     company: { type: String },

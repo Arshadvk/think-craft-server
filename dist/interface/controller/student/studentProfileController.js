@@ -34,7 +34,9 @@ const studentProfileController = (req, res) => __awaiter(void 0, void 0, void 0,
             guardianNumber: data.guardianNumber,
             gender: data.gender,
             qualification: data.qualification,
-            dob: data.dob
+            dob: data.dob,
+            domain: data.domain,
+            isProfileVarified: true
         };
         console.log(req.body);
         console.log(studentData);

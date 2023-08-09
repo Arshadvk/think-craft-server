@@ -4,10 +4,12 @@ import { AppError } from "../../../../utils/error";
 
 export const addDomainUseCase = (domainRepository:DomainRepository)=>{
   return  async(domainName:string):Promise<Domain |any >=>{
+    console.log("ksifj");
+    
         const domainNameValidate:string = validateDomainData(domainName)
-        const isDomainExist:Domain|any  = await domainRepository.findDomainByName(domainName)
-        if(isDomainExist) throw new AppError ("The Domain is already exist" , 409)
-        console.log(isDomainExist);
+        console.log(domainNameValidate);
+        
+       
         
         const newDomain : Domain | any  = await domainRepository.createNewDomain(domainNameValidate)
         return newDomain

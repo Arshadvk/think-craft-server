@@ -11,17 +11,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const domain_1 = require("../../database/model/domain/domain");
 const domainRepositoryIMPL = (DomainModel) => {
-    const createNewDomain = (domainName) => __awaiter(void 0, void 0, void 0, function* () {
-        const newDomain = new DomainModel({
-            name: domainName,
-        });
-        const createdDomain = yield newDomain.save();
-        return createdDomain;
+    const createNewDomain = (name) => __awaiter(void 0, void 0, void 0, function* () {
+        console.log("mgjfsngj");
+        const newDomain = yield domain_1.domainModel.create(name);
+        console.log(newDomain);
+        return newDomain;
     });
-    const findDomainByName = (domainName) => __awaiter(void 0, void 0, void 0, function* () {
-        const domainExist = yield domain_1.domainModel.find({ domainName });
+    const findDomainByName = (name) => __awaiter(void 0, void 0, void 0, function* () {
+        const domainExist = yield domain_1.domainModel.findOne();
         return domainExist;
     });
-    return { createNewDomain, findDomainByName };
+    const findAllDomain = () => __awaiter(void 0, void 0, void 0, function* () {
+        const domain = yield domain_1.domainModel.find();
+        return domain;
+    });
+    return { createNewDomain, findDomainByName, findAllDomain };
 };
 exports.default = domainRepositoryIMPL;

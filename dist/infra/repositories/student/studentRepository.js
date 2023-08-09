@@ -46,10 +46,7 @@ const studentRepositoryImpl = (StudentModel) => {
         return student;
     });
     const findStudentById = (userId) => __awaiter(void 0, void 0, void 0, function* () {
-        console.log('isfh');
-        console.log(userId);
-        const student = yield student_1.studentModel.findById(userId);
-        console.log(student);
+        const student = yield student_1.studentModel.findById(userId).populate('domain');
         return student;
     });
     return {

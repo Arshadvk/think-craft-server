@@ -4,12 +4,13 @@ import { MongoDBAdvisor, advisorModel, } from "../../database/model/advisor/advi
 
 
 export type AdvisorRepository = {
-    createAdvisor: (advisorData: any) => Promise<any | null>
-    findAdvisorByEmail: (email: string) => Promise<any | null>
-    setAdvisorPassword:(email:string, password:string)=>Promise<any|null>
+    createAdvisor: (advisorData: any) => Promise<any>
+    findAdvisorByEmail: (email: string) => Promise<any >
+    setAdvisorPassword:(email:string, password:string)=>Promise<any>
     getAllAdvisor:()=>Promise<object[]>
     updateIsBlock:(userId : string , action : string) => Promise <boolean | undefined >
-    uodateAdvisorProfile :(userId : string , advisorData : object) => Promise <any | null >
+    updateAdvisorProfile :(userId : string , advisorData : object) => Promise <any | null >
+    findAdvisorById:(userId:string)=> Promise <any>
 }
 
 const AdvisorRepositoryImpl = (AdvisorModel: MongoDBAdvisor): AdvisorRepository => {
@@ -36,11 +37,27 @@ const AdvisorRepositoryImpl = (AdvisorModel: MongoDBAdvisor): AdvisorRepository 
         const advisor = await advisorModel.findByIdAndUpdate(userId , {isBlocked} , {new : true})
         return isBlocked
     }
-    const uodateAdvisorProfile =async (userId:string  , reviwerData : object):Promise<any| null> => {
+    const updateAdvisorProfile =async (userId:string  , reviwerData : object):Promise<any| null> => {
+        console.log(userId);
+        console.log(reviwerData);
+        
         const advisor = await advisorModel.findByIdAndUpdate(userId , reviwerData ,{new : true})
         if (!advisor) throw new AppError('somthing went wrong when block the user ' , 500)
         return advisor                
     }
-    return { createAdvisor, findAdvisorByEmail ,setAdvisorPassword  , getAllAdvisor , updateIsBlock , uodateAdvisorProfile}
+    const findAdvisorById =async (userId:string):Promise<any> => {
+        const advisor = await advisorModel.findById(userId)
+        return advisor
+        
+    }
+    return {
+         createAdvisor,
+         findAdvisorByEmail ,
+         setAdvisorPassword  , 
+         getAllAdvisor , 
+         updateIsBlock , 
+         updateAdvisorProfile ,
+         findAdvisorById
+        }
 }
 export default AdvisorRepositoryImpl

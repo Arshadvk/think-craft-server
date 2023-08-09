@@ -20,7 +20,7 @@ const createReviewerUsecase = (reviewerRepository) => {
             throw new error_1.AppError("Revieweer is already exist", 409);
         const newReviewer = yield reviewerRepository.createReviewer(reviwerData);
         console.log(newReviewer);
-        const sended = (0, email_send_1.sendMail)(reviwerData, "/reviewer");
+        const sended = (0, email_send_1.sendMail)(newReviewer, "/reviewer");
     });
 };
 exports.createReviewerUsecase = createReviewerUsecase;

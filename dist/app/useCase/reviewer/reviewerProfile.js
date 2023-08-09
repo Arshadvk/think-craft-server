@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.reviewerProfileUsecase = void 0;
+exports.getReviewerProfileUsecase = exports.reviewerProfileUsecase = void 0;
 const reviewerProfileUsecase = (reviewerRepository) => {
     return (userId, reviewerData) => __awaiter(void 0, void 0, void 0, function* () {
         const reviewer = yield reviewerRepository.updateReviewerProfile(userId, reviewerData);
@@ -17,3 +17,10 @@ const reviewerProfileUsecase = (reviewerRepository) => {
     });
 };
 exports.reviewerProfileUsecase = reviewerProfileUsecase;
+const getReviewerProfileUsecase = (reviewerRepository) => {
+    return (userId) => __awaiter(void 0, void 0, void 0, function* () {
+        const reviewer = yield reviewerRepository.findReviewerById(userId);
+        return reviewer;
+    });
+};
+exports.getReviewerProfileUsecase = getReviewerProfileUsecase;

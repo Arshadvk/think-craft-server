@@ -9,11 +9,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.advisorProfileUsecase = void 0;
+exports.getAdvisorProfileUsecase = exports.advisorProfileUsecase = void 0;
 const advisorProfileUsecase = (advisorRepository) => {
     return (userId, advisorData) => __awaiter(void 0, void 0, void 0, function* () {
-        const advisor = yield advisorRepository.uodateAdvisorProfile(userId, advisorData);
+        console.log("ghh");
+        const advisor = yield advisorRepository.updateAdvisorProfile(userId, advisorData);
         return advisor;
     });
 };
 exports.advisorProfileUsecase = advisorProfileUsecase;
+const getAdvisorProfileUsecase = (advisorRepository) => {
+    return (userId) => __awaiter(void 0, void 0, void 0, function* () {
+        const advisor = yield advisorRepository.findAdvisorById(userId);
+        return advisor;
+    });
+};
+exports.getAdvisorProfileUsecase = getAdvisorProfileUsecase;

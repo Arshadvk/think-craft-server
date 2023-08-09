@@ -11,7 +11,7 @@ const advisorSchema = new Schema({
     image: { type: String },
     age: { type: String, },
     dob: { type: Date },
-    sex: { type: String, enum: ['male', 'female'] },
+    gender: { type: String, enum: ['male', 'female'] },
     isMailVarified: { type: Boolean, default: false },
     education:{type:String},
     isBlocked : {type: Boolean }

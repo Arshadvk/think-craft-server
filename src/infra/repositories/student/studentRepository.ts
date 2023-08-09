@@ -46,14 +46,7 @@ const studentRepositoryImpl = (StudentModel: MongoDBStudent): StudentRepository 
         return student
     }
     const findStudentById = async (userId: string): Promise<any> => {
-        
-        console.log('isfh');
-        console.log(userId);
-        
-        const student = await studentModel.findById(userId )
-      
-       console.log(student);
-        
+        const student = await studentModel.findById(userId ).populate('domain')
         return student
 
     }

@@ -47,6 +47,19 @@ const reviewerRepositoryImpl = (ReviewerModel) => {
             throw new error_1.AppError('somthing went wrong when block the user ', 500);
         return reviewer;
     });
-    return { createReviewer, findReviewerByEmail, setReviewerPassword, getAllReviewer, updateIsBlock, updateReviewerProfile };
+    const findReviewerById = (userId) => __awaiter(void 0, void 0, void 0, function* () {
+        const reviewer = yield reviewer_1.reviewerModel.findById(userId).populate('domain');
+        console.log(reviewer);
+        return reviewer;
+    });
+    return {
+        createReviewer,
+        findReviewerByEmail,
+        setReviewerPassword,
+        getAllReviewer,
+        updateIsBlock,
+        updateReviewerProfile,
+        findReviewerById
+    };
 };
 exports.default = reviewerRepositoryImpl;

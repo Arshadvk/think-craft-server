@@ -20,7 +20,7 @@ const createAdvisorUsecase = (advisorRepository) => {
                 throw new error_1.AppError("Advisor is already exist", 409);
             const newAdvisor = yield advisorRepository.createAdvisor(advisorData);
             console.log(newAdvisor);
-            const sended = (0, email_send_1.sendMail)(advisorData, "/advisor");
+            const sended = (0, email_send_1.sendMail)(newAdvisor, "/advisor");
             console.log(sended);
         });
     };

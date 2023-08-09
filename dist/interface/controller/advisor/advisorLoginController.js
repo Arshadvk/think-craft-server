@@ -21,7 +21,8 @@ const advisorLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     try {
         const advisor = req.body;
         const advisorToken = yield (0, advisorLogin_1.loginAdvisor)(advisorRepository)(advisor);
-        res.status(200).json({ message: advisorToken });
+        console.log(advisorToken);
+        res.status(200).json({ token: advisorToken });
     }
     catch (error) {
     }
