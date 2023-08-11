@@ -18,11 +18,10 @@ const advisorRepository_1 = __importDefault(require("../../../infra/repositories
 const advisor_1 = require("../../../infra/database/model/advisor/advisor");
 const advisorRepository = (0, advisorRepository_1.default)(advisor_1.advisorModel);
 const advisorProfileController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
     try {
-        const userId = req.params.id;
-        console.log(userId);
+        const userId = (_b = (_a = req.user) === null || _a === void 0 ? void 0 : _a.advisor) === null || _b === void 0 ? void 0 : _b._id;
         const data = req.body.values;
-        console.log(data);
         const advisorData = {
             number: data.number,
             address: data.address,
@@ -32,7 +31,6 @@ const advisorProfileController = (req, res) => __awaiter(void 0, void 0, void 0,
             domain: data.domain
         };
         const advisor = yield (0, advisorProfile_1.advisorProfileUsecase)(advisorRepository)(userId, advisorData);
-        console.log(advisor);
         if (advisor)
             res.status(200).json(advisor);
         else
@@ -44,8 +42,9 @@ const advisorProfileController = (req, res) => __awaiter(void 0, void 0, void 0,
 });
 exports.advisorProfileController = advisorProfileController;
 const getAdvisorProfileController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _c, _d;
     try {
-        const userId = req.params.id;
+        const userId = (_d = (_c = req.user) === null || _c === void 0 ? void 0 : _c.advisor) === null || _d === void 0 ? void 0 : _d._id;
         const advisor = yield (0, advisorProfile_1.getAdvisorProfileUsecase)(advisorRepository)(userId);
         res.status(200).json({ data: advisor });
     }

@@ -4,33 +4,34 @@ import { MongoDBReviewer,reviewerModel } from "../../database/model/reviewer/rev
 export type ReviewerRepository ={
     createReviewer:(reviewerData:any)=>Promise<any | null>
     findReviewerByEmail:(email:string)=>Promise<any | null>
-    setReviewerPassword:(email:string,password:string)=>Promise<any | null>
+    setReviewerPassword:(id:string,password:string)=>Promise<any | null>
     getAllReviewer:()=>Promise<object[]>
     updateIsBlock:(userId:string , action:string)=>Promise <boolean | undefined>
     updateReviewerProfile :( userId: string, reviewerData : any)=> Promise <any|null>
     findReviewerById:(userId : string )=> Promise <any>
 }
 const reviewerRepositoryImpl=(ReviewerModel:MongoDBReviewer):ReviewerRepository=>{
+    
     const createReviewer = async (reviewerData:any):Promise<any | null >=>{
-
-        console.log(reviewerData);
-        console.log("dfsdafg");
-        
         const newReviewer = await reviewerModel.create(reviewerData)
         return newReviewer
     }
+
     const findReviewerByEmail = async(email:string):Promise<any | null>=>{
         const reviewer = await reviewerModel.findOne({email})
         return reviewer 
     }
-    const setReviewerPassword = async (email:string , password:string)=>{
-        const reviewer = await reviewerModel.updateOne({email:email},{$set:{password:password}})
+
+    const setReviewerPassword = async (id:string , password:string)=>{
+        const reviewer = await reviewerModel.findByIdAndUpdate({_id : id},{$set:{password:password}})
         return reviewer
     }
+
     const getAllReviewer = async ():Promise<object[]> =>{
         const allReviewer  = reviewerModel.find()
         return allReviewer
     }
+
     const updateIsBlock =async (userId:string , action:string):Promise<boolean | undefined> => {
         let isBlocked:boolean | undefined
         if (action === "block" ) isBlocked = true
@@ -39,6 +40,7 @@ const reviewerRepositoryImpl=(ReviewerModel:MongoDBReviewer):ReviewerRepository=
         if (!reviewer) throw new AppError("somthing went worng when block the reviwer",500)
         return isBlocked      
     }
+
     const updateReviewerProfile =async (userId:string , reviewerData : object ):Promise <any | null >  => {
          const reviewer = await reviewerModel.findByIdAndUpdate(userId , reviewerData ,{new: true })
          if(!reviewer) throw new AppError('somthing went wrong when block the user ' , 500)

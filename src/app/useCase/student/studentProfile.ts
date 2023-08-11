@@ -3,6 +3,7 @@ import { StudentRepository } from "../../../infra/repositories/student/studentRe
 
  export const studentProfileUsecase = (studentRepository : StudentRepository)=>{
     return async (userId : string , studentData:object):Promise<any | null >=>{
+        
         const student = await studentRepository.updateStudentProfile(userId, studentData)
         return student
     }

@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAllAdvisorUsecase = exports.createAdvisorUsecase = void 0;
+const advisor_1 = require("../../../../domain/entities/advisor/advisor");
 const email_send_1 = require("../../../../domain/service/email_send");
 const error_1 = require("../../../../utils/error");
 const createAdvisorUsecase = (advisorRepository) => {
@@ -20,7 +21,8 @@ const createAdvisorUsecase = (advisorRepository) => {
                 throw new error_1.AppError("Advisor is already exist", 409);
             const newAdvisor = yield advisorRepository.createAdvisor(advisorData);
             console.log(newAdvisor);
-            const sended = (0, email_send_1.sendMail)(newAdvisor, "/advisor");
+            const token = (0, advisor_1.createAdvisorToken)(newAdvisor);
+            const sended = (0, email_send_1.sendMail)(newAdvisor, "/advisor", token);
             console.log(sended);
         });
     };

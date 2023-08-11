@@ -13,8 +13,6 @@ const error_1 = require("../../../utils/error");
 const reviewer_1 = require("../../database/model/reviewer/reviewer");
 const reviewerRepositoryImpl = (ReviewerModel) => {
     const createReviewer = (reviewerData) => __awaiter(void 0, void 0, void 0, function* () {
-        console.log(reviewerData);
-        console.log("dfsdafg");
         const newReviewer = yield reviewer_1.reviewerModel.create(reviewerData);
         return newReviewer;
     });
@@ -22,8 +20,8 @@ const reviewerRepositoryImpl = (ReviewerModel) => {
         const reviewer = yield reviewer_1.reviewerModel.findOne({ email });
         return reviewer;
     });
-    const setReviewerPassword = (email, password) => __awaiter(void 0, void 0, void 0, function* () {
-        const reviewer = yield reviewer_1.reviewerModel.updateOne({ email: email }, { $set: { password: password } });
+    const setReviewerPassword = (id, password) => __awaiter(void 0, void 0, void 0, function* () {
+        const reviewer = yield reviewer_1.reviewerModel.findByIdAndUpdate({ _id: id }, { $set: { password: password } });
         return reviewer;
     });
     const getAllReviewer = () => __awaiter(void 0, void 0, void 0, function* () {

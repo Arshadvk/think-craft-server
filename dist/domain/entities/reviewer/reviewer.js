@@ -34,11 +34,11 @@ const reviewerLogin = (passwordCompare, createToken) => {
 };
 exports.reviewerLogin = reviewerLogin;
 const createReviewerToken = (reviewer) => {
-    const secretKey = process.env.JWT_SECRET_KEY_REVIEWER;
+    const secretKey = process.env.JWT_SECRET_KEY;
     if (!secretKey) {
         throw new Error('jwt secret key  is not defined');
     }
-    const token = jsonwebtoken_1.default.sign({ reviewer }, secretKey, { expiresIn: '1h' });
+    const token = jsonwebtoken_1.default.sign({ reviewer, role: 'reviewer' }, secretKey, { expiresIn: '1day' });
     return token;
 };
 exports.createReviewerToken = createReviewerToken;

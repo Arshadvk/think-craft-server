@@ -11,10 +11,10 @@ const advisorSchema = new Schema({
     image: { type: String },
     age: { type: String, },
     dob: { type: Date },
+    qualification:{ type: String,  },
     gender: { type: String, enum: ['male', 'female'] },
-    isMailVarified: { type: Boolean, default: false },
-    education:{type:String},
-    isBlocked : {type: Boolean }
+    isProfileVarified: { type: Boolean, default: false },
+    isBlocked : {type: Boolean , default:false } ,
 },{
     timestamps : {createdAt:true}
 });

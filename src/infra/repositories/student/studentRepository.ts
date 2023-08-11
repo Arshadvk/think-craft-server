@@ -41,7 +41,11 @@ const studentRepositoryImpl = (StudentModel: MongoDBStudent): StudentRepository 
         return isBlocked
     }
     const updateStudentProfile = async (userId: string, studentData: object): Promise<any | null> => {
+       console.log("gui");
+       
         const student = await studentModel.findByIdAndUpdate(userId, studentData, { new: true })
+        console.log(student);
+        
         if (!student) throw new AppError('somthing went wrong when block the user ', 500)
         return student
     }

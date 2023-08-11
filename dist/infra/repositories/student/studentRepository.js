@@ -40,7 +40,9 @@ const studentRepositoryImpl = (StudentModel) => {
         return isBlocked;
     });
     const updateStudentProfile = (userId, studentData) => __awaiter(void 0, void 0, void 0, function* () {
+        console.log("gui");
         const student = yield student_1.studentModel.findByIdAndUpdate(userId, studentData, { new: true });
+        console.log(student);
         if (!student)
             throw new error_1.AppError('somthing went wrong when block the user ', 500);
         return student;

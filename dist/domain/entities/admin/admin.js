@@ -32,7 +32,7 @@ const adminLogin = (passwordCompare, createToken) => {
 };
 exports.adminLogin = adminLogin;
 const createToken = (admin) => {
-    const secretKey = process.env.JWT_SECRET_KEY_ADMIN;
+    const secretKey = process.env.JWT_SECRET_KEY;
     if (!secretKey)
         throw new error_1.AppError("JWT secret key is not defiend", 401);
     console.log(secretKey);

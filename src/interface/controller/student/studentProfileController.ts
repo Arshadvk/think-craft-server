@@ -7,21 +7,16 @@ import { Date, ObjectId } from "mongoose";
 
 const studentRepository = studentRepositoryImpl(studentModel)
 
-export const studentProfileController = async (req: Request, res: Response) => {
+export const studentProfileController = async (req: CustomRequest, res: Response) => {
     try {
-        const userId: string | undefined = req.params.id as string
+        const userId:string =  req.user?.student?._id  
         console.log(userId);
+        
         const data : object | any  = req.body.values as object | any
+
         const studentData: object = {
-            name: data.name as string,
             number: data.number as string,
             address: data.address as string,
-            fatherName: data.fatherName as string,
-            motherName: data.motherName as string,
-            fatherNumber: data.fatherNumber as string,
-            motherNumber: data.motherNumber as string,
-            guardianName: data.guardianName as string,
-            guardianNumber: data.guardianNumber as string ,
             gender: data.gender as string ,
             qualification: data.qualification,
             dob:data.dob as Date,
@@ -29,12 +24,7 @@ export const studentProfileController = async (req: Request, res: Response) => {
             isProfileVarified: true 
     
         }
-        console.log(req.body);
-        
-        console.log(studentData);
-        
         const student = await studentProfileUsecase(studentRepository)(userId, studentData)
-        console.log(student);
 
         if (student) res.status(200).json({ message: 'update' })
 
@@ -50,16 +40,9 @@ export const studentProfileController = async (req: Request, res: Response) => {
 export const getStudentProfileController =async (req:CustomRequest , res: Response) => {
 
     try {
-        const studentId:string =  req.params.id 
-
-        console.log(studentId);
-        
-        
+        const studentId:string =  req.user?.student?._id  
         const student = await getStudentProfileUsecase(studentRepository)(studentId)
-
         res.status(200).json({data:student})
-
-        
     } catch (error : any) {
         
         

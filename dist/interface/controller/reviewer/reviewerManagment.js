@@ -33,9 +33,11 @@ const createReviewerController = (req, res) => __awaiter(void 0, void 0, void 0,
 });
 exports.createReviewerController = createReviewerController;
 const passwordCreationReviewer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
     try {
+        const reviewerId = (_b = (_a = req.user) === null || _a === void 0 ? void 0 : _a.reviewer) === null || _b === void 0 ? void 0 : _b._id;
         const reviewerData = req.body;
-        const newPassword = yield (0, setPassword_1.setPasswordUsecaseReviewer)(reviewerRepository)(reviewerData);
+        const newPassword = yield (0, setPassword_1.setPasswordUsecaseReviewer)(reviewerRepository)(reviewerData, reviewerId);
         res.status(200).send({ message: "password change successfully" });
     }
     catch (error) {

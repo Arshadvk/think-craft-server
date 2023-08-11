@@ -13,10 +13,10 @@ const reviwerSchema = new Schema({
     dob: { type: Date },
     domain:{type: Schema.Types.ObjectId, ref: 'domain'},
     gender: { type: String, enum: ['male', 'female'] },
-    isMailVarified: { type: Boolean, default: false },
-    education:{type:String},
+    isProfileVarified: { type: Boolean, default: false },
+    qualification:{type:String},
     company:{type:String},
-    isBlocked : {type: Boolean } 
+    isBlocked : {type: Boolean , default:false }  
 },{
     timestamps : {createdAt:true}
 });

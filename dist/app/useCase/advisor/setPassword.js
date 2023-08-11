@@ -12,9 +12,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setPasswordUsecaseAdvisor = void 0;
 const hashing_1 = require("../../../domain/service/hashing");
 const setPasswordUsecaseAdvisor = (advisorRepository) => {
-    return (advisorData) => __awaiter(void 0, void 0, void 0, function* () {
+    return (advisorData, userId) => __awaiter(void 0, void 0, void 0, function* () {
         const password = yield (0, hashing_1.passwordHashing)(advisorData.password);
-        const advisor = yield advisorRepository.setAdvisorPassword(advisorData.email, password);
+        const advisor = yield advisorRepository.setAdvisorPassword(userId, password);
         return advisor;
     });
 };

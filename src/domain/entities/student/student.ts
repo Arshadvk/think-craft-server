@@ -49,11 +49,11 @@ export const studentLogin =(passwordCompare:Function , createToken:Function)=>{
 
 export const createToken =(student:string):string=>{
 
-    const secretKey:string | undefined = process.env.JWT_SECRET_KEY_STUDENT
+    const secretKey:string | undefined = process.env.JWT_SECRET_KEY
     if (!secretKey) {
         throw new Error('JWT secret key is not defined')
     }
-    const token = jwt.sign({student,role:'student'},secretKey as string ,{expiresIn:'1h'})
+    const token = jwt.sign({student,role:'student'},secretKey as string ,{expiresIn:'1day'})
     return token
 }
 export const studentLoginUserValidate = studentLogin(isPasswordCorrect,createToken)

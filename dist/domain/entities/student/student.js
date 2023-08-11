@@ -43,11 +43,11 @@ const studentLogin = (passwordCompare, createToken) => {
 };
 exports.studentLogin = studentLogin;
 const createToken = (student) => {
-    const secretKey = process.env.JWT_SECRET_KEY_STUDENT;
+    const secretKey = process.env.JWT_SECRET_KEY;
     if (!secretKey) {
         throw new Error('JWT secret key is not defined');
     }
-    const token = jsonwebtoken_1.default.sign({ student, role: 'student' }, secretKey, { expiresIn: '1h' });
+    const token = jsonwebtoken_1.default.sign({ student, role: 'student' }, secretKey, { expiresIn: '1day' });
     return token;
 };
 exports.createToken = createToken;

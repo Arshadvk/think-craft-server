@@ -11,21 +11,22 @@ import { adminAuthToken } from "../middlewares/authMiddleware"
 const adminRoute = express.Router()
 
 adminRoute.post('/login', adminLogin)
-adminRoute.post('/add-student' ,createStudentController )
-adminRoute.post('/add-reviewer' ,createReviewerController)
-adminRoute.post('/add-advisor',createAdvisorController)
+
+adminRoute.post('/add-student' , adminAuthToken ,createStudentController )
+adminRoute.post('/add-reviewer' , adminAuthToken  ,createReviewerController)
+adminRoute.post('/add-advisor',adminAuthToken ,createAdvisorController)
 
 
-adminRoute.get('/all-student',adminAuthToken, getAllStudentSearchFilterSortController)
-adminRoute.get('/all-reviewer', getAllReviewerSearchFilterSortController)
-adminRoute.get('/all-advisor', getAllAdvisorSearchFilterSortController)
+adminRoute.get('/all-student', adminAuthToken , getAllStudentSearchFilterSortController)
+adminRoute.get('/all-reviewer',adminAuthToken , getAllReviewerSearchFilterSortController)
+adminRoute.get('/all-advisor',adminAuthToken , getAllAdvisorSearchFilterSortController)
 
-adminRoute.patch('/block-unblock-student', blockStudentController)
-adminRoute.patch('/block-unblock-reviewer',  blockReviewerController)
-adminRoute.patch('/block-unblock-advisor',blockAdvisorController)
+adminRoute.patch('/block-unblock-student',adminAuthToken , blockStudentController)
+adminRoute.patch('/block-unblock-reviewer',adminAuthToken ,  blockReviewerController)
+adminRoute.patch('/block-unblock-advisor',adminAuthToken, blockAdvisorController)
 
-adminRoute.post('/add-domain' , addDomainController)
-adminRoute.get('/all-domain' , getAllDomainController )
+adminRoute.post('/add-domain' ,adminAuthToken , addDomainController)
+adminRoute.get('/all-domain' , adminAuthToken, getAllDomainController )
 
 adminRoute.put('/change-password',passwordChangeController )
 adminRoute.post('/add-admin' ,  createAdminController)

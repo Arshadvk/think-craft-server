@@ -2,8 +2,6 @@ import { AdvisorRepository } from "../../../infra/repositories/advisor/advisorRe
 
 export const advisorProfileUsecase = (advisorRepository : AdvisorRepository)=>{
     return async (userId : string , advisorData : object): Promise <any | null > =>{
-        console.log("ghh");
-        
         const advisor = await advisorRepository.updateAdvisorProfile(userId , advisorData)
         return advisor 
     }

@@ -5,9 +5,8 @@ import { setPasswordUsecase } from "../../../app/usecase/student/setPassword";
 import { createStudentUsecase } from "../../../app/usecase/admin/student/createStudent";
 import { getAllStudentUseCase } from "../../../app/usecase/admin/student/getAllStudent";
 import { AppError } from "../../../utils/error";
-import { blockStudentUseCase } from "../../../app/usecase/admin/student/block-unblock";
-import { studentProfileUsecase } from "../../../app/usecase/student/studentProfile";
-import { Date } from "mongoose";
+import { blockStudentUseCase } from "../../../app/usecase/admin/student/block-unblock"
+import { CustomRequest } from "../../middlewares/authMiddleware";
 
 
 
@@ -15,10 +14,9 @@ const studentRepository = studentRepositoryImpl(studentModel)
 
 export const createStudentController = async (req: Request, res: Response) => {
     try {
+        
         const studentData = req.body
-        console.log(studentData);
         const newStudent = await createStudentUsecase(studentRepository)(studentData)
-        console.log(newStudent)
         res.status(200).send({ message: "Student Created Successfully" })
 
     } catch (error: any) {
@@ -26,12 +24,10 @@ export const createStudentController = async (req: Request, res: Response) => {
     }
 }
 
-export const passwordCreation = async (req: Request, res: Response) => {
+export const passwordCreation = async (req: CustomRequest, res: Response) => {
     try {
-        const userId = req.params.id
+        const userId:string =  req.user?.student?._id 
         const studentData = req.body
-        console.log(studentData);
-        
         const newPassword = await setPasswordUsecase(studentRepository)(studentData ,userId)
         res.status(200).send({ message: "password change successfully" })
 

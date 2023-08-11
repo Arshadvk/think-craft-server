@@ -1,7 +1,7 @@
 import { sendMail } from "../../../../domain/service/email_send";
 import { ReviewerRepository } from "../../../../infra/repositories/reviewer/reviewerRepository";
 import { AppError } from "../../../../utils/error";
-import { Reviewer } from "../../../../domain/entities/reviewer/reviewer";
+import { Reviewer, createReviewerToken } from "../../../../domain/entities/reviewer/reviewer";
 
 
 
@@ -13,8 +13,8 @@ export const createReviewerUsecase = (reviewerRepository : ReviewerRepository)=>
         if (isReviewer) throw new AppError("Revieweer is already exist" ,409)
         const newReviewer  = await reviewerRepository.createReviewer(reviwerData)
         console.log(newReviewer);
-        
-        const sended = sendMail(newReviewer , "/reviewer")
+        const token = createReviewerToken(newReviewer)
+        const sended = sendMail(newReviewer , "/reviewer" ,token )
         
         
     }

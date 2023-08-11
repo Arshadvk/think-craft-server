@@ -1,3 +1,4 @@
+import { createAdvisorToken } from "../../../../domain/entities/advisor/advisor";
 import { sendMail } from "../../../../domain/service/email_send";
 import { AdvisorRepository } from "../../../../infra/repositories/advisor/advisorRepository";
 import { AppError } from "../../../../utils/error";
@@ -14,8 +15,8 @@ export const createAdvisorUsecase = (advisorRepository: AdvisorRepository) => {
         if (isAdvisor) throw new AppError("Advisor is already exist", 409);
         const newAdvisor = await advisorRepository.createAdvisor(advisorData);
         console.log(newAdvisor);
-        
-        const sended = sendMail(newAdvisor,"/advisor");
+        const token = createAdvisorToken(newAdvisor)
+        const sended = sendMail(newAdvisor,"/advisor" , token);
         console.log(sended);
         
     }

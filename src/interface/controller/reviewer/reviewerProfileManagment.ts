@@ -2,17 +2,16 @@ import { Request, Response } from "express";
 import { getReviewerProfileUsecase, reviewerProfileUsecase } from "../../../app/usecase/reviewer/reviewerProfile";
 import reviewerRepositoryImpl from "../../../infra/repositories/reviewer/reviewerRepository";
 import { reviewerModel } from "../../../infra/database/model/reviewer/reviewer";
+import { CustomRequest } from "../../middlewares/authMiddleware";
 
 const reviewerRepository = reviewerRepositoryImpl(reviewerModel)
 
-export const reviewerProfileController =async (req:Request , res : Response) => {
+export const reviewerProfileController =async (req:CustomRequest , res : Response) => {
     try {
-        const userId: string | undefined = req.params.id as string
-        console.log(userId);
-        console.log(req.body);
-        
-        
+        const userId: string | undefined =  req.user?.reviewer?._id   as string
         const data : object | any  = req.body.values as object | any
+    
+        
         const reviewerData : Object ={
             number : data.number as string , 
             address :  data.address as string ,
@@ -22,8 +21,6 @@ export const reviewerProfileController =async (req:Request , res : Response) => 
             education : data.qualification ,
             domain : data.domain
         }
-        console.log(reviewerData);
-        
         const reviewer = await reviewerProfileUsecase(reviewerRepository)(userId , reviewerData)
         if(reviewer)  res.status(200).json(reviewer)
 
@@ -33,11 +30,9 @@ export const reviewerProfileController =async (req:Request , res : Response) => 
     }
 }
 
-export const getReviewerProfileController =async (req:Request , res : Response) => {
+export const getReviewerProfileController =async (req:CustomRequest , res : Response) => {
     try {
-        console.log("jdufhdsg");
-        
-        const reviewerId :string = req.params.id
+        const reviewerId :string = req.user?.reviewer?._id 
         console.log(reviewerId);
         
         const reviewer = await getReviewerProfileUsecase(reviewerRepository)(reviewerId)

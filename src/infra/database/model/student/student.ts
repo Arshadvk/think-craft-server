@@ -11,7 +11,7 @@ const studentSchema = new Schema({
     image: { type: String,  },
     address: { type: String,  },
     dob: { type: Date },
-    isBlocked : {type: Boolean } ,
+    isBlocked : {type: Boolean , default:false } ,
     qualification:{ type: String,  },
     domain:{type: Schema.Types.ObjectId, ref: 'domain'},
     gender: { type: String, enum: ['male', 'female'] }, 

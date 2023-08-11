@@ -3,18 +3,17 @@ import { advisorProfileUsecase, getAdvisorProfileUsecase } from "../../../app/us
 import AdvisorRepositoryImpl from "../../../infra/repositories/advisor/advisorRepository"
 import { advisorModel } from "../../../infra/database/model/advisor/advisor"
 import { ObjectId } from "mongoose"
+import { CustomRequest } from "../../middlewares/authMiddleware"
 
 const advisorRepository = AdvisorRepositoryImpl(advisorModel)
 
 
-export const advisorProfileController = async (req: Request, res: Response) => {
+export const advisorProfileController = async (req: CustomRequest, res: Response) => {
     try {
-        const userId: string | undefined = req.params.id as string
-        console.log(userId);
-        
+
+        const userId: string | undefined = req.user?.advisor?._id   as string
         const data: object | any = req.body.values as object | any
-        console.log(data);
-        
+
         const advisorData: Object = {
             number: data.number as string,
             address: data.address as string,
@@ -25,7 +24,6 @@ export const advisorProfileController = async (req: Request, res: Response) => {
         }
 
         const advisor = await advisorProfileUsecase(advisorRepository)(userId, advisorData)
-        console.log(advisor);
         if (advisor) res.status(200).json(advisor)
         else res.status(200).json({ message: 'User failed' })
     } catch (error: any) {
@@ -35,9 +33,9 @@ export const advisorProfileController = async (req: Request, res: Response) => {
 
 }
 
-export const getAdvisorProfileController =async (req:Request , res : Response) => {
+export const getAdvisorProfileController =async (req:CustomRequest , res : Response) => {
     try {
-        const userId: string | undefined = req.params.id as string
+        const userId: string | undefined = req.user?.advisor?._id as string
         const advisor = await getAdvisorProfileUsecase(advisorRepository)(userId)
         res.status(200).json({data:advisor})
     } catch (error:any) {

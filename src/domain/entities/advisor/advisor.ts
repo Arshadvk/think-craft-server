@@ -31,12 +31,12 @@ export const advisorLogin = (passwordCompare:Function , createToken: Function)=>
     }
 }
 export const createAdvisorToken = (advisor : advisorLoginType):string=>{
-    const secretKey : string | undefined = process.env.JWT_SECRET_KEY_REVIEWER
+    const secretKey : string | undefined = process.env.JWT_SECRET_KEY
     if ( !secretKey) {
         throw new Error('jwt secret key  is not defined')
         
     }
-    const token = jwt.sign({advisor},secretKey as string , {expiresIn:'1h'})
+    const token = jwt.sign({advisor , role:'advisor'},secretKey as string , {expiresIn:'1day'})
         return token
 }
 

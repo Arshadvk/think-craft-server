@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createStudentUsecase = void 0;
+const student_1 = require("../../../../domain/entities/student/student");
 const email_send_1 = require("../../../../domain/service/email_send");
 const error_1 = require("../../../../utils/error");
 const createStudentUsecase = (studentRepository) => {
@@ -18,8 +19,8 @@ const createStudentUsecase = (studentRepository) => {
         if (isStudent)
             throw new error_1.AppError("Student is already exist", 409);
         const newStudent = yield studentRepository.createStudent(studentData);
-        console.log(newStudent._id + "hgfj");
-        const sended = (0, email_send_1.sendMail)(newStudent, "");
+        const token = (0, student_1.createToken)(newStudent);
+        const sended = (0, email_send_1.sendMail)(newStudent, "", token);
         return newStudent;
     });
 };

@@ -5,6 +5,7 @@ import AdvisorRepositoryImpl from "../../../infra/repositories/advisor/advisorRe
 import { Request,Response } from "express"
 import { AppError } from "../../../utils/error"
 import { blockAdvisorUsecase } from "../../../app/usecase/admin/advisor/block-unblock"
+import { CustomRequest } from "../../middlewares/authMiddleware"
 
 
 const advisorRepository = AdvisorRepositoryImpl(advisorModel)
@@ -22,10 +23,11 @@ export const createAdvisorController = async(req:Request, res:Response)=>{
     }
 }
 
-export const passwordCreationAdvisor = async (req:Request , res: Response)=>{
+export const passwordCreationAdvisor = async (req:CustomRequest , res: Response)=>{
     try {
+        const userId : string = req.user?.advisor?._id
         const advisorData = req.body
-        const newPassword = await setPasswordUsecaseAdvisor(advisorRepository)(advisorData)
+        const newPassword = await setPasswordUsecaseAdvisor(advisorRepository)(advisorData , userId)
         res.status(200).send({message:"password change successfully"})
      } catch (error:any) {
         res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' })

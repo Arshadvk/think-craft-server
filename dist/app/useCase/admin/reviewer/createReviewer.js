@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAllReviewerUsecase = exports.createReviewerUsecase = void 0;
 const email_send_1 = require("../../../../domain/service/email_send");
 const error_1 = require("../../../../utils/error");
+const reviewer_1 = require("../../../../domain/entities/reviewer/reviewer");
 const createReviewerUsecase = (reviewerRepository) => {
     return (reviwerData) => __awaiter(void 0, void 0, void 0, function* () {
         console.log("fgasdvg");
@@ -20,7 +21,8 @@ const createReviewerUsecase = (reviewerRepository) => {
             throw new error_1.AppError("Revieweer is already exist", 409);
         const newReviewer = yield reviewerRepository.createReviewer(reviwerData);
         console.log(newReviewer);
-        const sended = (0, email_send_1.sendMail)(newReviewer, "/reviewer");
+        const token = (0, reviewer_1.createReviewerToken)(newReviewer);
+        const sended = (0, email_send_1.sendMail)(newReviewer, "/reviewer", token);
     });
 };
 exports.createReviewerUsecase = createReviewerUsecase;

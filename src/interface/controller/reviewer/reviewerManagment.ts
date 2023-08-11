@@ -5,6 +5,7 @@ import { createReviewerUsecase, getAllReviewerUsecase } from "../../../app/useca
 import { setPasswordUsecaseReviewer } from "../../../app/usecase/reviewer/setPassword"
 import { AppError } from "../../../utils/error"
 import { blockReviewerUsecase } from "../../../app/usecase/admin/reviewer/block-unblock"
+import { CustomRequest } from "../../middlewares/authMiddleware"
 
 
 const reviewerRepository = reviewerRepositoryImpl(reviewerModel)
@@ -20,10 +21,11 @@ export const createReviewerController = async (req:Request , res : Response)=>{
         
     }
 }
-export const passwordCreationReviewer =async (req:Request , res : Response) => {
+export const passwordCreationReviewer =async (req:CustomRequest , res : Response) => {
     try {
+        const reviewerId:string = req.user?.reviewer?._id as string
         const reviewerData = req.body
-        const newPassword = await setPasswordUsecaseReviewer(reviewerRepository)(reviewerData)
+        const newPassword = await setPasswordUsecaseReviewer(reviewerRepository)(reviewerData ,reviewerId)
         res.status(200).send({message:"password change successfully"})
         
     } catch (error) {

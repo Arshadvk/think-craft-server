@@ -5,25 +5,29 @@ export interface CustomRequest extends Request {
     user?: any
 }
 
-const StudentAuthenticateToken = (req: CustomRequest, res: Response, next: NextFunction) => {
-    try {
+export const StudentAuthToken = (req: CustomRequest, res: Response, next: NextFunction) => {
+    try {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
         const authHeader: any | undefined = req.headers.authorization;
-        console.log(authHeader);
-        
-        const secretKey: string | undefined = process.env.JWT_SECRET_KEY_STUDENT
+        const secretKey: string | undefined = process.env.JWT_SECRET_KEY
         if (!authHeader || !secretKey) {
             return res.status(401).json({ success: false, message: 'not authenticated !', Auth: false })
         }
-        let token = JSON.parse(authHeader)
-        console.log("uggygy");
-        token = token.Token as string
-        console.log(token);
-        
-        jwt.verify(token, secretKey as string, (err :any, user :any) => {
+
+        jwt.verify(authHeader, secretKey as string, (err: any, user: any) => {
             if (err) {
                 return res.status(401).json({ success: false, message: 'not hello !', Auth: false })
+            } else if (user) {
+
+                if(user.role === 'student' && user.student.isBlocked !== true){
+                    req.user = user;
+                }
+                else {
+                    return res.status(401).json({ success: false, message: 'this token not for student !', Auth: false }) 
+                }
+                console.log(user);
+
             }
-            req.user = user;
+            
             next();
         })
     } catch (error) {
@@ -32,40 +36,104 @@ const StudentAuthenticateToken = (req: CustomRequest, res: Response, next: NextF
 
 }
 
-export const adminAuthToken = (req : CustomRequest , res: Response , next : NextFunction)=>{
+export const adminAuthToken = (req: CustomRequest, res: Response, next: NextFunction) => {
     try {
         const authHeader: string | undefined = req.headers.authorization;
-        console.log(authHeader);
-        
-        const secretKey: string | undefined = process.env.JWT_SECRET_KEY_ADMIN
-        console.log(secretKey);
-        
+        const secretKey: string | undefined = process.env.JWT_SECRET_KEY
+
         if (!authHeader || !secretKey) {
-            
-            
             return res.status(401).json({ success: false, message: 'not authenticated !', Auth: false })
         }
-        // const token:string = JSON.parse(authHeader).Token
-        // console.log(typeof token, token);
-        
-        jwt.verify(authHeader, secretKey , (err :any, user : any) => {
+        jwt.verify(authHeader, secretKey, (err: any, user: any) => {
             if (err) {
                 console.log(err);
-                
-                return res.status(401).json({ success: false, message: 'not authenticated !', Auth: false })
-            }else{
 
-                console.log(user,99);
+                return res.status(401).json({ success: false, message: 'not authenticated !', Auth: false })
+            } else if (user) {
+                
+                if(user.role === 'admin'){
+                    req.user = user;
+                }
+                else {
+                    return res.status(401).json({ success: false, message: 'this token not for admin !', Auth: false }) 
+                }
+                console.log(user);
+
+            }
+            next();
+        })
+    } catch (error) {
+        return res.status(401).json({ success: false, message: 'not authenticated !', Auth: false })
+
+    }
+}
+
+export const advisorAuthToken =async ( req:CustomRequest , res : Response , next : NextFunction) => {
+    try {
+        const authHeader : string | undefined = req.headers.authorization;
+        const secretKey : string | undefined = process.env.JWT_SECRET_KEY
+
+        if (!authHeader || !secretKey) {
+            return res.status(401).json({ success: false, message: 'not authenticated !', Auth: false })
+        }
+        jwt.verify(authHeader, secretKey, (err: any, user: any) => {
+            if (err) {
+                console.log(err);
+
+                return res.status(401).json({ success: false, message: 'not authenticated !', Auth: false })
+            } else if (user) {
+                
+                if(user.role === 'advisor' && user.advisor.isBlocked !== true){
+                    req.user = user;
+                }
+                else {
+                    return res.status(401).json({ success: false, message: 'this token not for advisor !', Auth: false }) 
+                }
+                console.log(user);
+
             }
             
-            req.user = user;
             next();
         })
     } catch (error) {
         return res.status(401).json({ success: false, message: 'not authenticated !', Auth: false })
         
     }
+    
 }
 
+export const reviewerAuthToken =async ( req:CustomRequest , res : Response , next : NextFunction) => {
+    try {
+        const authHeader : string | undefined = req.headers.authorization;
+        const secretKey : string | undefined = process.env.JWT_SECRET_KEY
 
-export default  StudentAuthenticateToken
+        if (!authHeader || !secretKey) {
+            return res.status(401).json({ success: false, message: 'not authenticated !', Auth: false })
+        }
+        jwt.verify(authHeader, secretKey, (err: any, user: any) => {
+            if (err) {
+                console.log(err);
+
+                return res.status(401).json({ success: false, message: 'not authenticated !', Auth: false })
+            } else if (user) {
+                
+                if(user.role === 'reviewer' && user.reviewer.isBlocked !== true){
+                
+                    req.user = user;
+                }
+                else {
+                    return res.status(401).json({ success: false, message: 'this token not for reviewer !', Auth: false }) 
+                }
+                console.log(user);
+
+            }
+            
+            next();
+        })
+    } catch (error) {
+        return res.status(401).json({ success: false, message: 'not authenticated !', Auth: false })
+        
+    }
+    
+}
+ 

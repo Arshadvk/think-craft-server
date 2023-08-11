@@ -6,7 +6,7 @@ import { MongoDBAdvisor, advisorModel, } from "../../database/model/advisor/advi
 export type AdvisorRepository = {
     createAdvisor: (advisorData: any) => Promise<any>
     findAdvisorByEmail: (email: string) => Promise<any >
-    setAdvisorPassword:(email:string, password:string)=>Promise<any>
+    setAdvisorPassword:(id:string, password:string)=>Promise<any>
     getAllAdvisor:()=>Promise<object[]>
     updateIsBlock:(userId : string , action : string) => Promise <boolean | undefined >
     updateAdvisorProfile :(userId : string , advisorData : object) => Promise <any | null >
@@ -22,8 +22,8 @@ const AdvisorRepositoryImpl = (AdvisorModel: MongoDBAdvisor): AdvisorRepository 
         const advisor = await advisorModel.findOne({ email })
         return advisor
     }
-    const setAdvisorPassword = async (email:string,password:string)=>{
-        const advisor = await advisorModel.updateOne({email:email},{$set:{password:password}})
+    const setAdvisorPassword = async (id:string,password:string)=>{
+        const advisor = await advisorModel.findOneAndUpdate({_id:id},{$set:{password:password}})
         return advisor
     }
     const getAllAdvisor = async():Promise<object[]>=>{

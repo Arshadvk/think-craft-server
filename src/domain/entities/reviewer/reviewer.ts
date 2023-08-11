@@ -35,12 +35,12 @@ export const reviewerLogin = (passwordCompare:Function , createToken:Function)=>
     }
 }
 export const createReviewerToken = (reviewer : reviewerLoginType):string=>{
-    const secretKey : string | undefined = process.env.JWT_SECRET_KEY_REVIEWER
+    const secretKey : string | undefined = process.env.JWT_SECRET_KEY
     if ( !secretKey) {
         throw new Error('jwt secret key  is not defined')
         
     }
-    const token = jwt.sign({reviewer},secretKey as string , {expiresIn:'1h'})
+    const token = jwt.sign({reviewer , role:'reviewer'},secretKey as string , {expiresIn:'1day'})
         return token
 }
 export const reviewerLoginValidate = reviewerLogin(isPasswordCorrect,createReviewerToken)

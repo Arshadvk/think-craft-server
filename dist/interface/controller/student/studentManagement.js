@@ -24,9 +24,7 @@ const studentRepository = (0, studentRepository_1.default)(student_1.studentMode
 const createStudentController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const studentData = req.body;
-        console.log(studentData);
         const newStudent = yield (0, createStudent_1.createStudentUsecase)(studentRepository)(studentData);
-        console.log(newStudent);
         res.status(200).send({ message: "Student Created Successfully" });
     }
     catch (error) {
@@ -35,10 +33,10 @@ const createStudentController = (req, res) => __awaiter(void 0, void 0, void 0, 
 });
 exports.createStudentController = createStudentController;
 const passwordCreation = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
     try {
-        const userId = req.params.id;
+        const userId = (_b = (_a = req.user) === null || _a === void 0 ? void 0 : _a.student) === null || _b === void 0 ? void 0 : _b._id;
         const studentData = req.body;
-        console.log(studentData);
         const newPassword = yield (0, setPassword_1.setPasswordUsecase)(studentRepository)(studentData, userId);
         res.status(200).send({ message: "password change successfully" });
     }

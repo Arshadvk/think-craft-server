@@ -33,9 +33,11 @@ const createAdvisorController = (req, res) => __awaiter(void 0, void 0, void 0, 
 });
 exports.createAdvisorController = createAdvisorController;
 const passwordCreationAdvisor = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
     try {
+        const userId = (_b = (_a = req.user) === null || _a === void 0 ? void 0 : _a.advisor) === null || _b === void 0 ? void 0 : _b._id;
         const advisorData = req.body;
-        const newPassword = yield (0, setPassword_1.setPasswordUsecaseAdvisor)(advisorRepository)(advisorData);
+        const newPassword = yield (0, setPassword_1.setPasswordUsecaseAdvisor)(advisorRepository)(advisorData, userId);
         res.status(200).send({ message: "password change successfully" });
     }
     catch (error) {

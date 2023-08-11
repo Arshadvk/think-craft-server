@@ -32,11 +32,11 @@ const advisorLogin = (passwordCompare, createToken) => {
 };
 exports.advisorLogin = advisorLogin;
 const createAdvisorToken = (advisor) => {
-    const secretKey = process.env.JWT_SECRET_KEY_REVIEWER;
+    const secretKey = process.env.JWT_SECRET_KEY;
     if (!secretKey) {
         throw new Error('jwt secret key  is not defined');
     }
-    const token = jsonwebtoken_1.default.sign({ advisor }, secretKey, { expiresIn: '1h' });
+    const token = jsonwebtoken_1.default.sign({ advisor, role: 'advisor' }, secretKey, { expiresIn: '1day' });
     return token;
 };
 exports.createAdvisorToken = createAdvisorToken;
