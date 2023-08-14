@@ -28,15 +28,16 @@ const mongoose_1 = __importStar(require("mongoose"));
 const advisorSchema = new mongoose_1.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true },
+    address: { type: String },
     number: { type: String, },
     password: { type: String, },
     image: { type: String },
     age: { type: String, },
     dob: { type: Date },
+    qualification: { type: String, },
     gender: { type: String, enum: ['male', 'female'] },
-    isMailVarified: { type: Boolean, default: false },
-    education: { type: String },
-    isBlocked: { type: Boolean }
+    isProfileVerified: { type: Boolean, default: false },
+    isBlocked: { type: Boolean, default: false },
 }, {
     timestamps: { createdAt: true }
 });

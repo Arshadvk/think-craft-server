@@ -15,7 +15,7 @@ export const studentProfileMiddleware = (req : CustomRequest , res : Response , 
             }else if (user){
                 console.log(user);
                 
-                if(user?.role === 'student'){
+                if(user?.role === 'student' && user.student.isProfileVerified !== true){
                     req.user = user;
 
                 }else{

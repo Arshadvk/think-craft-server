@@ -21,14 +21,15 @@ const advisorProfileController = (req, res) => __awaiter(void 0, void 0, void 0,
     var _a, _b;
     try {
         const userId = (_b = (_a = req.user) === null || _a === void 0 ? void 0 : _a.advisor) === null || _b === void 0 ? void 0 : _b._id;
-        const data = req.body.values;
+        const data = req.body.userData;
         const advisorData = {
             number: data.number,
             address: data.address,
             dob: data.dob,
             gender: data.gender,
-            qualification: data.education,
-            domain: data.domain
+            qualification: data.qualification,
+            domain: data.domain,
+            isProfileVerified: true
         };
         const advisor = yield (0, advisorProfile_1.advisorProfileUsecase)(advisorRepository)(userId, advisorData);
         if (advisor)

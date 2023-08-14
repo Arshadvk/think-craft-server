@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAdvisorProfileUsecase = exports.advisorProfileUsecase = void 0;
 const advisorProfileUsecase = (advisorRepository) => {
     return (userId, advisorData) => __awaiter(void 0, void 0, void 0, function* () {
-        console.log("ghh");
         const advisor = yield advisorRepository.updateAdvisorProfile(userId, advisorData);
         return advisor;
     });

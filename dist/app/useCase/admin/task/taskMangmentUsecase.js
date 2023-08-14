@@ -11,8 +11,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.addTaskUsecase = void 0;
 const addTaskUsecase = (taskRepository) => {
-    return (task) => __awaiter(void 0, void 0, void 0, function* () {
-        const newTask = yield taskRepository.createNewTask(task);
+    return (domainId, Tasks) => __awaiter(void 0, void 0, void 0, function* () {
+        const newTask = yield taskRepository.createNewTask(domainId, Tasks);
         return newTask;
     });
 };

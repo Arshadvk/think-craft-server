@@ -6,6 +6,7 @@ export type MongoDBAdvisor = Model<Document<any, any, any>>;
 const advisorSchema = new Schema({
     name: { type: String, required: true },
     email: { type: String, required: true },
+    address:{type : String} ,
     number: { type: String,  },
     password: { type: String,  },
     image: { type: String },
@@ -13,7 +14,7 @@ const advisorSchema = new Schema({
     dob: { type: Date },
     qualification:{ type: String,  },
     gender: { type: String, enum: ['male', 'female'] },
-    isProfileVarified: { type: Boolean, default: false },
+    isProfileVerified: { type: Boolean, default: false },
     isBlocked : {type: Boolean , default:false } ,
 },{
     timestamps : {createdAt:true}

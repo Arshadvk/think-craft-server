@@ -11,12 +11,45 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const slot_1 = require("../../../database/model/reviewer/slot/slot");
 const slotRepositoryImpl = (SlotModel) => {
-    const createSlot = (slotData) => __awaiter(void 0, void 0, void 0, function* () {
-        const newSlot = yield slot_1.slotModel.create(slotData);
-        return newSlot;
+    const createNewSlot = (reviewerId, slotes) => __awaiter(void 0, void 0, void 0, function* () {
+        const isSlotExist = yield SlotModel.findOne({ reviewer: reviewerId });
+        if (!isSlotExist) {
+            const newSlot = new SlotModel({
+                reviewer: reviewerId,
+                slotes: slotes
+            });
+            const createdSlot = yield newSlot.save();
+            return createdSlot;
+        }
+        slotes.forEach(slot => {
+            isSlotExist.slotes.push(slot);
+        });
+        yield isSlotExist.save();
+        return isSlotExist;
+    });
+    const findSlot = (slotDate, startingTime, endingTime, reviewerId) => __awaiter(void 0, void 0, void 0, function* () {
+        const slot = yield slot_1.slotModel.findOne({
+            reviewer: reviewerId,
+            'slotes.date': new Date(slotDate),
+            $or: [
+                {
+                    $and: [
+                        { 'slotes.slot_time': { $gte: startingTime } },
+                        { 'slotes.slot_time': { $lt: endingTime } }
+                    ]
+                }, {
+                    $and: [
+                        { 'slotes.slot_time': { $gte: new Date(`2000-01-01 ${startingTime}`).toLocaleTimeString(`en-US`, { hour: 'numeric', minute: "2-digit", hour12: false }) } },
+                        { 'slotes.slot_time': { $lt: new Date(`2000-01-01 ${endingTime}`).toLocaleTimeString(`en-US`, { hour: 'numeric', minute: "2-digit", hour12: false }) } },
+                    ]
+                }
+            ]
+        });
+        return slot;
     });
     return {
-        createSlot
+        createNewSlot,
+        findSlot
     };
 };
 exports.default = slotRepositoryImpl;

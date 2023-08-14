@@ -79,12 +79,13 @@ const advisorAuthToken = (req, res, next) => __awaiter(void 0, void 0, void 0, f
             return res.status(401).json({ success: false, message: 'not authenticated !', Auth: false });
         }
         jsonwebtoken_1.default.verify(authHeader, secretKey, (err, user) => {
+            var _a;
             if (err) {
                 console.log(err);
                 return res.status(401).json({ success: false, message: 'not authenticated !', Auth: false });
             }
             else if (user) {
-                if (user.role === 'advisor' && user.advisor.isBlocked !== true) {
+                if (user.role === 'advisor' && ((_a = user.advisor) === null || _a === void 0 ? void 0 : _a.isBlocked) !== true) {
                     req.user = user;
                 }
                 else {
@@ -108,12 +109,13 @@ const reviewerAuthToken = (req, res, next) => __awaiter(void 0, void 0, void 0, 
             return res.status(401).json({ success: false, message: 'not authenticated !', Auth: false });
         }
         jsonwebtoken_1.default.verify(authHeader, secretKey, (err, user) => {
+            var _a;
             if (err) {
                 console.log(err);
                 return res.status(401).json({ success: false, message: 'not authenticated !', Auth: false });
             }
             else if (user) {
-                if (user.role === 'reviewer' && user.reviewer.isBlocked !== true) {
+                if (user.role === 'reviewer' && ((_a = user.reviewer) === null || _a === void 0 ? void 0 : _a.isBlocked) !== true) {
                     req.user = user;
                 }
                 else {

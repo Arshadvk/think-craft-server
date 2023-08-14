@@ -12,8 +12,9 @@ export const studentProfileController = async (req: CustomRequest, res: Response
         const userId:string =  req.user?.student?._id  
         console.log(userId);
         
-        const data : object | any  = req.body.values as object | any
-
+        const data : object | any  = req.body.userData as object | any
+        console.log(data);
+        
         const studentData: object = {
             number: data.number as string,
             address: data.address as string,
@@ -21,12 +22,16 @@ export const studentProfileController = async (req: CustomRequest, res: Response
             qualification: data.qualification,
             dob:data.dob as Date,
             domain:data.domain as ObjectId ,
-            isProfileVarified: true 
+            isProfileVerified: true 
     
         }
         const student = await studentProfileUsecase(studentRepository)(userId, studentData)
 
-        if (student) res.status(200).json({ message: 'update' })
+        if (student) {
+
+            
+            res.status(200).json({ message: 'update' })
+        }
 
         else res.status(200).json({ message: 'User failed' })
 

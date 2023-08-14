@@ -11,9 +11,10 @@ import { getAllDomainController } from "../controller/admin/domain/domainControl
 const reviewerRoute = express.Router()
 
 reviewerRoute.post('/login' ,reviewerLoginController)
-reviewerRoute.put('/setpassword/:id',reviewerProfileMiddleware , passwordCreationReviewer)
-reviewerRoute.put('/edit-profile/:id' ,reviewerProfileMiddleware , reviewerProfileController)
-reviewerRoute.post('/add-slot' ,reviewerAuthToken , slotCreateController)
+reviewerRoute.put('/set-password/:id',reviewerProfileMiddleware , passwordCreationReviewer)
+reviewerRoute.put('/set-profile/:id' ,reviewerProfileMiddleware , reviewerProfileController)
+reviewerRoute.put('/edit-profile' , reviewerAuthToken , reviewerProfileController)
+reviewerRoute.post('/add-slot' ,reviewerAuthToken , slotCreateController )
 reviewerRoute.get('/profile', reviewerAuthToken , getReviewerProfileController )
 reviewerRoute.get('/get-domaim-info/:id' , reviewerProfileMiddleware , getAllDomainController )
 

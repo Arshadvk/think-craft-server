@@ -27,6 +27,7 @@ exports.reviewerModel = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const reviwerSchema = new mongoose_1.Schema({
     name: { type: String, required: true },
+    address: { type: String },
     email: { type: String, required: true },
     number: { type: String, },
     password: { type: String, },
@@ -35,10 +36,10 @@ const reviwerSchema = new mongoose_1.Schema({
     dob: { type: Date },
     domain: { type: mongoose_1.Schema.Types.ObjectId, ref: 'domain' },
     gender: { type: String, enum: ['male', 'female'] },
-    isMailVarified: { type: Boolean, default: false },
-    education: { type: String },
+    isProfileVerified: { type: Boolean, default: false },
+    qualification: { type: String },
     company: { type: String },
-    isBlocked: { type: Boolean }
+    isBlocked: { type: Boolean, default: false }
 }, {
     timestamps: { createdAt: true }
 });

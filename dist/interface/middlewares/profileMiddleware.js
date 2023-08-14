@@ -18,7 +18,7 @@ const studentProfileMiddleware = (req, res, next) => {
             }
             else if (user) {
                 console.log(user);
-                if ((user === null || user === void 0 ? void 0 : user.role) === 'student') {
+                if ((user === null || user === void 0 ? void 0 : user.role) === 'student' && user.student.isProfileVerified !== true) {
                     req.user = user;
                 }
                 else {

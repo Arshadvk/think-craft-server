@@ -1,9 +1,10 @@
-import { TaskRepository } from "../../../../infra/repositories/admin/task/taskRepository";
+import { Task, tasks } from "../../../../domain/entities/task/task";
+import { TaskRepository } from "../../../../infra/repositories/task/taskRepository";
 
 export const addTaskUsecase = (taskRepository:TaskRepository)=>{
-    return async (task:any):Promise<any>=>{
-        const newTask : any = await taskRepository.createNewTask(task)
-        return newTask
+   return async (domainId : string , Tasks : tasks )=>{
 
-    }
+    const newTask = await taskRepository.createNewTask(domainId , Tasks)
+    return newTask 
+   }
 }

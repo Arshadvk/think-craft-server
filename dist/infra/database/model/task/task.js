@@ -26,11 +26,23 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.taskModel = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const taskSchema = new mongoose_1.Schema({
-    weekNo: { type: Number },
     domain: { type: mongoose_1.Schema.Types.ObjectId, ref: 'domain' },
-    personalDevelopmentWorkout: { type: Array },
-    technicalWorkouts: { type: Array },
-    miscellaneousWorkouts: { type: Array }
+    tasks: {
+        type: [{
+                week: {
+                    type: Number
+                },
+                personalDevelopmentWorkout: {
+                    type: Array
+                },
+                technicalWorkouts: {
+                    type: Array
+                },
+                miscellaneousWorkouts: {
+                    type: Array
+                },
+            }],
+    },
 }, {
     timestamps: { createdAt: true }
 });

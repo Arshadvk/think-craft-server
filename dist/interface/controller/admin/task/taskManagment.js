@@ -14,13 +14,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.addTaskController = void 0;
 const task_1 = require("../../../../infra/database/model/task/task");
-const taskRepository_1 = __importDefault(require("../../../../infra/repositories/admin/task/taskRepository"));
+const taskRepository_1 = __importDefault(require("../../../../infra/repositories/task/taskRepository"));
 const taskMangmentUsecase_1 = require("../../../../app/usecase/admin/task/taskMangmentUsecase");
 const taskRepository = (0, taskRepository_1.default)(task_1.taskModel);
 const addTaskController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const task = req.body;
-        const newTask = yield (0, taskMangmentUsecase_1.addTaskUsecase)(taskRepository)(task);
+        const domainId = req.body.domain;
+        console.log(req.body);
+        const task = {
+            week: req.body.weekNo,
+            miscellaneousWorkouts: req.body.miscellaneousWorkouts,
+            personalDevelopmentWorkout: req.body.personalDevelopmentWorkout,
+            technicalWorkouts: req.body.technicalWorkouts
+        };
+        const newTask = yield (0, taskMangmentUsecase_1.addTaskUsecase)(taskRepository)(domainId, task);
         if (!newTask)
             res.status(500).json({ message: "Somthing went worng" });
         else

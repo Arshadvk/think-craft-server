@@ -83,7 +83,7 @@ export const advisorAuthToken =async ( req:CustomRequest , res : Response , next
                 return res.status(401).json({ success: false, message: 'not authenticated !', Auth: false })
             } else if (user) {
                 
-                if(user.role === 'advisor' && user.advisor.isBlocked !== true){
+                if(user.role === 'advisor' && user.advisor?.isBlocked !== true){
                     req.user = user;
                 }
                 else {
@@ -117,7 +117,7 @@ export const reviewerAuthToken =async ( req:CustomRequest , res : Response , nex
                 return res.status(401).json({ success: false, message: 'not authenticated !', Auth: false })
             } else if (user) {
                 
-                if(user.role === 'reviewer' && user.reviewer.isBlocked !== true){
+                if(user.role === 'reviewer' && user.reviewer?.isBlocked !== true){
                 
                     req.user = user;
                 }

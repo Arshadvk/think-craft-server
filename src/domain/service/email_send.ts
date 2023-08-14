@@ -34,7 +34,7 @@ export const sendMail =(userData:any, userType:string , token : string )=>{
                 <div class="bg-white p-6 border rounded mt-4">
                     <p>Dear ${userData.name},</p>
                     <p>Welcome to <b>Think Craft</b>! An administrator has created an account for you. To set up your password and access your account, please follow the link below:</p>
-                    <p class="mt-4"><a href="http://localhost:3000${userType}/setpassword/${token}" class="text-blue-500 text-shadow font-bold text-3xl">Complete Your Registration</a></p>
+                    <p class="mt-4"><a href="http://localhost:3000${userType}/set-password/${token}" class="text-blue-500 text-shadow font-bold text-3xl">Complete Your Registration</a></p>
                     <p>This link is valid for a limited time and is unique to you. Please keep it confidential and do not share it with others.</p>
                     <p>If you have any questions or need assistance, please contact our support team at <a href="mailto:egoftverify@gmail.com" class="text-blue-500">egoftverify@gmail.com</a> or 7560943415. We're here to help!</p>
                     <p>Thank you for choosing Think Craft. We look forward to serving you.</p>

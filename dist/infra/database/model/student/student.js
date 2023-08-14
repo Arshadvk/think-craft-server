@@ -33,11 +33,11 @@ const studentSchema = new mongoose_1.Schema({
     image: { type: String, },
     address: { type: String, },
     dob: { type: Date },
-    isBlocked: { type: Boolean },
+    isBlocked: { type: Boolean, default: false },
     qualification: { type: String, },
     domain: { type: mongoose_1.Schema.Types.ObjectId, ref: 'domain' },
     gender: { type: String, enum: ['male', 'female'] },
-    isProfileVarified: { type: Boolean, default: false },
+    isProfileVerified: { type: Boolean, default: false },
     week: { type: Number, default: 1 }
 }, {
     timestamps: { createdAt: true }

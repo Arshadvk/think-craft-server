@@ -9,7 +9,7 @@ const reviewerRepository = reviewerRepositoryImpl(reviewerModel)
 export const reviewerProfileController =async (req:CustomRequest , res : Response) => {
     try {
         const userId: string | undefined =  req.user?.reviewer?._id   as string
-        const data : object | any  = req.body.values as object | any
+        const data : object | any  = req.body.userData as object | any
     
         
         const reviewerData : Object ={
@@ -18,8 +18,9 @@ export const reviewerProfileController =async (req:CustomRequest , res : Respons
             age : data.age , 
             dob : data.dob , 
             gender : data.gender , 
-            education : data.qualification ,
-            domain : data.domain
+            qualification : data.qualification ,
+            domain : data.domain,
+            isProfileVerified: true 
         }
         const reviewer = await reviewerProfileUsecase(reviewerRepository)(userId , reviewerData)
         if(reviewer)  res.status(200).json(reviewer)

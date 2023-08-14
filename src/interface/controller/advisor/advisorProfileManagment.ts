@@ -12,15 +12,16 @@ export const advisorProfileController = async (req: CustomRequest, res: Response
     try {
 
         const userId: string | undefined = req.user?.advisor?._id   as string
-        const data: object | any = req.body.values as object | any
+        const data: object | any = req.body.userData as object | any
 
         const advisorData: Object = {
             number: data.number as string,
             address: data.address as string,
             dob: data.dob as Date,
             gender: data.gender as string,
-            qualification: data.education as string,
-            domain: data.domain as ObjectId
+            qualification: data.qualification as string,
+            domain: data.domain as ObjectId ,
+            isProfileVerified: true 
         }
 
         const advisor = await advisorProfileUsecase(advisorRepository)(userId, advisorData)

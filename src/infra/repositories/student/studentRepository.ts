@@ -29,7 +29,7 @@ const studentRepositoryImpl = (StudentModel: MongoDBStudent): StudentRepository 
     }
     const getAllStudents = async (): Promise<object[]> => {
 
-        const allStudent = await StudentModel.find()
+        const allStudent = await StudentModel.find().populate('domain')
         return allStudent
     }
     const updateIsBlock = async (userId: string, action: string): Promise<boolean | undefined> => {
@@ -41,8 +41,6 @@ const studentRepositoryImpl = (StudentModel: MongoDBStudent): StudentRepository 
         return isBlocked
     }
     const updateStudentProfile = async (userId: string, studentData: object): Promise<any | null> => {
-       console.log("gui");
-       
         const student = await studentModel.findByIdAndUpdate(userId, studentData, { new: true })
         console.log(student);
         

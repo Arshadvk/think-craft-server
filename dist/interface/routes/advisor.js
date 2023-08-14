@@ -9,9 +9,12 @@ const advisorLoginController_1 = require("../controller/advisor/advisorLoginCont
 const advisorProfileManagment_1 = require("../controller/advisor/advisorProfileManagment");
 const authMiddleware_1 = require("../middlewares/authMiddleware");
 const profileMiddleware_1 = require("../middlewares/profileMiddleware");
+const slotCreateController_1 = require("../controller/reviewer/slot/slotCreateController");
 const advisorRoute = express_1.default.Router();
 advisorRoute.post('/login', advisorLoginController_1.advisorLogin);
-advisorRoute.put('/setpassword/:id', profileMiddleware_1.advisorProfileMiddleware, advisorMangment_1.passwordCreationAdvisor);
-advisorRoute.put('/edit-profile/:id', profileMiddleware_1.advisorProfileMiddleware, advisorProfileManagment_1.advisorProfileController);
+advisorRoute.put('/set-password/:id', profileMiddleware_1.advisorProfileMiddleware, advisorMangment_1.passwordCreationAdvisor);
+advisorRoute.put('/set-profile/:id', profileMiddleware_1.advisorProfileMiddleware, advisorProfileManagment_1.advisorProfileController);
+advisorRoute.put('/edit-profile', authMiddleware_1.advisorAuthToken, advisorProfileManagment_1.advisorProfileController);
 advisorRoute.get('/profile', authMiddleware_1.advisorAuthToken, advisorProfileManagment_1.getAdvisorProfileController);
+advisorRoute.get('slots/:id', authMiddleware_1.advisorAuthToken, slotCreateController_1.getSlotsController);
 exports.default = advisorRoute;

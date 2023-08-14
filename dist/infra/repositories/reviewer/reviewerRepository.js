@@ -25,7 +25,7 @@ const reviewerRepositoryImpl = (ReviewerModel) => {
         return reviewer;
     });
     const getAllReviewer = () => __awaiter(void 0, void 0, void 0, function* () {
-        const allReviewer = reviewer_1.reviewerModel.find();
+        const allReviewer = reviewer_1.reviewerModel.find().populate('domain');
         return allReviewer;
     });
     const updateIsBlock = (userId, action) => __awaiter(void 0, void 0, void 0, function* () {

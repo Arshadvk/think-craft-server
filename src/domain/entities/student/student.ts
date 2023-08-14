@@ -13,14 +13,8 @@ export type Student ={
     address:string;
     dob:Date;
     isBlocked:boolean;
-    sex:string;
+    gender:string;
     domain:string;
-    fatherName:string;
-    motherName:string;
-    fatherNumber:string;
-    motherNumber:string;
-    guardianName:string;
-    guardianNumber:string;
     isMailVarified:boolean;
 }
 

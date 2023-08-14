@@ -22,7 +22,8 @@ const studentProfileController = (req, res) => __awaiter(void 0, void 0, void 0,
     try {
         const userId = (_b = (_a = req.user) === null || _a === void 0 ? void 0 : _a.student) === null || _b === void 0 ? void 0 : _b._id;
         console.log(userId);
-        const data = req.body.values;
+        const data = req.body.userData;
+        console.log(data);
         const studentData = {
             number: data.number,
             address: data.address,
@@ -30,11 +31,12 @@ const studentProfileController = (req, res) => __awaiter(void 0, void 0, void 0,
             qualification: data.qualification,
             dob: data.dob,
             domain: data.domain,
-            isProfileVarified: true
+            isProfileVerified: true
         };
         const student = yield (0, studentProfile_1.studentProfileUsecase)(studentRepository)(userId, studentData);
-        if (student)
+        if (student) {
             res.status(200).json({ message: 'update' });
+        }
         else
             res.status(200).json({ message: 'User failed' });
     }

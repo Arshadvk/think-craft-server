@@ -28,7 +28,7 @@ const reviewerRepositoryImpl=(ReviewerModel:MongoDBReviewer):ReviewerRepository=
     }
 
     const getAllReviewer = async ():Promise<object[]> =>{
-        const allReviewer  = reviewerModel.find()
+        const allReviewer  = reviewerModel.find().populate('domain')
         return allReviewer
     }
 

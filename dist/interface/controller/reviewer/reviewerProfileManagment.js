@@ -21,15 +21,16 @@ const reviewerProfileController = (req, res) => __awaiter(void 0, void 0, void 0
     var _a, _b;
     try {
         const userId = (_b = (_a = req.user) === null || _a === void 0 ? void 0 : _a.reviewer) === null || _b === void 0 ? void 0 : _b._id;
-        const data = req.body.values;
+        const data = req.body.userData;
         const reviewerData = {
             number: data.number,
             address: data.address,
             age: data.age,
             dob: data.dob,
             gender: data.gender,
-            education: data.qualification,
-            domain: data.domain
+            qualification: data.qualification,
+            domain: data.domain,
+            isProfileVerified: true
         };
         const reviewer = yield (0, reviewerProfile_1.reviewerProfileUsecase)(reviewerRepository)(userId, reviewerData);
         if (reviewer)

@@ -25,7 +25,7 @@ const studentRepositoryImpl = (StudentModel) => {
         return student;
     });
     const getAllStudents = () => __awaiter(void 0, void 0, void 0, function* () {
-        const allStudent = yield StudentModel.find();
+        const allStudent = yield StudentModel.find().populate('domain');
         return allStudent;
     });
     const updateIsBlock = (userId, action) => __awaiter(void 0, void 0, void 0, function* () {
@@ -40,7 +40,6 @@ const studentRepositoryImpl = (StudentModel) => {
         return isBlocked;
     });
     const updateStudentProfile = (userId, studentData) => __awaiter(void 0, void 0, void 0, function* () {
-        console.log("gui");
         const student = yield student_1.studentModel.findByIdAndUpdate(userId, studentData, { new: true });
         console.log(student);
         if (!student)

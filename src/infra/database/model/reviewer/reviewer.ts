@@ -5,6 +5,7 @@ export type MongoDBReviewer = Model<Document<any, any, any>>;
 
 const reviwerSchema = new Schema({
     name: { type: String, required: true },
+    address: {type:String} , 
     email: { type: String, required: true },
     number: { type: String,  },
     password: { type: String,  },
@@ -13,7 +14,7 @@ const reviwerSchema = new Schema({
     dob: { type: Date },
     domain:{type: Schema.Types.ObjectId, ref: 'domain'},
     gender: { type: String, enum: ['male', 'female'] },
-    isProfileVarified: { type: Boolean, default: false },
+    isProfileVerified: { type: Boolean, default: false },
     qualification:{type:String},
     company:{type:String},
     isBlocked : {type: Boolean , default:false }  
