@@ -59,7 +59,6 @@ const blockStudentController = (req, res) => __awaiter(void 0, void 0, void 0, f
     try {
         const userId = req.body.id;
         const action = req.body.action;
-        console.log(userId + "uhyugy");
         if (!userId || !action)
             throw new error_1.AppError("Not found", 404);
         const blocked = yield (0, block_unblock_1.blockStudentUseCase)(studentRepository)(userId, action);

@@ -24,8 +24,8 @@ const reviewerRepositoryImpl = (ReviewerModel) => {
         const reviewer = yield reviewer_1.reviewerModel.findByIdAndUpdate({ _id: id }, { $set: { password: password } });
         return reviewer;
     });
-    const getAllReviewer = () => __awaiter(void 0, void 0, void 0, function* () {
-        const allReviewer = reviewer_1.reviewerModel.find().populate('domain');
+    const getAllReviewer = (filterData) => __awaiter(void 0, void 0, void 0, function* () {
+        const allReviewer = reviewer_1.reviewerModel.find(filterData).populate('domain');
         return allReviewer;
     });
     const updateIsBlock = (userId, action) => __awaiter(void 0, void 0, void 0, function* () {

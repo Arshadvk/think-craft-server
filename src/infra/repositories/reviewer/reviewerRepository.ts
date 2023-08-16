@@ -1,3 +1,4 @@
+import { Filter } from "../../../interface/controller/reviewer/reviewerManagment";
 import { AppError } from "../../../utils/error";
 import { MongoDBReviewer,reviewerModel } from "../../database/model/reviewer/reviewer";
 
@@ -5,7 +6,7 @@ export type ReviewerRepository ={
     createReviewer:(reviewerData:any)=>Promise<any | null>
     findReviewerByEmail:(email:string)=>Promise<any | null>
     setReviewerPassword:(id:string,password:string)=>Promise<any | null>
-    getAllReviewer:()=>Promise<object[]>
+    getAllReviewer:(filterData : Filter)=>Promise<object[]>
     updateIsBlock:(userId:string , action:string)=>Promise <boolean | undefined>
     updateReviewerProfile :( userId: string, reviewerData : any)=> Promise <any|null>
     findReviewerById:(userId : string )=> Promise <any>
@@ -27,8 +28,8 @@ const reviewerRepositoryImpl=(ReviewerModel:MongoDBReviewer):ReviewerRepository=
         return reviewer
     }
 
-    const getAllReviewer = async ():Promise<object[]> =>{
-        const allReviewer  = reviewerModel.find().populate('domain')
+    const getAllReviewer = async (filterData : Filter ):Promise<object[]> =>{
+        const allReviewer  = reviewerModel.find(filterData).populate('domain')
         return allReviewer
     }
 

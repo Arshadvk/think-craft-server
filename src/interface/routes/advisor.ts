@@ -5,6 +5,7 @@ import { advisorProfileController, getAdvisorProfileController } from "../contro
 import { advisorAuthToken } from "../middlewares/authMiddleware";
 import { advisorProfileMiddleware } from "../middlewares/profileMiddleware";
 import { getSlotsController } from "../controller/reviewer/slot/slotCreateController";
+import { getAllReviewerSearchFilterSortController } from "../controller/reviewer/reviewerManagment";
 
 
 const advisorRoute = express.Router()
@@ -14,6 +15,7 @@ advisorRoute.put('/set-password/:id' ,advisorProfileMiddleware, passwordCreation
 advisorRoute.put('/set-profile/:id' , advisorProfileMiddleware ,  advisorProfileController)
 advisorRoute.put('/edit-profile' , advisorAuthToken  , advisorProfileController )
 advisorRoute.get('/profile' , advisorAuthToken ,  getAdvisorProfileController)
+advisorRoute.get('/reviewer-list' , advisorAuthToken , getAllReviewerSearchFilterSortController)
 advisorRoute.get('slots/:id' , advisorAuthToken , getSlotsController)
 
 export default advisorRoute

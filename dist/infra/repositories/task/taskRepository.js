@@ -24,6 +24,15 @@ const taskRepositoryIMPL = (TaskModel) => {
         yield isDomainExist.save();
         return isDomainExist;
     });
-    return { createNewTask };
+    const findTaskByDomain = (domainId, week) => __awaiter(void 0, void 0, void 0, function* () {
+        const task = yield TaskModel.findOne({
+            domain: domainId,
+            'tasks.week': week
+        }, {
+            'tasks.$': 1 // This ensures that only the matched task within the array is returned
+        });
+        return task;
+    });
+    return { createNewTask, findTaskByDomain };
 };
 exports.default = taskRepositoryIMPL;

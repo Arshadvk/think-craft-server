@@ -50,7 +50,6 @@ export const blockStudentController = async (req: Request, res: Response) => {
     try {
         const userId: string | undefined = req.body.id as string
         const action: string | undefined = req.body.action as string
-        console.log(userId + "uhyugy");
 
         if (!userId || !action) throw new AppError("Not found", 404)
 

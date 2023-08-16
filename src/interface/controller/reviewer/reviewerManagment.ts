@@ -7,6 +7,11 @@ import { AppError } from "../../../utils/error"
 import { blockReviewerUsecase } from "../../../app/usecase/admin/reviewer/block-unblock"
 import { CustomRequest } from "../../middlewares/authMiddleware"
 
+export interface Filter {
+    name?: object ;
+    domain?: string | undefined
+     
+}
 
 const reviewerRepository = reviewerRepositoryImpl(reviewerModel)
 
@@ -35,7 +40,14 @@ export const passwordCreationReviewer =async (req:CustomRequest , res : Response
 
 export const getAllReviewerSearchFilterSortController =async (req:Request , res :Response) => {
     try {
-        const reviewerList = await getAllReviewerUsecase(reviewerRepository)()
+        
+        let sortCriteria : object
+        let filterData : Filter ={}
+
+        if(req.query.name) filterData.name = {$regex: req.query.name as string , $options : 'i' }
+        if(req.query.domain) filterData.domain = req.query.domaim as string 
+
+        const reviewerList = await getAllReviewerUsecase(reviewerRepository)(filterData)
         res.status(200).json(reviewerList)
     } catch (error) {
         

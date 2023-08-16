@@ -2,6 +2,7 @@ import { sendMail } from "../../../../domain/service/email_send";
 import { ReviewerRepository } from "../../../../infra/repositories/reviewer/reviewerRepository";
 import { AppError } from "../../../../utils/error";
 import { Reviewer, createReviewerToken } from "../../../../domain/entities/reviewer/reviewer";
+import { Filter } from "../../../../interface/controller/reviewer/reviewerManagment";
 
 
 
@@ -20,8 +21,8 @@ export const createReviewerUsecase = (reviewerRepository : ReviewerRepository)=>
     }
 }
 export const getAllReviewerUsecase = (reviewerRepository:ReviewerRepository)=>{
-    return async ():Promise <Object[]>=>{
-        const allReviewer = await reviewerRepository.getAllReviewer()
+    return async (filterData : Filter ):Promise <Object[]>=>{
+        const allReviewer = await reviewerRepository.getAllReviewer(filterData)
         return allReviewer
     }
 }

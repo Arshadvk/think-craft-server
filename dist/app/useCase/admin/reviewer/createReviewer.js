@@ -27,8 +27,8 @@ const createReviewerUsecase = (reviewerRepository) => {
 };
 exports.createReviewerUsecase = createReviewerUsecase;
 const getAllReviewerUsecase = (reviewerRepository) => {
-    return () => __awaiter(void 0, void 0, void 0, function* () {
-        const allReviewer = yield reviewerRepository.getAllReviewer();
+    return (filterData) => __awaiter(void 0, void 0, void 0, function* () {
+        const allReviewer = yield reviewerRepository.getAllReviewer(filterData);
         return allReviewer;
     });
 };

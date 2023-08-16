@@ -15,9 +15,7 @@ export const studentLogin = async (req: Request, res: Response) => {
         const student: Student = req.body
         const studentToken = await loginStudent(studentRepository)(student)
         console.log(studentToken);
-        res.status(200).json({ message: studentToken })
-
-
+        res.status(200).json({studentToken })
     } catch (error: any) {
         res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' })
     }

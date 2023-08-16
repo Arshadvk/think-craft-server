@@ -46,7 +46,13 @@ const passwordCreationReviewer = (req, res) => __awaiter(void 0, void 0, void 0,
 exports.passwordCreationReviewer = passwordCreationReviewer;
 const getAllReviewerSearchFilterSortController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const reviewerList = yield (0, createReviewer_1.getAllReviewerUsecase)(reviewerRepository)();
+        let sortCriteria;
+        let filterData = {};
+        if (req.query.name)
+            filterData.name = { $regex: req.query.name, $options: 'i' };
+        if (req.query.domain)
+            filterData.domain = req.query.domaim;
+        const reviewerList = yield (0, createReviewer_1.getAllReviewerUsecase)(reviewerRepository)(filterData);
         res.status(200).json(reviewerList);
     }
     catch (error) {

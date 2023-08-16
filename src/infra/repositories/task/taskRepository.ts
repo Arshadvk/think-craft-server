@@ -3,7 +3,7 @@ import { MongoDBTask } from "../../database/model/task/task";
 
 export type TaskRepository ={
     createNewTask:(domainId:string , task:tasks)=>Promise<Task>
-
+    findTaskByDomain:(domainId:string ,week : number )=>Promise<Task | null>
 }
 
 const taskRepositoryIMPL = (TaskModel:MongoDBTask):TaskRepository=>{
@@ -25,8 +25,17 @@ const taskRepositoryIMPL = (TaskModel:MongoDBTask):TaskRepository=>{
         return isDomainExist
     }
 
+    const findTaskByDomain = async (domainId:string , week:number):Promise<Task | null> => {
+        const task : Task | null = await TaskModel.findOne({
+            domain: domainId,
+            'tasks.week': week
+          }, {
+            'tasks.$': 1 // This ensures that only the matched task within the array is returned
+          });
+        return task 
+    }
     
-    return {createNewTask}
+    return {createNewTask , findTaskByDomain}
 }
 
 export default taskRepositoryIMPL
