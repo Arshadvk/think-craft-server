@@ -19,4 +19,5 @@ studentRoute.put('/edit-profile', authMiddleware_1.StudentAuthToken, studentProf
 studentRoute.get('/profile', authMiddleware_1.StudentAuthToken, studentProfileController_1.getStudentProfileController);
 studentRoute.get('/get-domaim-info/:id', profileMiddleware_1.studentProfileMiddleware, domainController_1.getAllDomainController);
 studentRoute.get('/weekly-task', authMiddleware_1.StudentAuthToken, taskManagementController_1.findTaskByDomainController);
+studentRoute.post('/weekly-task', authMiddleware_1.StudentAuthToken);
 exports.default = studentRoute;

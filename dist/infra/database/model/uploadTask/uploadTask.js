@@ -27,7 +27,7 @@ exports.uploadTaskModel = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const uploadTaskSchema = new mongoose_1.Schema({
     student: { type: mongoose_1.Schema.Types.ObjectId, ref: "student" },
-    tasks: {
+    uploads: {
         type: [{
                 week: {
                     type: Number
