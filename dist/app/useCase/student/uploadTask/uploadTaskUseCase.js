@@ -9,21 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const uploadTaskRepositoryIMPL = (UploadTaskModel) => {
-    const uploadNewTask = (studentId, task) => __awaiter(void 0, void 0, void 0, function* () {
-        const isTaskExist = yield UploadTaskModel.findOne({ student: studentId });
-        if (!isTaskExist) {
-            const newStudent = new UploadTaskModel({
-                student: studentId,
-                uploads: task
-            });
-            const createdTask = yield newStudent.save();
-            return createdTask;
-        }
-        isTaskExist.uploads.push(task);
-        yield isTaskExist.save();
-        return isTaskExist;
+exports.uploadTaskUsecase = void 0;
+const uploadTaskUsecase = (uploadTaskRepository) => {
+    return (studentId, uploads) => __awaiter(void 0, void 0, void 0, function* () {
+        const uploadTask = yield uploadTaskRepository.uploadNewTask(studentId, uploads);
+        return uploadTask;
     });
-    return { uploadNewTask };
 };
-exports.default = uploadTaskRepositoryIMPL;
+exports.uploadTaskUsecase = uploadTaskUsecase;

@@ -11,6 +11,7 @@ const domainController_1 = require("../controller/admin/domain/domainController"
 const authMiddleware_1 = require("../middlewares/authMiddleware");
 const profileMiddleware_1 = require("../middlewares/profileMiddleware");
 const taskManagementController_1 = require("../controller/task/taskManagementController");
+const uploadTask_1 = require("../controller/uploadTask/uploadTask");
 const studentRoute = express_1.default.Router();
 studentRoute.post('/login', studentLoginController_1.studentLogin);
 studentRoute.put('/set-password/:id', profileMiddleware_1.studentProfileMiddleware, studentManagement_1.passwordCreation);
@@ -18,6 +19,7 @@ studentRoute.put('/set-profile/:id', profileMiddleware_1.studentProfileMiddlewar
 studentRoute.put('/edit-profile', authMiddleware_1.StudentAuthToken, studentProfileController_1.studentProfileController);
 studentRoute.get('/profile', authMiddleware_1.StudentAuthToken, studentProfileController_1.getStudentProfileController);
 studentRoute.get('/get-domaim-info/:id', profileMiddleware_1.studentProfileMiddleware, domainController_1.getAllDomainController);
+studentRoute.get('/review', authMiddleware_1.StudentAuthToken);
 studentRoute.get('/weekly-task', authMiddleware_1.StudentAuthToken, taskManagementController_1.findTaskByDomainController);
-studentRoute.post('/weekly-task', authMiddleware_1.StudentAuthToken);
+studentRoute.post('/weekly-task', authMiddleware_1.StudentAuthToken, uploadTask_1.uploadTaskByStudentController);
 exports.default = studentRoute;

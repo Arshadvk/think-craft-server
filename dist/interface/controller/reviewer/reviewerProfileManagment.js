@@ -44,9 +44,10 @@ const reviewerProfileController = (req, res) => __awaiter(void 0, void 0, void 0
 });
 exports.reviewerProfileController = reviewerProfileController;
 const getReviewerProfileController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _c, _d;
+    var _c, _d, _e, _f;
     try {
-        const reviewerId = (_d = (_c = req.user) === null || _c === void 0 ? void 0 : _c.reviewer) === null || _d === void 0 ? void 0 : _d._id;
+        const reviewerId = (_e = (_d = (_c = req.user) === null || _c === void 0 ? void 0 : _c.reviewer) === null || _d === void 0 ? void 0 : _d._id) !== null && _e !== void 0 ? _e : (_f = req.params) === null || _f === void 0 ? void 0 : _f.id;
+        console.log("reviewer", req.params.id);
         console.log(reviewerId);
         const reviewer = yield (0, reviewerProfile_1.getReviewerProfileUsecase)(reviewerRepository)(reviewerId);
         console.log(reviewer);

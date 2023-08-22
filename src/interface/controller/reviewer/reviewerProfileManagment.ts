@@ -33,7 +33,9 @@ export const reviewerProfileController =async (req:CustomRequest , res : Respons
 
 export const getReviewerProfileController =async (req:CustomRequest , res : Response) => {
     try {
-        const reviewerId :string = req.user?.reviewer?._id 
+        const reviewerId :string = req.user?.reviewer?._id ?? req.params?.id
+        console.log("reviewer",req.params.id);
+        
         console.log(reviewerId);
         
         const reviewer = await getReviewerProfileUsecase(reviewerRepository)(reviewerId)

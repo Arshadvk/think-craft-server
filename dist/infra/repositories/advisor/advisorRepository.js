@@ -49,6 +49,11 @@ const AdvisorRepositoryImpl = (AdvisorModel) => {
         const advisor = yield advisor_1.advisorModel.findById(userId);
         return advisor;
     });
+    const findAvilableAdvisor = () => __awaiter(void 0, void 0, void 0, function* () {
+        const advisors = yield advisor_1.advisorModel.find({}, { _id: 1 });
+        const advisorIds = advisors.map((advisor) => advisor._id);
+        return advisorIds;
+    });
     return {
         createAdvisor,
         findAdvisorByEmail,
@@ -56,7 +61,8 @@ const AdvisorRepositoryImpl = (AdvisorModel) => {
         getAllAdvisor,
         updateIsBlock,
         updateAdvisorProfile,
-        findAdvisorById
+        findAdvisorById,
+        findAvilableAdvisor
     };
 };
 exports.default = AdvisorRepositoryImpl;

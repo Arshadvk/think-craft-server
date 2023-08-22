@@ -8,7 +8,7 @@ export interface UploadTask {
 }
 
 export type uploads = {
-    week : number 
+    week ?: number 
     personalDevelopmentWorkout ?: string[] | null
     technicalWorkouts ?: string[] | null 
     miscellaneousWorkouts ?: string[] | null

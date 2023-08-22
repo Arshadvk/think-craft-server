@@ -6,6 +6,8 @@ import { advisorAuthToken } from "../middlewares/authMiddleware";
 import { advisorProfileMiddleware } from "../middlewares/profileMiddleware";
 import { getSlotsController } from "../controller/reviewer/slot/slotCreateController";
 import { getAllReviewerSearchFilterSortController } from "../controller/reviewer/reviewerManagment";
+import { findReviewController } from "../controller/review/reviewMangmentController";
+import { getReviewerProfileController } from "../controller/reviewer/reviewerProfileManagment";
 
 
 const advisorRoute = express.Router()
@@ -16,6 +18,8 @@ advisorRoute.put('/set-profile/:id' , advisorProfileMiddleware ,  advisorProfile
 advisorRoute.put('/edit-profile' , advisorAuthToken  , advisorProfileController )
 advisorRoute.get('/profile' , advisorAuthToken ,  getAdvisorProfileController)
 advisorRoute.get('/reviewer-list' , advisorAuthToken , getAllReviewerSearchFilterSortController)
-advisorRoute.get('slots/:id' , advisorAuthToken , getSlotsController)
+advisorRoute.get('/slots/:id' ,advisorAuthToken , getSlotsController)
+advisorRoute.get('/reviewer-details/:id' , advisorAuthToken , getReviewerProfileController )
+advisorRoute.get('/review-list' , advisorAuthToken ,findReviewController )
 
 export default advisorRoute

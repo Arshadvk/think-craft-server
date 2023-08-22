@@ -16,7 +16,16 @@ exports.getStudentProfileController = exports.studentProfileController = void 0;
 const studentProfile_1 = require("../../../app/usecase/student/studentProfile");
 const student_1 = require("../../../infra/database/model/student/student");
 const studentRepository_1 = __importDefault(require("../../../infra/repositories/student/studentRepository"));
+const reviewUsecase_1 = require("../../../app/usecase/review/reviewUsecase");
+const reviewRepository_1 = __importDefault(require("../../../infra/repositories/review/reviewRepository"));
+const review_1 = require("../../../infra/database/model/review/review");
+const advisorRepository_1 = __importDefault(require("../../../infra/repositories/advisor/advisorRepository"));
+const advisor_1 = require("../../../infra/database/model/advisor/advisor");
+const moment_1 = __importDefault(require("moment"));
+const student_2 = require("../../../domain/entities/student/student");
 const studentRepository = (0, studentRepository_1.default)(student_1.studentModel);
+const reviewRepository = (0, reviewRepository_1.default)(review_1.reviewModel);
+const advisorRepository = (0, advisorRepository_1.default)(advisor_1.advisorModel);
 const studentProfileController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
     try {
@@ -35,7 +44,13 @@ const studentProfileController = (req, res) => __awaiter(void 0, void 0, void 0,
         };
         const student = yield (0, studentProfile_1.studentProfileUsecase)(studentRepository)(userId, studentData);
         if (student) {
-            res.status(200).json({ message: 'update' });
+            const review = {
+                date: (0, moment_1.default)().add(8, 'days').toDate(),
+                week: student === null || student === void 0 ? void 0 : student.week
+            };
+            const newReview = yield (0, reviewUsecase_1.createReviewUsecase)(reviewRepository, advisorRepository)(userId, review);
+            const token = (0, student_2.createToken)(student);
+            res.status(200).json({ token: token });
         }
         else
             res.status(200).json({ message: 'User failed' });

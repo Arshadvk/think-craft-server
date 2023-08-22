@@ -11,8 +11,6 @@ import { StudentRepository } from "../../../infra/repositories/student/studentRe
 
  export const getStudentProfileUsecase = (studentRepository:StudentRepository)=>{
     return async(userId:string):Promise<any>=>{
-        console.log("kdsfj");
-        
         const student = await studentRepository.findStudentById(userId)
         return student
     }

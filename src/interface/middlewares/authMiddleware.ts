@@ -72,7 +72,7 @@ export const advisorAuthToken =async ( req:CustomRequest , res : Response , next
     try {
         const authHeader : string | undefined = req.headers.authorization;
         const secretKey : string | undefined = process.env.JWT_SECRET_KEY
-
+        
         if (!authHeader || !secretKey) {
             return res.status(401).json({ success: false, message: 'not authenticated !', Auth: false })
         }

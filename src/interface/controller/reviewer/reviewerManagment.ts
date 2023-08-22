@@ -45,13 +45,17 @@ export const getAllReviewerSearchFilterSortController =async (req:Request , res 
         let filterData : Filter ={}
 
         if(req.query.name) filterData.name = {$regex: req.query.name as string , $options : 'i' }
-        if(req.query.domain) filterData.domain = req.query.domaim as string 
+        if(req.query.domain) filterData.domain = req.query.domain as string 
+       console.log(filterData.domain);
+       
+        
 
         const reviewerList = await getAllReviewerUsecase(reviewerRepository)(filterData)
         res.status(200).json(reviewerList)
-    } catch (error) {
+    } catch (error:any) {
+        res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' })     
+    }
         
-    }    
 }
 
 export const blockReviewerController =async (req:Request , res : Response) => {

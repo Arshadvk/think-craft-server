@@ -19,7 +19,6 @@ const studentProfileUsecase = (studentRepository) => {
 exports.studentProfileUsecase = studentProfileUsecase;
 const getStudentProfileUsecase = (studentRepository) => {
     return (userId) => __awaiter(void 0, void 0, void 0, function* () {
-        console.log("kdsfj");
         const student = yield studentRepository.findStudentById(userId);
         return student;
     });

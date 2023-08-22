@@ -57,6 +57,8 @@ exports.slotCreateController = slotCreateController;
 const getSlotsController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const reviewerId = req.params.id;
+        console.log(reviewerId);
+        console.log("hello");
         const slot = yield (0, slotUsecase_1.getSlotUsecase)(slotRepository)(reviewerId);
         res.status(200).json(slot);
     }

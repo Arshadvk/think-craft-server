@@ -7,6 +7,7 @@ import { getAllDomainController } from "../controller/admin/domain/domainControl
 import { StudentAuthToken } from "../middlewares/authMiddleware";
 import { studentProfileMiddleware } from "../middlewares/profileMiddleware";
 import { findTaskByDomainController } from "../controller/task/taskManagementController";
+import { uploadTaskByStudentController } from "../controller/uploadTask/uploadTask";
 
 
 const studentRoute = express.Router()
@@ -17,6 +18,7 @@ studentRoute.put('/set-profile/:id' ,studentProfileMiddleware , studentProfileCo
 studentRoute.put('/edit-profile' , StudentAuthToken , studentProfileController )
 studentRoute.get('/profile' ,  StudentAuthToken ,  getStudentProfileController)
 studentRoute.get('/get-domaim-info/:id' , studentProfileMiddleware ,  getAllDomainController)
+studentRoute.get('/review' , StudentAuthToken , )
 studentRoute.get('/weekly-task' ,StudentAuthToken , findTaskByDomainController )
-studentRoute.post('/weekly-task' , StudentAuthToken ) 
+studentRoute.post('/weekly-task' , StudentAuthToken , uploadTaskByStudentController ) 
 export default studentRoute

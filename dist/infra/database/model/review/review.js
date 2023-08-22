@@ -34,7 +34,6 @@ const reviewSchema = new mongoose_1.Schema({
                 },
                 week: {
                     type: Number,
-                    required: true
                 },
                 reviewer: {
                     type: mongoose_1.Schema.Types.ObjectId, ref: 'reviewer'

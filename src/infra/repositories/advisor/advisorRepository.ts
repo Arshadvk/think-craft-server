@@ -1,3 +1,4 @@
+import { AdvisorId } from "../../../domain/entities/advisor/advisor"
 import { AppError } from "../../../utils/error"
 import { MongoDBAdvisor, advisorModel, } from "../../database/model/advisor/advisor"
 
@@ -11,6 +12,7 @@ export type AdvisorRepository = {
     updateIsBlock:(userId : string , action : string) => Promise <boolean | undefined >
     updateAdvisorProfile :(userId : string , advisorData : object) => Promise <any | null >
     findAdvisorById:(userId:string)=> Promise <any>
+    findAvilableAdvisor : ()=>Promise<AdvisorId[]>
 }
 
 const AdvisorRepositoryImpl = (AdvisorModel: MongoDBAdvisor): AdvisorRepository => {
@@ -50,6 +52,12 @@ const AdvisorRepositoryImpl = (AdvisorModel: MongoDBAdvisor): AdvisorRepository 
         return advisor
         
     }
+    const findAvilableAdvisor =async ():Promise<AdvisorId[]> => {
+        const advisors = await advisorModel.find({}, { _id: 1 });
+
+        const advisorIds: AdvisorId[] = advisors.map((advisor) => advisor._id);
+        return advisorIds;
+    }
     return {
          createAdvisor,
          findAdvisorByEmail ,
@@ -57,7 +65,8 @@ const AdvisorRepositoryImpl = (AdvisorModel: MongoDBAdvisor): AdvisorRepository 
          getAllAdvisor , 
          updateIsBlock , 
          updateAdvisorProfile ,
-         findAdvisorById
+         findAdvisorById ,
+         findAvilableAdvisor 
         }
 }
 export default AdvisorRepositoryImpl

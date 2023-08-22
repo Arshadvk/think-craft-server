@@ -51,11 +51,13 @@ const getAllReviewerSearchFilterSortController = (req, res) => __awaiter(void 0,
         if (req.query.name)
             filterData.name = { $regex: req.query.name, $options: 'i' };
         if (req.query.domain)
-            filterData.domain = req.query.domaim;
+            filterData.domain = req.query.domain;
+        console.log(filterData.domain);
         const reviewerList = yield (0, createReviewer_1.getAllReviewerUsecase)(reviewerRepository)(filterData);
         res.status(200).json(reviewerList);
     }
     catch (error) {
+        res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' });
     }
 });
 exports.getAllReviewerSearchFilterSortController = getAllReviewerSearchFilterSortController;

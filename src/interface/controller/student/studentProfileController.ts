@@ -4,8 +4,18 @@ import { studentModel } from "../../../infra/database/model/student/student";
 import studentRepositoryImpl from "../../../infra/repositories/student/studentRepository";
 import { CustomRequest } from "../../middlewares/authMiddleware";
 import { Date, ObjectId } from "mongoose";
+import { createReviewUsecase } from "../../../app/usecase/review/reviewUsecase";
+import ReviewRepositoryIMPL from "../../../infra/repositories/review/reviewRepository";
+import { reviewModel } from "../../../infra/database/model/review/review";
+import AdvisorRepositoryImpl from "../../../infra/repositories/advisor/advisorRepository";
+import { advisorModel } from "../../../infra/database/model/advisor/advisor";
+import { reviews } from "../../../domain/entities/review/review";
+import moment from "moment";
+import { createToken } from "../../../domain/entities/student/student";
 
 const studentRepository = studentRepositoryImpl(studentModel)
+const reviewRepository = ReviewRepositoryIMPL(reviewModel)
+const advisorRepository = AdvisorRepositoryImpl(advisorModel)
 
 export const studentProfileController = async (req: CustomRequest, res: Response) => {
     try {
@@ -28,9 +38,16 @@ export const studentProfileController = async (req: CustomRequest, res: Response
         const student = await studentProfileUsecase(studentRepository)(userId, studentData)
 
         if (student) {
+            const review : reviews = {
+                date : moment().add(8, 'days').toDate() ,
+                week : student?.week
+                
+            }
 
-            
-            res.status(200).json({ message: 'update' })
+            const newReview = await createReviewUsecase(reviewRepository , advisorRepository)(userId , review )
+            const token =  createToken(student)
+
+            res.status(200).json({ token:token })
         }
 
         else res.status(200).json({ message: 'User failed' })

@@ -9,13 +9,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const review_1 = require("../../database/model/review/review");
 const ReviewRepositoryIMPL = (ReviewModel) => {
     const createNewReview = (studentId, review) => __awaiter(void 0, void 0, void 0, function* () {
         const isReviewExist = yield ReviewModel.findOne({ student: studentId });
+        console.log(review);
         if (!isReviewExist) {
             const newReview = new ReviewModel({
                 student: studentId,
-                review: review
+                reviews: review
             });
             const createReview = yield newReview.save();
             return createReview;
@@ -24,6 +26,15 @@ const ReviewRepositoryIMPL = (ReviewModel) => {
         yield isReviewExist.save();
         return isReviewExist;
     });
-    return { createNewReview };
+    const findReview = (filterData) => __awaiter(void 0, void 0, void 0, function* () {
+        const reviews = yield review_1.reviewModel.find(filterData).populate({
+            path: 'student',
+            populate: {
+                path: 'domain'
+            }
+        }).populate('reviews.advisor').populate('student.domain');
+        return reviews;
+    });
+    return { createNewReview, findReview };
 };
 exports.default = ReviewRepositoryIMPL;

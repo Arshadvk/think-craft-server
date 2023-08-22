@@ -3,6 +3,10 @@ import { advisorLoginType } from "../../../interface/controller/advisor/advisorL
 import { AppError } from "../../../utils/error"
 import { isPasswordCorrect } from "../../service/hashing"
 
+export type AdvisorId ={
+    _id : string
+}
+
 export type Advisor = {
     name:string
     email:string

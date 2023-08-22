@@ -12,7 +12,6 @@ const reviewSchema = new  Schema<Review>({
             },
             week :{
                 type : Number ,
-                required : true
             },
             reviewer:{
                 type : Schema.Types.ObjectId , ref : 'reviewer'

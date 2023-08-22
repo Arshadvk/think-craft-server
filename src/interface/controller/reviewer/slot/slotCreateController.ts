@@ -52,9 +52,13 @@ export const slotCreateController =async (req:CustomRequest , res : Response) =>
     }
 }
 
-export const getSlotsController =async (req:Request , res :Response) => {
+export const getSlotsController =async (req:CustomRequest , res :Response) => {
     try {
         const reviewerId = req.params.id as string
+        console.log(reviewerId);
+        console.log("hello");
+        
+        
         const slot:slotes[]| undefined = await getSlotUsecase(slotRepository)(reviewerId)
 
         res.status(200).json(slot)
