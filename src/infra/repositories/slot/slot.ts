@@ -6,6 +6,7 @@ export type SlotRepository = {
     createNewSlot: (reviewerId: string , slot:slotes[]) => Promise<Slot>
     findSlot : (slotDate : string , startingTime: string , endingTime :string , reviewerId:string) => Promise  <Slot | null>
     findSlotByRevId : (reviewerId : string) => Promise <Slot | null >
+    updateSlot : (reviewerId : string , slotId : string) => Promise <Slot | null >
 }
 
 const slotRepositoryImpl = (SlotModel: MongoDBSlot): SlotRepository => {
@@ -65,10 +66,42 @@ const slotRepositoryImpl = (SlotModel: MongoDBSlot): SlotRepository => {
         return slot
     } 
     
+    const updateSlot =async (reviewerId : string , slotId : string):Promise <Slot | null > => {
+        const crr = moment().format('YYYY-MM-DD');
+        const currentDate = new Date(crr)
+        await SlotModel.findOneAndUpdate({reviewer : reviewerId},{
+            $pull : {slotes : {date :{$lt : currentDate}}},
+        })
+
+        const slot = await SlotModel.findOneAndUpdate(
+            { reviewer: reviewerId },
+            [
+                {
+                    $set: {
+                        slotes: {
+                            $map: {
+                                input: "$slotes",
+                                as: "slot",
+                                in: {
+                                    $cond: [
+                                        { $eq: ["$$slot._id", slotId] },
+                                        { $mergeObjects: ["$$slot", { isBooked: true }] },
+                                        "$$slot"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
+        );
+        return slot
+    }
     return {
         createNewSlot ,
         findSlot ,
-        findSlotByRevId
+        findSlotByRevId ,
+        updateSlot
     }
 }
 

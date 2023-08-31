@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getSlotUsecase = exports.createSlotUsecase = void 0;
+exports.updateSlotUsecase = exports.getSlotUsecase = exports.createSlotUsecase = void 0;
 const error_1 = require("../../../../utils/error");
 const createSlotUsecase = (slotRepository) => {
     return (reviewerId, date, startTime, endTime, slotDuration) => __awaiter(void 0, void 0, void 0, function* () {
@@ -54,3 +54,10 @@ const getSlotUsecase = (slotRepository) => {
     });
 };
 exports.getSlotUsecase = getSlotUsecase;
+const updateSlotUsecase = (slotRepository) => {
+    return (reviewerId, slotId) => __awaiter(void 0, void 0, void 0, function* () {
+        const slot = yield slotRepository.updateSlot(reviewerId, slotId);
+        return slot;
+    });
+};
+exports.updateSlotUsecase = updateSlotUsecase;

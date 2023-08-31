@@ -21,7 +21,11 @@ const AdvisorRepositoryImpl = (AdvisorModel: MongoDBAdvisor): AdvisorRepository 
         return newAdvisor
     }
     const findAdvisorByEmail = async (email: string): Promise<any | null> => {
+
+        
         const advisor = await advisorModel.findOne({ email })
+
+        
         return advisor
     }
     const setAdvisorPassword = async (id:string,password:string)=>{

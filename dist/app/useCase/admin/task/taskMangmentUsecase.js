@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.findTaskByDomainUsecase = exports.addTaskUsecase = void 0;
+exports.findAllTaskUsecase = exports.findTaskByDomainUsecase = exports.addTaskUsecase = void 0;
 const addTaskUsecase = (taskRepository) => {
     return (domainId, Tasks) => __awaiter(void 0, void 0, void 0, function* () {
         const newTask = yield taskRepository.createNewTask(domainId, Tasks);
@@ -22,8 +22,15 @@ const findTaskByDomainUsecase = (taskRepository, studentRepository) => {
         var _a;
         const student = yield studentRepository.findStudentById(userId);
         console.log(student);
-        const task = yield taskRepository.findTaskByDomain((_a = student === null || student === void 0 ? void 0 : student.domain) === null || _a === void 0 ? void 0 : _a._id, student === null || student === void 0 ? void 0 : student.week);
+        const task = yield taskRepository.findWeeklyTask((_a = student === null || student === void 0 ? void 0 : student.domain) === null || _a === void 0 ? void 0 : _a._id, student === null || student === void 0 ? void 0 : student.week);
         return task;
     });
 };
 exports.findTaskByDomainUsecase = findTaskByDomainUsecase;
+const findAllTaskUsecase = (taskRepository) => {
+    return (filterData) => __awaiter(void 0, void 0, void 0, function* () {
+        const allTask = yield taskRepository.findAllTask(filterData);
+        return allTask;
+    });
+};
+exports.findAllTaskUsecase = findAllTaskUsecase;

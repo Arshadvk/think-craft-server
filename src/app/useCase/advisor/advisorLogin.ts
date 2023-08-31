@@ -10,8 +10,12 @@ type advisorReturnType ={
 
 export const loginAdvisor =(advisorRepository: AdvisorRepository)=>{
     return async (advisor : advisorLoginType): Promise <advisorReturnType>=>{
+
+        
         const isAdvisorExist: Advisor | null = await advisorRepository.findAdvisorByEmail(advisor.email)
         if(!isAdvisorExist) throw new AppError("user is not exist" , 404)
+
+        
         const AdvisorToken = await advisorLoginValidate(advisor , isAdvisorExist)
         const verifiedAdvisor ={
             token:AdvisorToken , 

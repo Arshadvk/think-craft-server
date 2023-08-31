@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getReviewListUseCase = exports.getRandomAdvisor = exports.createReviewUsecase = void 0;
+exports.findOneReviewUsecase = exports.findReviewAndUpdateUsecase = exports.getReviewListUseCase = exports.getRandomAdvisor = exports.createReviewUsecase = void 0;
 const createReviewUsecase = (reviewRepository, advisorRepository) => {
     return (studentId, review) => __awaiter(void 0, void 0, void 0, function* () {
         const advisors = yield advisorRepository.findAvilableAdvisor();
@@ -38,3 +38,21 @@ const getReviewListUseCase = (reviewRepository) => {
     });
 };
 exports.getReviewListUseCase = getReviewListUseCase;
+const findReviewAndUpdateUsecase = (reviewRepository, studentRepository) => {
+    return (studentId, reviewerId) => __awaiter(void 0, void 0, void 0, function* () {
+        const studentData = yield studentRepository.findStudentById(studentId);
+        const week = studentData === null || studentData === void 0 ? void 0 : studentData.week;
+        const review = yield reviewRepository.findReviewAndUpdate(studentId, week, reviewerId);
+        return review;
+    });
+};
+exports.findReviewAndUpdateUsecase = findReviewAndUpdateUsecase;
+const findOneReviewUsecase = (reviewRepository, studentRepository) => {
+    return (studentId) => __awaiter(void 0, void 0, void 0, function* () {
+        const studentData = yield studentRepository.findStudentById(studentId);
+        const week = studentData === null || studentData === void 0 ? void 0 : studentData.week;
+        const review = yield reviewRepository.findOneReview(studentId, week);
+        return review;
+    });
+};
+exports.findOneReviewUsecase = findOneReviewUsecase;

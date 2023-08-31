@@ -14,11 +14,9 @@ export const advisorLogin =async (req:Request , res: Response) => {
     try {
         const advisor = req.body
         const advisorToken = await loginAdvisor(advisorRepository)(advisor)
-        console.log(advisorToken);
-        
         res.status(200).json({token:advisorToken})
 
-    } catch (error) {
-        
+    } catch (error : any) {
+        res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' })
     }
 }

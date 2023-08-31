@@ -4,10 +4,17 @@ import slotRepositoryImpl from "../../../../infra/repositories/slot/slot";
 import { CustomRequest } from "../../../middlewares/authMiddleware";
 import moment from 'moment'
 import { AppError } from "../../../../utils/error";
-import { createSlotUsecase, getSlotUsecase } from "../../../../app/usecase/reviewer/slot/slotUsecase";
-import { slotes } from "../../../../domain/entities/slot/slot";
+import { createSlotUsecase, getSlotUsecase, updateSlotUsecase } from "../../../../app/usecase/reviewer/slot/slotUsecase";
+import { Slot, slotes } from "../../../../domain/entities/slot/slot";
+import { findReviewAndUpdateUsecase } from "../../../../app/usecase/review/reviewUsecase";
+import ReviewRepositoryIMPL from "../../../../infra/repositories/review/reviewRepository";
+import { reviewModel } from "../../../../infra/database/model/review/review";
+import studentRepositoryImpl from "../../../../infra/repositories/student/studentRepository";
+import { studentModel } from "../../../../infra/database/model/student/student";
 
 const slotRepository = slotRepositoryImpl(slotModel)
+const reviewRepository = ReviewRepositoryIMPL(reviewModel)
+const studentRepository = studentRepositoryImpl(studentModel)
 
 export const slotCreateController =async (req:CustomRequest , res : Response) => {
     try {
@@ -55,16 +62,27 @@ export const slotCreateController =async (req:CustomRequest , res : Response) =>
 export const getSlotsController =async (req:CustomRequest , res :Response) => {
     try {
         const reviewerId = req.params.id as string
-        console.log(reviewerId);
-        console.log("hello");
-        
-        
         const slot:slotes[]| undefined = await getSlotUsecase(slotRepository)(reviewerId)
-
         res.status(200).json(slot)
-        
     } catch (error:any) {
-        console.log(error);
         res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' })
        }
+}
+
+export const bookSlotController =async (req:CustomRequest , res : Response) => {
+    try {
+        const slotId = req.body.slot as string
+        const studentId = req.body.student as string
+        const reviewerId = req.body.id as string 
+        const slot : Slot | null = await updateSlotUsecase(slotRepository)( reviewerId ,slotId) 
+
+        if (slot) {
+            const review = await findReviewAndUpdateUsecase(reviewRepository , studentRepository )(studentId , reviewerId)
+            res.status(200).json({review})
+        }
+        
+    } catch (error : any) {
+        res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' })
+        
+    }
 }

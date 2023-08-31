@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const task_1 = require("../../database/model/task/task");
 const taskRepositoryIMPL = (TaskModel) => {
     const createNewTask = (domainId, tasks) => __awaiter(void 0, void 0, void 0, function* () {
         const isDomainExist = yield TaskModel.findOne({ domain: domainId });
@@ -24,15 +25,19 @@ const taskRepositoryIMPL = (TaskModel) => {
         yield isDomainExist.save();
         return isDomainExist;
     });
-    const findTaskByDomain = (domainId, week) => __awaiter(void 0, void 0, void 0, function* () {
+    const findWeeklyTask = (domainId, week) => __awaiter(void 0, void 0, void 0, function* () {
         const task = yield TaskModel.findOne({
             domain: domainId,
             'tasks.week': week
         }, {
-            'tasks.$': 1 // This ensures that only the matched task within the array is returned
+            'tasks.$': 1
         });
         return task;
     });
-    return { createNewTask, findTaskByDomain };
+    const findAllTask = (filterData) => __awaiter(void 0, void 0, void 0, function* () {
+        const tasks = task_1.taskModel.find(filterData).populate('domain');
+        return tasks;
+    });
+    return { createNewTask, findWeeklyTask, findAllTask };
 };
 exports.default = taskRepositoryIMPL;

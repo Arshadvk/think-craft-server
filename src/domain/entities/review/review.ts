@@ -1,10 +1,12 @@
 import { ObjectId } from "mongoose"
-import { AdvisorId } from "../advisor/advisor"
+import { Advisor, AdvisorId } from "../advisor/advisor"
 import moment from "moment"
+import { Student } from "../student/student"
+import { Reviewer } from "../reviewer/reviewer"
 
 export interface Review {
     _id : string
-    student : ObjectId
+    student : ObjectId | Student
     reviews : reviews[]
     created_at:string
 
@@ -12,8 +14,8 @@ export interface Review {
 
 export type reviews ={
     week ?: number
-    advisor ?: AdvisorId
-    reviewer ?: ObjectId
+    advisor ?: AdvisorId | Advisor 
+    reviewer ?: ObjectId | Reviewer
     date ?: Date
     mark ?: { code : number , theory : number}
     pendingTask ?: []

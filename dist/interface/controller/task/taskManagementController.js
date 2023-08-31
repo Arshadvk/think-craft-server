@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.findTaskByDomainController = void 0;
+exports.getAllTaskController = exports.findTaskByDomainController = void 0;
 const taskMangmentUsecase_1 = require("../../../app/usecase/admin/task/taskMangmentUsecase");
 const taskRepository_1 = __importDefault(require("../../../infra/repositories/task/taskRepository"));
 const task_1 = require("../../../infra/database/model/task/task");
@@ -24,9 +24,7 @@ const findTaskByDomainController = (req, res) => __awaiter(void 0, void 0, void 
     var _a, _b;
     try {
         const userId = (_b = (_a = req.user) === null || _a === void 0 ? void 0 : _a.student) === null || _b === void 0 ? void 0 : _b._id;
-        console.log(userId);
         const task = yield (0, taskMangmentUsecase_1.findTaskByDomainUsecase)(taskRepository, studentRepository)(userId);
-        console.log(task);
         res.status(200).json(task);
     }
     catch (error) {
@@ -34,3 +32,17 @@ const findTaskByDomainController = (req, res) => __awaiter(void 0, void 0, void 
     }
 });
 exports.findTaskByDomainController = findTaskByDomainController;
+const getAllTaskController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        let filterData = {};
+        if (req.query.week)
+            filterData.week = { 'task.week': req.query.week };
+        if (req.query.domain)
+            filterData.domian = req.query.domain;
+        const task = yield (0, taskMangmentUsecase_1.findAllTaskUsecase)(taskRepository)(filterData);
+        res.status(200).send(task);
+    }
+    catch (error) {
+    }
+});
+exports.getAllTaskController = getAllTaskController;

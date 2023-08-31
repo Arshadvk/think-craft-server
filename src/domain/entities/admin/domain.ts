@@ -3,7 +3,8 @@ import { AppError } from "../../../utils/error";
 
 export interface Domain{
     _id:ObjectId,
-    name:string
+    name:string ,
+    create_at : string
 }
 
 export const validateDomainData = (domainName:string):string=>{

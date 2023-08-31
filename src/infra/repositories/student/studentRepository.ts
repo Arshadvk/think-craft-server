@@ -11,6 +11,7 @@ export type StudentRepository = {
     updateIsBlock: (userId: string, action: string) => Promise<boolean | undefined>
     updateStudentProfile: (userId: string, studentData: object) => Promise<any | null>
     findStudentById:(userId : string)=> Promise <any>
+    findStudentIsBlocked :(userId : string) => Promise <Boolean>
 }
 
 
@@ -52,6 +53,18 @@ const studentRepositoryImpl = (StudentModel: MongoDBStudent): StudentRepository 
         return student
 
     }
+    const findStudentIsBlocked = async (userId: string): Promise<boolean> => {
+  
+            const student : Student | null = await studentModel.findById(userId, { isBlocked: 1 });
+            
+            if (student?.isBlocked) {
+                return true
+            }
+            
+            return false
+       
+    };
+    
     return {
         createStudent,
         findStudentByEmail, 
@@ -59,7 +72,8 @@ const studentRepositoryImpl = (StudentModel: MongoDBStudent): StudentRepository 
         getAllStudents, 
         updateIsBlock, 
         updateStudentProfile,
-        findStudentById
+        findStudentById , 
+        findStudentIsBlocked
     }
 }
 

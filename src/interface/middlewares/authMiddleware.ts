@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import { Response, Request, NextFunction } from "express";
+import studentRepositoryImpl from "../../infra/repositories/student/studentRepository";
 
 export interface CustomRequest extends Request {
     user?: any
@@ -17,8 +18,9 @@ export const StudentAuthToken = (req: CustomRequest, res: Response, next: NextFu
             if (err) {
                 return res.status(401).json({ success: false, message: 'not hello !', Auth: false })
             } else if (user) {
-
+                
                 if(user.role === 'student' && user.student.isBlocked !== true){
+                    
                     req.user = user;
                 }
                 else {

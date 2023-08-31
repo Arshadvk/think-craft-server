@@ -50,6 +50,13 @@ const studentRepositoryImpl = (StudentModel) => {
         const student = yield student_1.studentModel.findById(userId).populate('domain');
         return student;
     });
+    const findStudentIsBlocked = (userId) => __awaiter(void 0, void 0, void 0, function* () {
+        const student = yield student_1.studentModel.findById(userId, { isBlocked: 1 });
+        if (student === null || student === void 0 ? void 0 : student.isBlocked) {
+            return true;
+        }
+        return false;
+    });
     return {
         createStudent,
         findStudentByEmail,
@@ -57,7 +64,8 @@ const studentRepositoryImpl = (StudentModel) => {
         getAllStudents,
         updateIsBlock,
         updateStudentProfile,
-        findStudentById
+        findStudentById,
+        findStudentIsBlocked
     };
 };
 exports.default = studentRepositoryImpl;

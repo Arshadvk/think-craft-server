@@ -12,11 +12,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.findReviewController = void 0;
+exports.findOneReviewController = exports.findReviewController = void 0;
 const reviewRepository_1 = __importDefault(require("../../../infra/repositories/review/reviewRepository"));
 const reviewUsecase_1 = require("../../../app/usecase/review/reviewUsecase");
 const review_1 = require("../../../infra/database/model/review/review");
+const studentRepository_1 = __importDefault(require("../../../infra/repositories/student/studentRepository"));
+const student_1 = require("../../../infra/database/model/student/student");
 const reviewRepository = (0, reviewRepository_1.default)(review_1.reviewModel);
+const studentRepository = (0, studentRepository_1.default)(student_1.studentModel);
 const findReviewController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
     try {
@@ -32,3 +35,16 @@ const findReviewController = (req, res) => __awaiter(void 0, void 0, void 0, fun
     }
 });
 exports.findReviewController = findReviewController;
+const findOneReviewController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _c, _d;
+    try {
+        const userId = (_d = (_c = req.user) === null || _c === void 0 ? void 0 : _c.student) === null || _d === void 0 ? void 0 : _d._id;
+        const review = yield (0, reviewUsecase_1.findOneReviewUsecase)(reviewRepository, studentRepository)(userId);
+        console.log(review);
+        res.status(200).json(review);
+    }
+    catch (error) {
+        res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' });
+    }
+});
+exports.findOneReviewController = findOneReviewController;

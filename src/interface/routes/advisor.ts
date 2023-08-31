@@ -4,7 +4,7 @@ import { advisorLogin } from "../controller/advisor/advisorLoginController";
 import { advisorProfileController, getAdvisorProfileController } from "../controller/advisor/advisorProfileManagment";
 import { advisorAuthToken } from "../middlewares/authMiddleware";
 import { advisorProfileMiddleware } from "../middlewares/profileMiddleware";
-import { getSlotsController } from "../controller/reviewer/slot/slotCreateController";
+import { bookSlotController, getSlotsController } from "../controller/reviewer/slot/slotCreateController";
 import { getAllReviewerSearchFilterSortController } from "../controller/reviewer/reviewerManagment";
 import { findReviewController } from "../controller/review/reviewMangmentController";
 import { getReviewerProfileController } from "../controller/reviewer/reviewerProfileManagment";
@@ -21,5 +21,6 @@ advisorRoute.get('/reviewer-list' , advisorAuthToken , getAllReviewerSearchFilte
 advisorRoute.get('/slots/:id' ,advisorAuthToken , getSlotsController)
 advisorRoute.get('/reviewer-details/:id' , advisorAuthToken , getReviewerProfileController )
 advisorRoute.get('/review-list' , advisorAuthToken ,findReviewController )
+advisorRoute.put('/book-slot'  , bookSlotController )
 
 export default advisorRoute

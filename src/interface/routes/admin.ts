@@ -6,6 +6,7 @@ import { blockAdvisorController, createAdvisorController, getAllAdvisorSearchFil
 import { addDomainController, getAllDomainController } from "../controller/admin/domain/domainController"
 import { addTaskController } from "../controller/admin/task/taskManagment"
 import { adminAuthToken } from "../middlewares/authMiddleware"
+import { getAllTaskController } from "../controller/task/taskManagementController"
 
 
 const adminRoute = express.Router()
@@ -28,9 +29,9 @@ adminRoute.patch('/block-unblock-advisor',adminAuthToken, blockAdvisorController
 adminRoute.post('/add-domain' ,adminAuthToken , addDomainController)
 adminRoute.get('/all-domain' , adminAuthToken, getAllDomainController )
 
-adminRoute.put('/change-password',passwordChangeController )
-adminRoute.post('/add-admin' ,  createAdminController)
+adminRoute.put('/change-password' , adminAuthToken ,passwordChangeController )
+adminRoute.post('/add-admin' ,adminAuthToken , createAdminController)
 
-adminRoute.post('/add-task',addTaskController)
-
+adminRoute.post('/add-task',adminAuthToken ,  addTaskController)
+adminRoute.get('/all-task' , getAllTaskController)
 export default adminRoute

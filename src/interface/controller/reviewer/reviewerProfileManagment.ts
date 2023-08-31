@@ -15,11 +15,11 @@ export const reviewerProfileController =async (req:CustomRequest , res : Respons
         const reviewerData : Object ={
             number : data.number as string , 
             address :  data.address as string ,
-            age : data.age , 
+            age : data?.age , 
             dob : data.dob , 
-            gender : data.gender , 
-            qualification : data.qualification ,
-            domain : data.domain,
+            gender : data?.gender , 
+            qualification : data?.qualification ,
+            domain : data?.domains,
             isProfileVerified: true 
         }
         const reviewer = await reviewerProfileUsecase(reviewerRepository)(userId , reviewerData)

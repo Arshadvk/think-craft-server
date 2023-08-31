@@ -23,4 +23,5 @@ advisorRoute.get('/reviewer-list', authMiddleware_1.advisorAuthToken, reviewerMa
 advisorRoute.get('/slots/:id', authMiddleware_1.advisorAuthToken, slotCreateController_1.getSlotsController);
 advisorRoute.get('/reviewer-details/:id', authMiddleware_1.advisorAuthToken, reviewerProfileManagment_1.getReviewerProfileController);
 advisorRoute.get('/review-list', authMiddleware_1.advisorAuthToken, reviewMangmentController_1.findReviewController);
+advisorRoute.put('/book-slot', slotCreateController_1.bookSlotController);
 exports.default = advisorRoute;

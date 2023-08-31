@@ -9,7 +9,9 @@ export type filterReview ={
 
 export type ReviewRepository = {
     createNewReview: (studentId: string, review: reviews) => Promise<Review>
-    findReview : (filterReview : any ) => Promise <any | null>
+    findReview : (filterReview : any ) => Promise <Review | null>
+    findReviewAndUpdate : (studentId : string , week : number , reviewer : string) => Promise <Review | null>
+    findOneReview : (studentId : string , week : number) => Promise <Review | null >
 }
 
 const ReviewRepositoryIMPL = (ReviewModel: MongoDBReview): ReviewRepository => {
@@ -32,7 +34,7 @@ const ReviewRepositoryIMPL = (ReviewModel: MongoDBReview): ReviewRepository => {
         await isReviewExist.save()
         return isReviewExist
     }
-    const findReview = async (filterData : any ): Promise <any | null > => {
+    const findReview = async (filterData : any ): Promise <Review | null > => {
         const reviews : any | null  = await reviewModel.find(filterData).populate({
             path: 'student',
             populate: {
@@ -42,7 +44,20 @@ const ReviewRepositoryIMPL = (ReviewModel: MongoDBReview): ReviewRepository => {
         return reviews
     }
 
-    return { createNewReview  , findReview }
+    const findReviewAndUpdate = async (studentId: string, week: number, reviewer: string): Promise<Review | null> => {
+        const review: Review | null = await reviewModel.findOneAndUpdate(
+            { student: studentId, 'reviews.week': week },
+            { $set: { 'reviews.$.reviewer': reviewer } } // Use the positional operator $ to update the specific element
+        );
+        return review;
+    };
+
+    const findOneReview  = async (studentId:string , week : number): Promise <Review | null>  => {
+        const reviews : Review | null = await reviewModel.findOne({student : studentId , "reviews.week" : week})
+        return reviews
+    }
+
+    return { createNewReview  , findReview  , findReviewAndUpdate , findOneReview }
 }
 
 

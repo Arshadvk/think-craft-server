@@ -35,6 +35,15 @@ const ReviewRepositoryIMPL = (ReviewModel) => {
         }).populate('reviews.advisor').populate('student.domain');
         return reviews;
     });
-    return { createNewReview, findReview };
+    const findReviewAndUpdate = (studentId, week, reviewer) => __awaiter(void 0, void 0, void 0, function* () {
+        const review = yield review_1.reviewModel.findOneAndUpdate({ student: studentId, 'reviews.week': week }, { $set: { 'reviews.$.reviewer': reviewer } } // Use the positional operator $ to update the specific element
+        );
+        return review;
+    });
+    const findOneReview = (studentId, week) => __awaiter(void 0, void 0, void 0, function* () {
+        const reviews = yield review_1.reviewModel.findOne({ student: studentId, "reviews.week": week });
+        return reviews;
+    });
+    return { createNewReview, findReview, findReviewAndUpdate, findOneReview };
 };
 exports.default = ReviewRepositoryIMPL;

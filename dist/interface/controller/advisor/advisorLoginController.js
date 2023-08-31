@@ -21,10 +21,10 @@ const advisorLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     try {
         const advisor = req.body;
         const advisorToken = yield (0, advisorLogin_1.loginAdvisor)(advisorRepository)(advisor);
-        console.log(advisorToken);
         res.status(200).json({ token: advisorToken });
     }
     catch (error) {
+        res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' });
     }
 });
 exports.advisorLogin = advisorLogin;

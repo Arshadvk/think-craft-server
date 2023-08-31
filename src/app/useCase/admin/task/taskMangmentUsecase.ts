@@ -1,6 +1,6 @@
 import { Task, tasks } from "../../../../domain/entities/task/task";
 import { StudentRepository } from "../../../../infra/repositories/student/studentRepository";
-import { TaskRepository } from "../../../../infra/repositories/task/taskRepository";
+import { FilterTask, TaskRepository } from "../../../../infra/repositories/task/taskRepository";
 
 export const addTaskUsecase = (taskRepository:TaskRepository)=>{
    return async (domainId : string , Tasks : tasks )=>{
@@ -16,7 +16,14 @@ export const findTaskByDomainUsecase = (taskRepository: TaskRepository , student
       const student = await studentRepository.findStudentById(userId)
       console.log(student);
       
-      const task = await taskRepository.findTaskByDomain(student?.domain?._id as string , student?.week as number)
+      const task = await taskRepository.findWeeklyTask(student?.domain?._id as string , student?.week as number)
       return task
+   }
+}
+
+export const findAllTaskUsecase = (taskRepository : TaskRepository)=>{
+   return async (filterData : FilterTask)=>{
+      const allTask = await taskRepository.findAllTask(filterData)
+      return allTask
    }
 }

@@ -60,10 +60,38 @@ const slotRepositoryImpl = (SlotModel) => {
         const slot = yield SlotModel.findOne({ reviewer: reviewerId });
         return slot;
     });
+    const updateSlot = (reviewerId, slotId) => __awaiter(void 0, void 0, void 0, function* () {
+        const crr = (0, moment_1.default)().format('YYYY-MM-DD');
+        const currentDate = new Date(crr);
+        yield SlotModel.findOneAndUpdate({ reviewer: reviewerId }, {
+            $pull: { slotes: { date: { $lt: currentDate } } },
+        });
+        const slot = yield SlotModel.findOneAndUpdate({ reviewer: reviewerId }, [
+            {
+                $set: {
+                    slotes: {
+                        $map: {
+                            input: "$slotes",
+                            as: "slot",
+                            in: {
+                                $cond: [
+                                    { $eq: ["$$slot._id", slotId] },
+                                    { $mergeObjects: ["$$slot", { isBooked: true }] },
+                                    "$$slot"
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        ]);
+        return slot;
+    });
     return {
         createNewSlot,
         findSlot,
-        findSlotByRevId
+        findSlotByRevId,
+        updateSlot
     };
 };
 exports.default = slotRepositoryImpl;

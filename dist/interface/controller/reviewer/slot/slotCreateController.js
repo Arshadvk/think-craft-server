@@ -12,13 +12,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getSlotsController = exports.slotCreateController = void 0;
+exports.bookSlotController = exports.getSlotsController = exports.slotCreateController = void 0;
 const slot_1 = require("../../../../infra/database/model/slot/slot");
 const slot_2 = __importDefault(require("../../../../infra/repositories/slot/slot"));
 const moment_1 = __importDefault(require("moment"));
 const error_1 = require("../../../../utils/error");
 const slotUsecase_1 = require("../../../../app/usecase/reviewer/slot/slotUsecase");
+const reviewUsecase_1 = require("../../../../app/usecase/review/reviewUsecase");
+const reviewRepository_1 = __importDefault(require("../../../../infra/repositories/review/reviewRepository"));
+const review_1 = require("../../../../infra/database/model/review/review");
+const studentRepository_1 = __importDefault(require("../../../../infra/repositories/student/studentRepository"));
+const student_1 = require("../../../../infra/database/model/student/student");
 const slotRepository = (0, slot_2.default)(slot_1.slotModel);
+const reviewRepository = (0, reviewRepository_1.default)(review_1.reviewModel);
+const studentRepository = (0, studentRepository_1.default)(student_1.studentModel);
 const slotCreateController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
     try {
@@ -57,14 +64,27 @@ exports.slotCreateController = slotCreateController;
 const getSlotsController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const reviewerId = req.params.id;
-        console.log(reviewerId);
-        console.log("hello");
         const slot = yield (0, slotUsecase_1.getSlotUsecase)(slotRepository)(reviewerId);
         res.status(200).json(slot);
     }
     catch (error) {
-        console.log(error);
         res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' });
     }
 });
 exports.getSlotsController = getSlotsController;
+const bookSlotController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const slotId = req.body.slot;
+        const studentId = req.body.student;
+        const reviewerId = req.body.id;
+        const slot = yield (0, slotUsecase_1.updateSlotUsecase)(slotRepository)(reviewerId, slotId);
+        if (slot) {
+            const review = yield (0, reviewUsecase_1.findReviewAndUpdateUsecase)(reviewRepository, studentRepository)(studentId, reviewerId);
+            res.status(200).json({ review });
+        }
+    }
+    catch (error) {
+        res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' });
+    }
+});
+exports.bookSlotController = bookSlotController;
