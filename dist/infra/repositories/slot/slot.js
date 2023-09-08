@@ -66,26 +66,18 @@ const slotRepositoryImpl = (SlotModel) => {
         yield SlotModel.findOneAndUpdate({ reviewer: reviewerId }, {
             $pull: { slotes: { date: { $lt: currentDate } } },
         });
-        const slot = yield SlotModel.findOneAndUpdate({ reviewer: reviewerId }, [
-            {
-                $set: {
-                    slotes: {
-                        $map: {
-                            input: "$slotes",
-                            as: "slot",
-                            in: {
-                                $cond: [
-                                    { $eq: ["$$slot._id", slotId] },
-                                    { $mergeObjects: ["$$slot", { isBooked: true }] },
-                                    "$$slot"
-                                ]
-                            }
-                        }
-                    }
-                }
+        const updatedSlot = yield SlotModel.findOneAndUpdate({ reviewer: reviewerId, 'slotes._id': slotId }, // Match the document with reviewerId and slotId
+        {
+            $set: {
+                'slotes.$[element].isBooked': true // Update the isBooked field within the matched slot
             }
-        ]);
-        return slot;
+        }, {
+            arrayFilters: [{ 'element._id': slotId }],
+            new: true // Return the updated document
+        });
+        console.log(updatedSlot);
+        console.log("hr" + updatedSlot);
+        return updatedSlot;
     });
     return {
         createNewSlot,

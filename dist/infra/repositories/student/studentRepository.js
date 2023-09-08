@@ -57,6 +57,10 @@ const studentRepositoryImpl = (StudentModel) => {
         }
         return false;
     });
+    const updateStudentWeek = (userId, week) => __awaiter(void 0, void 0, void 0, function* () {
+        const student = yield student_1.studentModel.findByIdAndUpdate(userId, { week: week }, { new: true });
+        return student;
+    });
     return {
         createStudent,
         findStudentByEmail,
@@ -65,7 +69,8 @@ const studentRepositoryImpl = (StudentModel) => {
         updateIsBlock,
         updateStudentProfile,
         findStudentById,
-        findStudentIsBlocked
+        findStudentIsBlocked,
+        updateStudentWeek
     };
 };
 exports.default = studentRepositoryImpl;

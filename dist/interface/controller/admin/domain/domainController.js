@@ -35,12 +35,11 @@ const addDomainController = (req, res) => __awaiter(void 0, void 0, void 0, func
 exports.addDomainController = addDomainController;
 const getAllDomainController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log("jkh");
         const domains = yield (0, getDomainUsecase_1.getAllDomainUsecase)(domainRepository)();
         if (!domains)
             res.status(500).json({ message: "no domain found" });
         else
-            res.status(200).json({ data: domains });
+            res.status(200).json(domains);
     }
     catch (error) {
     }

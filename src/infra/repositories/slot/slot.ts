@@ -73,29 +73,24 @@ const slotRepositoryImpl = (SlotModel: MongoDBSlot): SlotRepository => {
             $pull : {slotes : {date :{$lt : currentDate}}},
         })
 
-        const slot = await SlotModel.findOneAndUpdate(
-            { reviewer: reviewerId },
-            [
-                {
-                    $set: {
-                        slotes: {
-                            $map: {
-                                input: "$slotes",
-                                as: "slot",
-                                in: {
-                                    $cond: [
-                                        { $eq: ["$$slot._id", slotId] },
-                                        { $mergeObjects: ["$$slot", { isBooked: true }] },
-                                        "$$slot"
-                                    ]
-                                }
-                            }
-                        }
-                    }
+        const updatedSlot = await SlotModel.findOneAndUpdate(
+            { reviewer: reviewerId, 'slotes._id': slotId }, // Match the document with reviewerId and slotId
+            {
+                $set: {
+                    'slotes.$[element].isBooked': true // Update the isBooked field within the matched slot
                 }
-            ]
+            },
+            {
+                arrayFilters: [{ 'element._id': slotId }], // Specify the array filter to match the correct slot
+                new: true // Return the updated document
+            }
         );
-        return slot
+        
+        console.log(updatedSlot);
+        
+        console.log("hr"+updatedSlot);
+        
+        return updatedSlot
     }
     return {
         createNewSlot ,

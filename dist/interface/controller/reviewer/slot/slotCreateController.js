@@ -62,8 +62,9 @@ const slotCreateController = (req, res) => __awaiter(void 0, void 0, void 0, fun
 });
 exports.slotCreateController = slotCreateController;
 const getSlotsController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _m, _o, _p;
     try {
-        const reviewerId = req.params.id;
+        const reviewerId = (_m = req.params.id) !== null && _m !== void 0 ? _m : (_p = (_o = req.user) === null || _o === void 0 ? void 0 : _o.reviewer) === null || _p === void 0 ? void 0 : _p._id;
         const slot = yield (0, slotUsecase_1.getSlotUsecase)(slotRepository)(reviewerId);
         res.status(200).json(slot);
     }
@@ -74,12 +75,15 @@ const getSlotsController = (req, res) => __awaiter(void 0, void 0, void 0, funct
 exports.getSlotsController = getSlotsController;
 const bookSlotController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const slotId = req.body.slot;
-        const studentId = req.body.student;
-        const reviewerId = req.body.id;
+        const values = req.body.value;
+        console.log(values);
+        const slotId = values === null || values === void 0 ? void 0 : values.slot;
+        const studentId = values === null || values === void 0 ? void 0 : values.student;
+        const reviewerId = values === null || values === void 0 ? void 0 : values.reviewer;
         const slot = yield (0, slotUsecase_1.updateSlotUsecase)(slotRepository)(reviewerId, slotId);
         if (slot) {
             const review = yield (0, reviewUsecase_1.findReviewAndUpdateUsecase)(reviewRepository, studentRepository)(studentId, reviewerId);
+            console.log(review);
             res.status(200).json({ review });
         }
     }

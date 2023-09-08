@@ -35,9 +35,33 @@ const taskRepositoryIMPL = (TaskModel) => {
         return task;
     });
     const findAllTask = (filterData) => __awaiter(void 0, void 0, void 0, function* () {
-        const tasks = task_1.taskModel.find(filterData).populate('domain');
+        const query = {};
+        if (filterData.week) {
+            query['tasks.week'] = filterData.week;
+        }
+        if (filterData.domain) {
+            query.domain = filterData.domain;
+        }
+        if (filterData.task) {
+            query['tasks'] = {
+                $elemMatch: {
+                    _id: filterData.task,
+                },
+            };
+        }
+        const tasks = task_1.taskModel.find(query).populate('domain');
         return tasks;
     });
-    return { createNewTask, findWeeklyTask, findAllTask };
+    const findOneTask = (id) => __awaiter(void 0, void 0, void 0, function* () {
+        const task = task_1.taskModel.find({
+            "tasks": {
+                $elemMatch: { "_id": id }
+            }
+        }, {
+            'tasks.$': 1
+        });
+        return task;
+    });
+    return { createNewTask, findWeeklyTask, findAllTask, findOneTask };
 };
 exports.default = taskRepositoryIMPL;

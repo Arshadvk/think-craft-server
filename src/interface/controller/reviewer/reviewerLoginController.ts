@@ -20,7 +20,8 @@ export const reviewerLoginController = async (req: Request , res: Response)=>{
         console.log(ReviewerToken);
         res.status(200).json({message:ReviewerToken})
         
-    } catch (error) {
-        
+    } catch (error:any) {
+        res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' })
+
     }
 }

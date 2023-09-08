@@ -57,6 +57,7 @@ exports.getSlotUsecase = getSlotUsecase;
 const updateSlotUsecase = (slotRepository) => {
     return (reviewerId, slotId) => __awaiter(void 0, void 0, void 0, function* () {
         const slot = yield slotRepository.updateSlot(reviewerId, slotId);
+        console.log(slot);
         return slot;
     });
 };

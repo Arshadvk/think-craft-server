@@ -12,6 +12,7 @@ export type StudentRepository = {
     updateStudentProfile: (userId: string, studentData: object) => Promise<any | null>
     findStudentById:(userId : string)=> Promise <any>
     findStudentIsBlocked :(userId : string) => Promise <Boolean>
+    updateStudentWeek : (userId : string , week: number ) => Promise <any>
 }
 
 
@@ -65,6 +66,10 @@ const studentRepositoryImpl = (StudentModel: MongoDBStudent): StudentRepository 
        
     };
     
+    const updateStudentWeek = async (userId : string ,week : number  ): Promise <any> =>{
+        const student : any  = await studentModel.findByIdAndUpdate(userId , {week: week} , {new : true} )
+        return student 
+    }
     return {
         createStudent,
         findStudentByEmail, 
@@ -73,7 +78,8 @@ const studentRepositoryImpl = (StudentModel: MongoDBStudent): StudentRepository 
         updateIsBlock, 
         updateStudentProfile,
         findStudentById , 
-        findStudentIsBlocked
+        findStudentIsBlocked ,
+        updateStudentWeek
     }
 }
 

@@ -12,21 +12,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.reviewerLoginController = void 0;
-const reviewerLogin_1 = require("../../../app/usecase/reviewer/reviewerLogin");
-const reviewer_1 = require("../../../infra/database/model/reviewer/reviewer");
-const reviewerRepository_1 = __importDefault(require("../../../infra/repositories/reviewer/reviewerRepository"));
-const reviewerRepository = (0, reviewerRepository_1.default)(reviewer_1.reviewerModel);
-const reviewerLoginController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.findStudentManifestController = void 0;
+const reviewUsecase_1 = require("../../../app/usecase/review/reviewUsecase");
+const reviewRepository_1 = __importDefault(require("../../../infra/repositories/review/reviewRepository"));
+const review_1 = require("../../../infra/database/model/review/review");
+const reviewRepository = (0, reviewRepository_1.default)(review_1.reviewModel);
+const findStudentManifestController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
     try {
-        const reviewer = req.body;
-        console.log(reviewer);
-        const ReviewerToken = yield (0, reviewerLogin_1.loginReviewer)(reviewerRepository)(reviewer);
-        console.log(ReviewerToken);
-        res.status(200).json({ message: ReviewerToken });
+        const userId = (_b = (_a = req.user) === null || _a === void 0 ? void 0 : _a.student) === null || _b === void 0 ? void 0 : _b._id;
+        let filterData = {};
+        filterData.student = userId;
+        const reviews = yield (0, reviewUsecase_1.getReviewListUseCase)(reviewRepository)(filterData);
+        res.status(200).json(reviews);
     }
     catch (error) {
         res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' });
     }
 });
-exports.reviewerLoginController = reviewerLoginController;
+exports.findStudentManifestController = findStudentManifestController;

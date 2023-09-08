@@ -10,6 +10,7 @@ export const StudentAuthToken = (req: CustomRequest, res: Response, next: NextFu
     try {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
         const authHeader: any | undefined = req.headers.authorization;
         const secretKey: string | undefined = process.env.JWT_SECRET_KEY
+
         if (!authHeader || !secretKey) {
             return res.status(401).json({ success: false, message: 'not authenticated !', Auth: false })
         }
@@ -26,7 +27,6 @@ export const StudentAuthToken = (req: CustomRequest, res: Response, next: NextFu
                 else {
                     return res.status(401).json({ success: false, message: 'this token not for student !', Auth: false }) 
                 }
-                console.log(user);
 
             }
             
@@ -59,7 +59,6 @@ export const adminAuthToken = (req: CustomRequest, res: Response, next: NextFunc
                 else {
                     return res.status(401).json({ success: false, message: 'this token not for admin !', Auth: false }) 
                 }
-                console.log(user);
 
             }
             next();
@@ -91,7 +90,6 @@ export const advisorAuthToken =async ( req:CustomRequest , res : Response , next
                 else {
                     return res.status(401).json({ success: false, message: 'this token not for advisor !', Auth: false }) 
                 }
-                console.log(user);
 
             }
             
@@ -126,7 +124,6 @@ export const reviewerAuthToken =async ( req:CustomRequest , res : Response , nex
                 else {
                     return res.status(401).json({ success: false, message: 'this token not for reviewer !', Auth: false }) 
                 }
-                console.log(user);
 
             }
             

@@ -38,7 +38,7 @@ const studentSchema = new mongoose_1.Schema({
     domain: { type: mongoose_1.Schema.Types.ObjectId, ref: 'domain' },
     gender: { type: String, enum: ['male', 'female'] },
     isProfileVerified: { type: Boolean, default: false },
-    week: { type: Number, default: 1 }
+    week: { type: Number, default: 0 }
 }, {
     timestamps: { createdAt: true }
 });

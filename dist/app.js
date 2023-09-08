@@ -29,3 +29,12 @@ app.use('/', student_1.default);
 // port setting
 const PORT = Number(4000 || process.env.PORT);
 const server = app.listen(4000, () => console.log(`server is runnin on port ${PORT}`));
+const io = require('socket.io')(server, {
+    pingTimeout: 600000,
+    cors: {
+        origin: 'http://localhost:3000'
+    }
+});
+io.on('connection', (socket) => {
+    console.log("Socket Connected", socket.id);
+});

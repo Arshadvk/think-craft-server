@@ -41,7 +41,7 @@ export const getReviewerProfileController =async (req:CustomRequest , res : Resp
         const reviewer = await getReviewerProfileUsecase(reviewerRepository)(reviewerId)
         console.log(reviewer);
         
-        res.status(200).json({data:reviewer})
+        res.status(200).json(reviewer)
         
     } catch (error:any) {
         res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' })

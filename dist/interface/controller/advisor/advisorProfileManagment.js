@@ -47,7 +47,7 @@ const getAdvisorProfileController = (req, res) => __awaiter(void 0, void 0, void
     try {
         const userId = (_d = (_c = req.user) === null || _c === void 0 ? void 0 : _c.advisor) === null || _d === void 0 ? void 0 : _d._id;
         const advisor = yield (0, advisorProfile_1.getAdvisorProfileUsecase)(advisorRepository)(userId);
-        res.status(200).json({ data: advisor });
+        res.status(200).json(advisor);
     }
     catch (error) {
         res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' });

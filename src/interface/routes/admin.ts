@@ -6,7 +6,7 @@ import { blockAdvisorController, createAdvisorController, getAllAdvisorSearchFil
 import { addDomainController, getAllDomainController } from "../controller/admin/domain/domainController"
 import { addTaskController } from "../controller/admin/task/taskManagment"
 import { adminAuthToken } from "../middlewares/authMiddleware"
-import { getAllTaskController } from "../controller/task/taskManagementController"
+import { getAllTaskController, getOneTaskController } from "../controller/task/taskManagementController"
 
 
 const adminRoute = express.Router()
@@ -33,5 +33,6 @@ adminRoute.put('/change-password' , adminAuthToken ,passwordChangeController )
 adminRoute.post('/add-admin' ,adminAuthToken , createAdminController)
 
 adminRoute.post('/add-task',adminAuthToken ,  addTaskController)
-adminRoute.get('/all-task' , getAllTaskController)
+adminRoute.get('/all-task' , adminAuthToken ,  getAllTaskController)
+adminRoute.get('/task' , adminAuthToken ,  getOneTaskController)
 export default adminRoute

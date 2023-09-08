@@ -16,7 +16,7 @@ const studentSchema = new Schema({
     domain:{type: Schema.Types.ObjectId, ref: 'domain'},
     gender: { type: String, enum: ['male', 'female'] }, 
     isProfileVerified: { type: Boolean, default: false },
-    week: {type:Number  , default:1} 
+    week: {type:Number  , default:0} 
    
 
     

@@ -18,9 +18,10 @@ advisorRoute.put('/set-profile/:id' , advisorProfileMiddleware ,  advisorProfile
 advisorRoute.put('/edit-profile' , advisorAuthToken  , advisorProfileController )
 advisorRoute.get('/profile' , advisorAuthToken ,  getAdvisorProfileController)
 advisorRoute.get('/reviewer-list' , advisorAuthToken , getAllReviewerSearchFilterSortController)
+advisorRoute.get('/')
 advisorRoute.get('/slots/:id' ,advisorAuthToken , getSlotsController)
 advisorRoute.get('/reviewer-details/:id' , advisorAuthToken , getReviewerProfileController )
 advisorRoute.get('/review-list' , advisorAuthToken ,findReviewController )
-advisorRoute.put('/book-slot'  , bookSlotController )
+advisorRoute.put('/book-slot'  ,advisorAuthToken , bookSlotController )
 
 export default advisorRoute

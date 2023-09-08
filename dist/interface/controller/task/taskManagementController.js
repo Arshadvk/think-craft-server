@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllTaskController = exports.findTaskByDomainController = void 0;
+exports.getOneTaskController = exports.getAllTaskController = exports.findTaskByDomainController = void 0;
 const taskMangmentUsecase_1 = require("../../../app/usecase/admin/task/taskMangmentUsecase");
 const taskRepository_1 = __importDefault(require("../../../infra/repositories/task/taskRepository"));
 const task_1 = require("../../../infra/database/model/task/task");
@@ -38,11 +38,27 @@ const getAllTaskController = (req, res) => __awaiter(void 0, void 0, void 0, fun
         if (req.query.week)
             filterData.week = { 'task.week': req.query.week };
         if (req.query.domain)
-            filterData.domian = req.query.domain;
+            filterData.domain = req.query.domain;
+        if (req.query.id)
+            filterData.task = req.query.id;
+        console.log(filterData);
         const task = yield (0, taskMangmentUsecase_1.findAllTaskUsecase)(taskRepository)(filterData);
-        res.status(200).send(task);
+        res.status(200).json(task);
     }
     catch (error) {
+        res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' });
     }
 });
 exports.getAllTaskController = getAllTaskController;
+const getOneTaskController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req.query.id;
+        const task = yield (0, taskMangmentUsecase_1.getOneTaskUseCase)(taskRepository)(id);
+        console.log("hwllo" + task);
+        res.status(200).json(task);
+    }
+    catch (error) {
+        res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' });
+    }
+});
+exports.getOneTaskController = getOneTaskController;

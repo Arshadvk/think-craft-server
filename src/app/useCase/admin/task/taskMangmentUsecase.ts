@@ -1,3 +1,4 @@
+import { ObjectId } from "mongoose";
 import { Task, tasks } from "../../../../domain/entities/task/task";
 import { StudentRepository } from "../../../../infra/repositories/student/studentRepository";
 import { FilterTask, TaskRepository } from "../../../../infra/repositories/task/taskRepository";
@@ -25,5 +26,12 @@ export const findAllTaskUsecase = (taskRepository : TaskRepository)=>{
    return async (filterData : FilterTask)=>{
       const allTask = await taskRepository.findAllTask(filterData)
       return allTask
+   }
+}
+
+export const getOneTaskUseCase = (taskRepository : TaskRepository) =>{
+   return async (id : string) =>{
+      const task = await taskRepository.findOneTask(id)
+      return task
    }
 }

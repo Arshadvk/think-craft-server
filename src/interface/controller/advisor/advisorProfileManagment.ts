@@ -38,7 +38,7 @@ export const getAdvisorProfileController =async (req:CustomRequest , res : Respo
     try {
         const userId: string | undefined = req.user?.advisor?._id as string
         const advisor = await getAdvisorProfileUsecase(advisorRepository)(userId)
-        res.status(200).json({data:advisor})
+        res.status(200).json(advisor)
     } catch (error:any) {
         res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' })
     }

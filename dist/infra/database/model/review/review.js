@@ -41,6 +41,28 @@ const reviewSchema = new mongoose_1.Schema({
                 advisor: {
                     type: mongoose_1.Schema.Types.ObjectId, ref: "advisor"
                 },
+                mark: {
+                    type: {
+                        code: {
+                            type: Number,
+                            default: 0,
+                        },
+                        theory: {
+                            type: Number,
+                            default: 0,
+                        },
+                    },
+                },
+                pendingTask: {
+                    type: Array
+                },
+                status: {
+                    type: String,
+                    default: "not-scheduled"
+                },
+                taskStatus: {
+                    type: String
+                }
             }]
     }
 }, {

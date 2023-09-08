@@ -61,7 +61,7 @@ export const slotCreateController =async (req:CustomRequest , res : Response) =>
 
 export const getSlotsController =async (req:CustomRequest , res :Response) => {
     try {
-        const reviewerId = req.params.id as string
+        const reviewerId = req.params.id ?? req.user?.reviewer?._id as string
         const slot:slotes[]| undefined = await getSlotUsecase(slotRepository)(reviewerId)
         res.status(200).json(slot)
     } catch (error:any) {
@@ -71,13 +71,18 @@ export const getSlotsController =async (req:CustomRequest , res :Response) => {
 
 export const bookSlotController =async (req:CustomRequest , res : Response) => {
     try {
-        const slotId = req.body.slot as string
-        const studentId = req.body.student as string
-        const reviewerId = req.body.id as string 
+        const values = req.body.value
+        console.log(values);
+        
+        const slotId = values?.slot as string
+        const studentId = values?.student as string
+        const reviewerId =values?.reviewer as string 
         const slot : Slot | null = await updateSlotUsecase(slotRepository)( reviewerId ,slotId) 
 
         if (slot) {
             const review = await findReviewAndUpdateUsecase(reviewRepository , studentRepository )(studentId , reviewerId)
+            console.log(review);
+            
             res.status(200).json({review})
         }
         

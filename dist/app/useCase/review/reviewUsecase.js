@@ -9,8 +9,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.findOneReviewUsecase = exports.findReviewAndUpdateUsecase = exports.getReviewListUseCase = exports.getRandomAdvisor = exports.createReviewUsecase = void 0;
-const createReviewUsecase = (reviewRepository, advisorRepository) => {
+exports.findOneReviewDetailsUseCase = exports.UpdateMarkUsecase = exports.findOneReviewUsecase = exports.findReviewAndUpdateUsecase = exports.getReviewListUseCase = exports.getRandomAdvisor = exports.createReviewUsecase = void 0;
+const createReviewUsecase = (reviewRepository, advisorRepository, studentRepository) => {
     return (studentId, review) => __awaiter(void 0, void 0, void 0, function* () {
         const advisors = yield advisorRepository.findAvilableAdvisor();
         const selectedAdvisor = (0, exports.getRandomAdvisor)(advisors);
@@ -19,6 +19,7 @@ const createReviewUsecase = (reviewRepository, advisorRepository) => {
         }
         review.advisor = selectedAdvisor;
         const newReview = yield reviewRepository.createNewReview(studentId, review);
+        const weekUpdatedStudent = yield studentRepository.updateStudentWeek(studentId, review.week);
         return newReview;
     });
 };
@@ -48,11 +49,31 @@ const findReviewAndUpdateUsecase = (reviewRepository, studentRepository) => {
 };
 exports.findReviewAndUpdateUsecase = findReviewAndUpdateUsecase;
 const findOneReviewUsecase = (reviewRepository, studentRepository) => {
-    return (studentId) => __awaiter(void 0, void 0, void 0, function* () {
-        const studentData = yield studentRepository.findStudentById(studentId);
-        const week = studentData === null || studentData === void 0 ? void 0 : studentData.week;
-        const review = yield reviewRepository.findOneReview(studentId, week);
+    return (studentId, week) => __awaiter(void 0, void 0, void 0, function* () {
+        let weekNo;
+        if (week) {
+            weekNo = week;
+        }
+        else {
+            const studentData = yield studentRepository.findStudentById(studentId);
+            weekNo = studentData === null || studentData === void 0 ? void 0 : studentData.week;
+        }
+        const review = yield reviewRepository.findOneReview(studentId, weekNo);
         return review;
     });
 };
 exports.findOneReviewUsecase = findOneReviewUsecase;
+const UpdateMarkUsecase = (reviewRepository) => {
+    return (id, week, data) => __awaiter(void 0, void 0, void 0, function* () {
+        const updateReviewData = yield reviewRepository.findReviewAndUpdateMark(id, week, data);
+        return updateReviewData;
+    });
+};
+exports.UpdateMarkUsecase = UpdateMarkUsecase;
+const findOneReviewDetailsUseCase = (reviewRepository) => {
+    return (reviewsId) => __awaiter(void 0, void 0, void 0, function* () {
+        const reviewDetails = yield reviewRepository.findOneReviewId(reviewsId);
+        return reviewDetails;
+    });
+};
+exports.findOneReviewDetailsUseCase = findOneReviewDetailsUseCase;

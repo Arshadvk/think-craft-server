@@ -4,7 +4,7 @@ import { studentModel } from "../../../infra/database/model/student/student";
 import studentRepositoryImpl from "../../../infra/repositories/student/studentRepository";
 import { CustomRequest } from "../../middlewares/authMiddleware";
 import { Date, ObjectId } from "mongoose";
-import { createReviewUsecase } from "../../../app/usecase/review/reviewUsecase";
+import { createReviewUsecase, findOneReviewUsecase } from "../../../app/usecase/review/reviewUsecase";
 import ReviewRepositoryIMPL from "../../../infra/repositories/review/reviewRepository";
 import { reviewModel } from "../../../infra/database/model/review/review";
 import AdvisorRepositoryImpl from "../../../infra/repositories/advisor/advisorRepository";
@@ -40,11 +40,11 @@ export const studentProfileController = async (req: CustomRequest, res: Response
         if (student) {
             const review : reviews = {
                 date : moment().add(8, 'days').toDate() ,
-                week : student?.week
+                week : 1 
                 
             }
 
-            const newReview = await createReviewUsecase(reviewRepository , advisorRepository)(userId , review )
+            const newReview = await createReviewUsecase(reviewRepository , advisorRepository, studentRepository)(userId , review )
             const token =  createToken(student)
 
             res.status(200).json({ token:token })
@@ -64,12 +64,25 @@ export const getStudentProfileController =async (req:CustomRequest , res: Respon
     try {
         const studentId:string =  req.user?.student?._id  
         const student = await getStudentProfileUsecase(studentRepository)(studentId)
-        res.status(200).json({data:student})
+        res.status(200).json(student)
     } catch (error : any) {
         
         
         res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' })
 
+    }
+    
+}
+
+export const getStudentHomeController =async (req:CustomRequest , res : Response) => {
+    try {
+        const studentId:string =  req.user?.student?._id  
+        let week
+        const student = await getStudentProfileUsecase(studentRepository)(studentId)
+        const review = await findOneReviewUsecase(reviewRepository , studentRepository)(studentId, week  )
+        res.status(200).json({student ,review})
+    } catch (error : any) {
+        res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' })
     }
     
 }

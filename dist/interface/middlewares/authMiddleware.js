@@ -32,7 +32,6 @@ const StudentAuthToken = (req, res, next) => {
                 else {
                     return res.status(401).json({ success: false, message: 'this token not for student !', Auth: false });
                 }
-                console.log(user);
             }
             next();
         });
@@ -61,7 +60,6 @@ const adminAuthToken = (req, res, next) => {
                 else {
                     return res.status(401).json({ success: false, message: 'this token not for admin !', Auth: false });
                 }
-                console.log(user);
             }
             next();
         });
@@ -91,7 +89,6 @@ const advisorAuthToken = (req, res, next) => __awaiter(void 0, void 0, void 0, f
                 else {
                     return res.status(401).json({ success: false, message: 'this token not for advisor !', Auth: false });
                 }
-                console.log(user);
             }
             next();
         });
@@ -121,7 +118,6 @@ const reviewerAuthToken = (req, res, next) => __awaiter(void 0, void 0, void 0, 
                 else {
                     return res.status(401).json({ success: false, message: 'this token not for reviewer !', Auth: false });
                 }
-                console.log(user);
             }
             next();
         });

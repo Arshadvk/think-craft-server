@@ -1,14 +1,18 @@
+import { ObjectId } from "mongoose";
 import { Task, tasks } from "../../../domain/entities/task/task";
 import { MongoDBTask, taskModel } from "../../database/model/task/task";
+import { query } from "express";
 
 export interface FilterTask {
-    domian?: string 
+    domain?: ObjectId 
     week ?: object
+    task ?: string
 }
 export type TaskRepository ={
     createNewTask:(domainId:string , task:tasks)=>Promise<Task>
     findWeeklyTask:(domainId:string ,week : number )=>Promise<Task | null>
     findAllTask :(filterData : FilterTask)=>Promise  <Task | null >
+    findOneTask : (id : string) => Promise <Task | null>
 }
 
 const taskRepositoryIMPL = (TaskModel:MongoDBTask):TaskRepository=>{
@@ -41,11 +45,35 @@ const taskRepositoryIMPL = (TaskModel:MongoDBTask):TaskRepository=>{
     }
 
     const findAllTask =async (filterData :FilterTask ): Promise <Task | null > => {
-        const tasks : any | null = taskModel.find(filterData).populate('domain')
+        const query : any = {}
+        if (filterData.week) {
+            query['tasks.week'] = filterData.week;
+          }
+          if (filterData.domain) {
+            query.domain = filterData.domain;
+          }
+          if (filterData.task) {
+            query['tasks'] = {
+              $elemMatch: {
+                _id: filterData.task,
+              },
+            };
+          }
+
+        const tasks : any | null = taskModel.find(query).populate('domain')
         return tasks
     }
-    
-    return {createNewTask , findWeeklyTask , findAllTask}
+    const findOneTask =async (id : string):Promise <Task | null> => {
+        const task : Task | any = taskModel.find({
+            "tasks": {
+              $elemMatch: { "_id": id }
+            }
+          }, {
+            'tasks.$': 1 
+          });
+        return task
+    }
+    return {createNewTask , findWeeklyTask , findAllTask , findOneTask}
 }
 
 export default taskRepositoryIMPL

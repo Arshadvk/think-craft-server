@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getStudentProfileController = exports.studentProfileController = void 0;
+exports.getStudentHomeController = exports.getStudentProfileController = exports.studentProfileController = void 0;
 const studentProfile_1 = require("../../../app/usecase/student/studentProfile");
 const student_1 = require("../../../infra/database/model/student/student");
 const studentRepository_1 = __importDefault(require("../../../infra/repositories/student/studentRepository"));
@@ -46,9 +46,9 @@ const studentProfileController = (req, res) => __awaiter(void 0, void 0, void 0,
         if (student) {
             const review = {
                 date: (0, moment_1.default)().add(8, 'days').toDate(),
-                week: student === null || student === void 0 ? void 0 : student.week
+                week: 1
             };
-            const newReview = yield (0, reviewUsecase_1.createReviewUsecase)(reviewRepository, advisorRepository)(userId, review);
+            const newReview = yield (0, reviewUsecase_1.createReviewUsecase)(reviewRepository, advisorRepository, studentRepository)(userId, review);
             const token = (0, student_2.createToken)(student);
             res.status(200).json({ token: token });
         }
@@ -65,10 +65,24 @@ const getStudentProfileController = (req, res) => __awaiter(void 0, void 0, void
     try {
         const studentId = (_d = (_c = req.user) === null || _c === void 0 ? void 0 : _c.student) === null || _d === void 0 ? void 0 : _d._id;
         const student = yield (0, studentProfile_1.getStudentProfileUsecase)(studentRepository)(studentId);
-        res.status(200).json({ data: student });
+        res.status(200).json(student);
     }
     catch (error) {
         res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' });
     }
 });
 exports.getStudentProfileController = getStudentProfileController;
+const getStudentHomeController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _e, _f;
+    try {
+        const studentId = (_f = (_e = req.user) === null || _e === void 0 ? void 0 : _e.student) === null || _f === void 0 ? void 0 : _f._id;
+        let week;
+        const student = yield (0, studentProfile_1.getStudentProfileUsecase)(studentRepository)(studentId);
+        const review = yield (0, reviewUsecase_1.findOneReviewUsecase)(reviewRepository, studentRepository)(studentId, week);
+        res.status(200).json({ student, review });
+    }
+    catch (error) {
+        res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' });
+    }
+});
+exports.getStudentHomeController = getStudentHomeController;

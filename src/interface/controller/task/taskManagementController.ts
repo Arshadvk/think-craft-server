@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
 import { CustomRequest } from "../../middlewares/authMiddleware";
-import { findAllTaskUsecase, findTaskByDomainUsecase } from "../../../app/usecase/admin/task/taskMangmentUsecase";
+import { findAllTaskUsecase, findTaskByDomainUsecase, getOneTaskUseCase } from "../../../app/usecase/admin/task/taskMangmentUsecase";
 import taskRepositoryIMPL, { FilterTask } from "../../../infra/repositories/task/taskRepository";
 import { taskModel } from "../../../infra/database/model/task/task";
 import studentRepositoryImpl from "../../../infra/repositories/student/studentRepository";
 import { studentModel } from "../../../infra/database/model/student/student";
+import { ObjectId } from "mongoose";
 
 const taskRepository = taskRepositoryIMPL(taskModel)
 const studentRepository = studentRepositoryImpl(studentModel)
@@ -23,11 +24,28 @@ export const getAllTaskController =async (req:Request , res : Response) => {
     try {
         let filterData : FilterTask = {}
         if (req.query.week) filterData.week = {'task.week' : req.query.week  } 
-        if(req.query.domain) filterData.domian = req.query.domain as string
-        const task = await findAllTaskUsecase(taskRepository)(filterData)
-        res.status(200).send(task)
-    } catch (error) {
+        if (req.query.domain) filterData.domain = req.query.domain as unknown as ObjectId
+        if (req.query.id) filterData.task =  req.query.id as string
+        console.log(filterData);
         
+        const task = await findAllTaskUsecase(taskRepository)(filterData)
+        res.status(200).json(task)
+    } catch (error:any) {
+        res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' }) 
+    }
+}
+
+export const getOneTaskController =async (req:Request , res : Response ) => {
+    try {
+        const id = req.query.id  as string
+
+        const task = await getOneTaskUseCase(taskRepository)(id)
+        console.log("hwllo"+task);
+        
+        res.status(200).json(task)
+
+    } catch (error:any) {
+        res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' }) 
     }
     
 }

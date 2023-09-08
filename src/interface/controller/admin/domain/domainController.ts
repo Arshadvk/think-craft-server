@@ -23,11 +23,9 @@ export const addDomainController = async (req: Request, res: Response) => {
 
 export const getAllDomainController =async (req:Request , res : Response ) => {
   try {
-    console.log("jkh");
-    
     const domains = await getAllDomainUsecase(domainRepository)()
     if(!domains) res.status(500).json({message:"no domain found"})
-    else res.status(200).json({data:domains})
+    else res.status(200).json(domains)
   } catch (error) {
     
   }

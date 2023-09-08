@@ -20,8 +20,9 @@ advisorRoute.put('/set-profile/:id', profileMiddleware_1.advisorProfileMiddlewar
 advisorRoute.put('/edit-profile', authMiddleware_1.advisorAuthToken, advisorProfileManagment_1.advisorProfileController);
 advisorRoute.get('/profile', authMiddleware_1.advisorAuthToken, advisorProfileManagment_1.getAdvisorProfileController);
 advisorRoute.get('/reviewer-list', authMiddleware_1.advisorAuthToken, reviewerManagment_1.getAllReviewerSearchFilterSortController);
+advisorRoute.get('/');
 advisorRoute.get('/slots/:id', authMiddleware_1.advisorAuthToken, slotCreateController_1.getSlotsController);
 advisorRoute.get('/reviewer-details/:id', authMiddleware_1.advisorAuthToken, reviewerProfileManagment_1.getReviewerProfileController);
 advisorRoute.get('/review-list', authMiddleware_1.advisorAuthToken, reviewMangmentController_1.findReviewController);
-advisorRoute.put('/book-slot', slotCreateController_1.bookSlotController);
+advisorRoute.put('/book-slot', authMiddleware_1.advisorAuthToken, slotCreateController_1.bookSlotController);
 exports.default = advisorRoute;

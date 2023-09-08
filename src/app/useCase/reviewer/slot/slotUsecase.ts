@@ -59,6 +59,8 @@ export const getSlotUsecase = (slotRepository: SlotRepository) => {
 export const updateSlotUsecase = (slotRepository: SlotRepository) => {
     return async (reviewerId: string, slotId: string): Promise<Slot | null> => {
         const slot: Slot | null = await slotRepository.updateSlot(reviewerId, slotId)
+        console.log(slot);
+        
         return slot
     }
 }

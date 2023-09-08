@@ -51,7 +51,7 @@ const getReviewerProfileController = (req, res) => __awaiter(void 0, void 0, voi
         console.log(reviewerId);
         const reviewer = yield (0, reviewerProfile_1.getReviewerProfileUsecase)(reviewerRepository)(reviewerId);
         console.log(reviewer);
-        res.status(200).json({ data: reviewer });
+        res.status(200).json(reviewer);
     }
     catch (error) {
         res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' });

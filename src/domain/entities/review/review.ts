@@ -7,23 +7,18 @@ import { Reviewer } from "../reviewer/reviewer"
 export interface Review {
     _id : string
     student : ObjectId | Student
-    reviews : reviews[]
-    created_at:string
-
-}
-
-export type reviews ={
     week ?: number
-    advisor ?: AdvisorId | Advisor 
-    reviewer ?: ObjectId | Reviewer
+    advisor ?: AdvisorId | Advisor | undefined
+    reviewer ?: ObjectId | Reviewer | undefined
     date ?: Date
     mark ?: { code : number , theory : number}
     pendingTask ?: []
     status ?: string
+    taskStatus ?: string 
+    created_at:string
 
 }
 
 export const findReviewdata = ()=>{
     const eightDaysFromNow = moment().add(8, 'days').toDate();
-
 }
