@@ -29,8 +29,14 @@ const reviewerRepositoryImpl=(ReviewerModel:MongoDBReviewer):ReviewerRepository=
     }
 
     const getAllReviewer = async (filterData : Filter ):Promise<object[]> =>{
-        const allReviewer  = reviewerModel.find(filterData).populate('domain')
-        return allReviewer
+        if (filterData.search) {
+            const allReviewer  = reviewerModel.find(filterData.search).populate('domain')
+            return allReviewer
+            
+        }else{
+            const allReviewer  = reviewerModel.find(filterData).populate('domain')
+            return allReviewer
+        }
     }
 
     const updateIsBlock =async (userId:string , action:string):Promise<boolean | undefined> => {

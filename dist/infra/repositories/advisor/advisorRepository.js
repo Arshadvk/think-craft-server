@@ -24,9 +24,15 @@ const AdvisorRepositoryImpl = (AdvisorModel) => {
         const advisor = yield advisor_1.advisorModel.findOneAndUpdate({ _id: id }, { $set: { password: password } });
         return advisor;
     });
-    const getAllAdvisor = () => __awaiter(void 0, void 0, void 0, function* () {
-        const allAdvisors = yield advisor_1.advisorModel.find();
-        return allAdvisors;
+    const getAllAdvisor = (filterData) => __awaiter(void 0, void 0, void 0, function* () {
+        if (filterData.search) {
+            const allAdvisors = yield advisor_1.advisorModel.find(filterData.search);
+            return allAdvisors;
+        }
+        else {
+            const allAdvisors = yield advisor_1.advisorModel.find(filterData);
+            return allAdvisors;
+        }
     });
     const updateIsBlock = (userId, action) => __awaiter(void 0, void 0, void 0, function* () {
         let isBlocked;

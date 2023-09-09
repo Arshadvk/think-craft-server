@@ -8,6 +8,7 @@ import { bookSlotController, getSlotsController } from "../controller/reviewer/s
 import { getAllReviewerSearchFilterSortController } from "../controller/reviewer/reviewerManagment";
 import { findReviewController } from "../controller/review/reviewMangmentController";
 import { getReviewerProfileController } from "../controller/reviewer/reviewerProfileManagment";
+import { updatedReviewController } from "../controller/review/advisor/reviewManagmentController";
 
 
 const advisorRoute = express.Router()
@@ -18,7 +19,7 @@ advisorRoute.put('/set-profile/:id' , advisorProfileMiddleware ,  advisorProfile
 advisorRoute.put('/edit-profile' , advisorAuthToken  , advisorProfileController )
 advisorRoute.get('/profile' , advisorAuthToken ,  getAdvisorProfileController)
 advisorRoute.get('/reviewer-list' , advisorAuthToken , getAllReviewerSearchFilterSortController)
-advisorRoute.get('/')
+advisorRoute.put('/update-review-details' , advisorAuthToken , updatedReviewController)
 advisorRoute.get('/slots/:id' ,advisorAuthToken , getSlotsController)
 advisorRoute.get('/reviewer-details/:id' , advisorAuthToken , getReviewerProfileController )
 advisorRoute.get('/review-list' , advisorAuthToken ,findReviewController )

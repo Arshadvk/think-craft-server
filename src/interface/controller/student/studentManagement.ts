@@ -7,6 +7,7 @@ import { getAllStudentUseCase } from "../../../app/usecase/admin/student/getAllS
 import { AppError } from "../../../utils/error";
 import { blockStudentUseCase } from "../../../app/usecase/admin/student/block-unblock"
 import { CustomRequest } from "../../middlewares/authMiddleware";
+import { Filter } from "../reviewer/reviewerManagment";
 
 
 
@@ -39,7 +40,20 @@ export const passwordCreation = async (req: CustomRequest, res: Response) => {
 
 export const getAllStudentSearchFilterSortController = async (req: Request, res: Response) => {
     try {
-        const studentList = await getAllStudentUseCase(studentRepository)()
+        let filterData : Filter ={}
+
+        
+        if(req.query.search){
+            
+            filterData.search = {
+                $or : [ {email : {$regex: req.query.search as string , $options : 'i' } }, 
+             { name:  {$regex: req.query.search as string , $options : 'i' } },
+            ]}
+        } 
+     
+        
+        if(req.query.domain) filterData.domain = req.query.domain as string 
+        const studentList = await getAllStudentUseCase(studentRepository)(filterData)
         res.status(200).json(studentList)
     } catch (error: any) {
         res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' })

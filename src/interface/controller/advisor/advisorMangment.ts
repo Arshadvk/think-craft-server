@@ -6,6 +6,7 @@ import { Request,Response } from "express"
 import { AppError } from "../../../utils/error"
 import { blockAdvisorUsecase } from "../../../app/usecase/admin/advisor/block-unblock"
 import { CustomRequest } from "../../middlewares/authMiddleware"
+import { Filter } from "../reviewer/reviewerManagment"
 
 
 const advisorRepository = AdvisorRepositoryImpl(advisorModel)
@@ -38,7 +39,17 @@ export const passwordCreationAdvisor = async (req:CustomRequest , res: Response)
 
 export const getAllAdvisorSearchFilterSortController =async (req:Request , res : Response) => {
     try {
-        const advisorList = await getAllAdvisorUsecase(advisorRepository)()
+        let filterData : Filter ={}
+
+        if(req.query.search){
+            
+            filterData.search = {
+                $or : [ {email : {$regex: req.query.search as string , $options : 'i' } }, 
+             { name:  {$regex: req.query.search as string , $options : 'i' }}
+    
+            ]}
+        } 
+        const advisorList = await getAllAdvisorUsecase(advisorRepository)(filterData )
         res.status(200).json(advisorList)
     } catch (error: any) {
         res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' })

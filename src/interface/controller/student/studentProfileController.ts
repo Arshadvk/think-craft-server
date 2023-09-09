@@ -4,14 +4,14 @@ import { studentModel } from "../../../infra/database/model/student/student";
 import studentRepositoryImpl from "../../../infra/repositories/student/studentRepository";
 import { CustomRequest } from "../../middlewares/authMiddleware";
 import { Date, ObjectId } from "mongoose";
-import { createReviewUsecase, findOneReviewUsecase } from "../../../app/usecase/review/reviewUsecase";
-import ReviewRepositoryIMPL from "../../../infra/repositories/review/reviewRepository";
+import { createReviewUsecase,  } from "../../../app/usecase/review/reviewCreateUsecase";
 import { reviewModel } from "../../../infra/database/model/review/review";
 import AdvisorRepositoryImpl from "../../../infra/repositories/advisor/advisorRepository";
 import { advisorModel } from "../../../infra/database/model/advisor/advisor";
-import { reviews } from "../../../domain/entities/review/review";
-import moment from "moment";
 import { createToken } from "../../../domain/entities/student/student";
+import { Review } from "../../../domain/entities/review/review";
+import ReviewRepositoryIMPL, { filterReview } from "../../../infra/repositories/review/reviewRepository";
+import { getReviewByIdUsecase, getReviewListByWeekUseCase, getReviewListUseCase } from "../../../app/usecase/review/reviewFindUsecase";
 
 const studentRepository = studentRepositoryImpl(studentModel)
 const reviewRepository = ReviewRepositoryIMPL(reviewModel)
@@ -19,7 +19,7 @@ const advisorRepository = AdvisorRepositoryImpl(advisorModel)
 
 export const studentProfileController = async (req: CustomRequest, res: Response) => {
     try {
-        const userId:string =  req.user?.student?._id  
+        const userId:ObjectId =  req.user?.student?._id   as ObjectId
         console.log(userId);
         
         const data : object | any  = req.body.userData as object | any
@@ -38,10 +38,9 @@ export const studentProfileController = async (req: CustomRequest, res: Response
         const student = await studentProfileUsecase(studentRepository)(userId, studentData)
 
         if (student) {
-            const review : reviews = {
-                date : moment().add(8, 'days').toDate() ,
-                week : 1 
-                
+            const review : Review = {
+                week : 1 ,
+                student : userId ,        
             }
 
             const newReview = await createReviewUsecase(reviewRepository , advisorRepository, studentRepository)(userId , review )
@@ -76,11 +75,14 @@ export const getStudentProfileController =async (req:CustomRequest , res: Respon
 
 export const getStudentHomeController =async (req:CustomRequest , res : Response) => {
     try {
-        const studentId:string =  req.user?.student?._id  
-        let week
-        const student = await getStudentProfileUsecase(studentRepository)(studentId)
-        const review = await findOneReviewUsecase(reviewRepository , studentRepository)(studentId, week  )
-        res.status(200).json({student ,review})
+        const studentId =  req.user?.student?._id  
+        const reviewId :ObjectId = req.body.id as ObjectId
+        
+      
+        
+        const review = await getReviewListByWeekUseCase(reviewRepository , studentRepository)( studentId )
+
+        res.status(200).json(review)
     } catch (error : any) {
         res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' })
     }

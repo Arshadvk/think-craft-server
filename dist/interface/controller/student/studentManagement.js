@@ -47,7 +47,17 @@ const passwordCreation = (req, res) => __awaiter(void 0, void 0, void 0, functio
 exports.passwordCreation = passwordCreation;
 const getAllStudentSearchFilterSortController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const studentList = yield (0, getAllStudent_1.getAllStudentUseCase)(studentRepository)();
+        let filterData = {};
+        if (req.query.search) {
+            filterData.search = {
+                $or: [{ email: { $regex: req.query.search, $options: 'i' } },
+                    { name: { $regex: req.query.search, $options: 'i' } },
+                ]
+            };
+        }
+        if (req.query.domain)
+            filterData.domain = req.query.domain;
+        const studentList = yield (0, getAllStudent_1.getAllStudentUseCase)(studentRepository)(filterData);
         res.status(200).json(studentList);
     }
     catch (error) {

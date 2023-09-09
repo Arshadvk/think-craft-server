@@ -22,49 +22,80 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.reviewModel = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
+const moment_1 = __importDefault(require("moment"));
 const reviewSchema = new mongoose_1.Schema({
     student: { type: mongoose_1.Schema.Types.ObjectId, ref: "student" },
-    reviews: {
-        type: [{
-                date: {
-                    type: String,
-                },
-                week: {
-                    type: Number,
-                },
-                reviewer: {
-                    type: mongoose_1.Schema.Types.ObjectId, ref: 'reviewer'
-                },
-                advisor: {
-                    type: mongoose_1.Schema.Types.ObjectId, ref: "advisor"
-                },
-                mark: {
-                    type: {
-                        code: {
-                            type: Number,
-                            default: 0,
-                        },
-                        theory: {
-                            type: Number,
-                            default: 0,
-                        },
-                    },
-                },
-                pendingTask: {
-                    type: Array
-                },
-                status: {
-                    type: String,
-                    default: "not-scheduled"
-                },
-                taskStatus: {
-                    type: String
-                }
-            }]
-    }
+    date: {
+        type: String,
+        default: (0, moment_1.default)().add(8, 'days').toDate()
+    },
+    week: {
+        type: Number,
+        default: 0, // Default value for 'week' field
+    },
+    reviewer: {
+        type: mongoose_1.Schema.Types.ObjectId, ref: 'reviewer'
+    },
+    advisor: {
+        type: mongoose_1.Schema.Types.ObjectId, ref: "advisor"
+    },
+    time: String,
+    day: String,
+    mark: {
+        type: {
+            code: {
+                type: Number,
+                default: 0,
+            },
+            theory: {
+                type: Number,
+                default: 0,
+            },
+        },
+    },
+    pendingTask: {
+        type: Array,
+        default: []
+    },
+    status: {
+        type: String,
+        default: "not-scheduled"
+    },
+    uploadTask: {
+        type: {
+            personalDevelopmentWorkout: {
+                type: String
+            },
+            technicalWorkouts: {
+                type: String
+            },
+            miscellaneousWorkouts: {
+                type: String
+            },
+        },
+    },
+    taskStatus: {
+        type: {
+            seminar: {
+                type: String,
+                default: 'Not added'
+            },
+            progress: {
+                type: String,
+                default: 'Not added'
+            },
+            typing: {
+                type: String,
+                default: 'Not added'
+            }
+        },
+    },
 }, {
     timestamps: { createdAt: true }
 });

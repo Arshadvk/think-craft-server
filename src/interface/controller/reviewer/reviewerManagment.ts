@@ -8,6 +8,8 @@ import { blockReviewerUsecase } from "../../../app/usecase/admin/reviewer/block-
 import { CustomRequest } from "../../middlewares/authMiddleware"
 
 export interface Filter {
+    search ?: Object
+    email ?: object
     name?: object ;
     domain?: string | undefined
      
@@ -33,8 +35,8 @@ export const passwordCreationReviewer =async (req:CustomRequest , res : Response
         const newPassword = await setPasswordUsecaseReviewer(reviewerRepository)(reviewerData ,reviewerId)
         res.status(200).send({message:"password change successfully"})
         
-    } catch (error) {
-        
+    } catch (error:any) {
+        res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' })     
     }
 }
 
@@ -43,8 +45,14 @@ export const getAllReviewerSearchFilterSortController =async (req:Request , res 
         
         let sortCriteria : object
         let filterData : Filter ={}
-
-        if(req.query.name) filterData.name = {$regex: req.query.name as string , $options : 'i' }
+        if(req.query.search){
+            
+            filterData.search = {
+                $or : [ {email : {$regex: req.query.search as string , $options : 'i' } }, 
+             { name:  {$regex: req.query.search as string , $options : 'i' }}
+    
+            ]}
+        } 
         if(req.query.domain) filterData.domain = req.query.domain as string 
        console.log(filterData.domain);
        

@@ -12,6 +12,7 @@ const reviewSchema = new Schema<Review>({
     },
     week: {
         type: Number,
+        default: 0, // Default value for 'week' field
     },
     reviewer: {
         type: Schema.Types.ObjectId, ref: 'reviewer'
@@ -19,6 +20,8 @@ const reviewSchema = new Schema<Review>({
     advisor: {
         type: Schema.Types.ObjectId, ref: "advisor"
     },
+    time: String,
+    day: String,
     mark: {
         type: {
             code: {
@@ -32,17 +35,44 @@ const reviewSchema = new Schema<Review>({
         },
     },
     pendingTask: {
-        type: Array
+        type: Array,
+        default: [] 
     },
     status: {
         type: String,
         default: "not-scheduled"
     },
+    uploadTask: {
+        type: {
+            personalDevelopmentWorkout: {
+                type: String
+            }, 
+            technicalWorkouts: {
+                type: String
+            },
+            miscellaneousWorkouts: {
+                type: String
+            },
+        },
+    },
     taskStatus: {
-        type: String
-    }
+        type : {
+            seminar: {
+                type: String,
+                default: 'Not added' 
+            },
+            progress: {
+                type: String,
+                default: 'Not added' 
+            },
+            typing: {
+                type: String,
+                default: 'Not added' 
+            }
+        },
+    },
 }, {
     timestamps: { createdAt: true }
-})
+});
 
-export const reviewModel: MongoDBReview = mongoose.connection.model<Document<any, any, any> & Review>('review', reviewSchema)
+export const reviewModel: MongoDBReview = mongoose.connection.model<Document<any, any, any> & Review>('review', reviewSchema);

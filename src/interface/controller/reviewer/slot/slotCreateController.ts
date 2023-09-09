@@ -6,11 +6,12 @@ import moment from 'moment'
 import { AppError } from "../../../../utils/error";
 import { createSlotUsecase, getSlotUsecase, updateSlotUsecase } from "../../../../app/usecase/reviewer/slot/slotUsecase";
 import { Slot, slotes } from "../../../../domain/entities/slot/slot";
-import { findReviewAndUpdateUsecase } from "../../../../app/usecase/review/reviewUsecase";
-import ReviewRepositoryIMPL from "../../../../infra/repositories/review/reviewRepository";
 import { reviewModel } from "../../../../infra/database/model/review/review";
 import studentRepositoryImpl from "../../../../infra/repositories/student/studentRepository";
 import { studentModel } from "../../../../infra/database/model/student/student";
+import ReviewRepositoryIMPL, { reviewUpdatedData } from "../../../../infra/repositories/review/reviewRepository";
+import { UpdateReviewUsecase } from "../../../../app/usecase/review/reviewUpdateUsecase";
+import { ObjectId } from "mongoose";
 
 const slotRepository = slotRepositoryImpl(slotModel)
 const reviewRepository = ReviewRepositoryIMPL(reviewModel)
@@ -63,6 +64,8 @@ export const getSlotsController =async (req:CustomRequest , res :Response) => {
     try {
         const reviewerId = req.params.id ?? req.user?.reviewer?._id as string
         const slot:slotes[]| undefined = await getSlotUsecase(slotRepository)(reviewerId)
+        console.log(slot);
+        
         res.status(200).json(slot)
     } catch (error:any) {
         res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' })
@@ -75,12 +78,23 @@ export const bookSlotController =async (req:CustomRequest , res : Response) => {
         console.log(values);
         
         const slotId = values?.slot as string
-        const studentId = values?.student as string
-        const reviewerId =values?.reviewer as string 
-        const slot : Slot | null = await updateSlotUsecase(slotRepository)( reviewerId ,slotId) 
+        const reviewerId =values?.reviewer as ObjectId 
+        const reviewId = values?.reviewId as ObjectId
 
+        const slot : Slot | null = await updateSlotUsecase(slotRepository)( reviewerId ,slotId) 
+        
         if (slot) {
-            const review = await findReviewAndUpdateUsecase(reviewRepository , studentRepository )(studentId , reviewerId)
+            console.log(slot);
+            
+            const  reviewUpdatedData : reviewUpdatedData ={
+                reviewer : reviewerId ,
+                status : 'review-scheduled' ,
+                day :slot.slotes[0].slot_date ,
+                time : slot.slotes[0].slot_time  
+                
+
+            }
+            const review = await UpdateReviewUsecase(reviewRepository  )( reviewId , reviewUpdatedData)
             console.log(review);
             
             res.status(200).json({review})

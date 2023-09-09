@@ -9,11 +9,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllStudentUseCase = void 0;
-const getAllStudentUseCase = (studentRepository) => {
-    return (filterData) => __awaiter(void 0, void 0, void 0, function* () {
-        const allStudent = yield studentRepository.getAllStudents(filterData);
-        return allStudent;
-    });
-};
-exports.getAllStudentUseCase = getAllStudentUseCase;
+exports.fileUpload = void 0;
+const cloudinary = require('cloudinary').v2;
+cloudinary.config({
+    cloud_name: 'sample',
+    api_key: '874837483274837',
+    api_secret: 'a676b67565c6767a6767d6767f676fe1',
+    secure: true
+});
+const fileUpload = () => __awaiter(void 0, void 0, void 0, function* () {
+});
+exports.fileUpload = fileUpload;

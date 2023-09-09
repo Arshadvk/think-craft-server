@@ -20,7 +20,6 @@ reviewerRoute.put('/edit-profile', authMiddleware_1.reviewerAuthToken, reviewerP
 reviewerRoute.post('/add-slot', authMiddleware_1.reviewerAuthToken, slotCreateController_1.slotCreateController);
 reviewerRoute.get('/profile', authMiddleware_1.reviewerAuthToken, reviewerProfileManagment_1.getReviewerProfileController);
 reviewerRoute.get('/review-list', authMiddleware_1.reviewerAuthToken, reviewMangmentController_1.findReviewController);
-reviewerRoute.get('/review-details/:id', reviewMangmentController_1.findOneReviewDetailsController);
 reviewerRoute.get('/slot-list', authMiddleware_1.reviewerAuthToken, slotCreateController_1.getSlotsController);
 reviewerRoute.get('/get-domaim-info/:id', profileMiddleware_1.reviewerProfileMiddleware, domainController_1.getAllDomainController);
 reviewerRoute.put('/update-review-details', authMiddleware_1.reviewerAuthToken, reviewMangmentController_1.updateReviewController);

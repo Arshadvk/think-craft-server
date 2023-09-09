@@ -1,6 +1,7 @@
 import { createAdvisorToken } from "../../../../domain/entities/advisor/advisor";
 import { sendMail } from "../../../../domain/service/email_send";
 import { AdvisorRepository } from "../../../../infra/repositories/advisor/advisorRepository";
+import { Filter } from "../../../../interface/controller/reviewer/reviewerManagment";
 import { AppError } from "../../../../utils/error";
 
 
@@ -23,8 +24,8 @@ export const createAdvisorUsecase = (advisorRepository: AdvisorRepository) => {
 }
 
 export const getAllAdvisorUsecase = (advisorRepository : AdvisorRepository)=>{
-    return async ():Promise <Object[]>=>{
-        const allAdvisor = await advisorRepository.getAllAdvisor()
+    return async (filterData : Filter):Promise <Object[]>=>{
+        const allAdvisor = await advisorRepository.getAllAdvisor(filterData)
         return allAdvisor
     }
 }

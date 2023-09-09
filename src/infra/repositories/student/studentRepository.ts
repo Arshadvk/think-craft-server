@@ -2,17 +2,18 @@ import { ObjectId } from "mongoose";
 import { Student } from "../../../domain/entities/student/student";
 import { AppError } from "../../../utils/error";
 import { MongoDBStudent, studentModel } from "../../database/model/student/student";
+import { Filter } from "../../../interface/controller/reviewer/reviewerManagment";
 
 export type StudentRepository = {
     createStudent: (studentData: any) => Promise<any | null>
     findStudentByEmail: (email: string) => Promise<any | null>
     setStudentPassword: (id: string, password: string) => Promise<any | null>
-    getAllStudents: () => Promise<object[]>
+    getAllStudents: (filterData : Filter) => Promise<object[]>
     updateIsBlock: (userId: string, action: string) => Promise<boolean | undefined>
-    updateStudentProfile: (userId: string, studentData: object) => Promise<any | null>
-    findStudentById:(userId : string)=> Promise <any>
+    updateStudentProfile: (userId: ObjectId, studentData: object) => Promise<any | null>
+    findStudentById:(userId : string| ObjectId)=> Promise <any>
     findStudentIsBlocked :(userId : string) => Promise <Boolean>
-    updateStudentWeek : (userId : string , week: number ) => Promise <any>
+    updateStudentWeek : (userId : ObjectId , week: number ) => Promise <any>
 }
 
 
@@ -29,10 +30,15 @@ const studentRepositoryImpl = (StudentModel: MongoDBStudent): StudentRepository 
         const student = await studentModel.findByIdAndUpdate({ _id: id}, { $set: { password: password } })
         return student
     }
-    const getAllStudents = async (): Promise<object[]> => {
+    const getAllStudents = async (filterData : Filter): Promise<object[]> => {
+        if (filterData.search){
+            const allStudent = await StudentModel.find(filterData.search).populate('domain')
+            return allStudent
 
-        const allStudent = await StudentModel.find().populate('domain')
-        return allStudent
+        }else{
+            const allStudent = await StudentModel.find(filterData).populate('domain')
+            return allStudent
+        }
     }
     const updateIsBlock = async (userId: string, action: string): Promise<boolean | undefined> => {
         let isBlocked: boolean | undefined
@@ -42,14 +48,14 @@ const studentRepositoryImpl = (StudentModel: MongoDBStudent): StudentRepository 
         if (!student) throw new AppError('somthing went wrong when block the user ', 500)
         return isBlocked
     }
-    const updateStudentProfile = async (userId: string, studentData: object): Promise<any | null> => {
+    const updateStudentProfile = async (userId: ObjectId, studentData: object): Promise<any | null> => {
         const student = await studentModel.findByIdAndUpdate(userId, studentData, { new: true })
         console.log(student);
         
         if (!student) throw new AppError('somthing went wrong when block the user ', 500)
         return student
     }
-    const findStudentById = async (userId: string): Promise<any> => {
+    const findStudentById = async (userId: string | ObjectId): Promise<any> => {
         const student = await studentModel.findById(userId ).populate('domain')
         return student
 
@@ -66,7 +72,7 @@ const studentRepositoryImpl = (StudentModel: MongoDBStudent): StudentRepository 
        
     };
     
-    const updateStudentWeek = async (userId : string ,week : number  ): Promise <any> =>{
+    const updateStudentWeek = async (userId : ObjectId ,week : number  ): Promise <any> =>{
         const student : any  = await studentModel.findByIdAndUpdate(userId , {week: week} , {new : true} )
         return student 
     }

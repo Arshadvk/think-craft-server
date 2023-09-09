@@ -9,6 +9,7 @@ export type Student ={
     email:string;
     number:string;
     password:string;
+    week : number
     image:string;
     address:string;
     dob:Date;

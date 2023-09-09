@@ -9,11 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllStudentUseCase = void 0;
-const getAllStudentUseCase = (studentRepository) => {
-    return (filterData) => __awaiter(void 0, void 0, void 0, function* () {
-        const allStudent = yield studentRepository.getAllStudents(filterData);
-        return allStudent;
-    });
-};
-exports.getAllStudentUseCase = getAllStudentUseCase;
+exports.updateTaskByStudent = void 0;
+const updateTaskByStudent = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+    }
+    catch (error) {
+        res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' });
+    }
+});
+exports.updateTaskByStudent = updateTaskByStudent;

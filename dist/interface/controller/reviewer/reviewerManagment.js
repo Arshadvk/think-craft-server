@@ -41,6 +41,7 @@ const passwordCreationReviewer = (req, res) => __awaiter(void 0, void 0, void 0,
         res.status(200).send({ message: "password change successfully" });
     }
     catch (error) {
+        res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' });
     }
 });
 exports.passwordCreationReviewer = passwordCreationReviewer;
@@ -48,8 +49,13 @@ const getAllReviewerSearchFilterSortController = (req, res) => __awaiter(void 0,
     try {
         let sortCriteria;
         let filterData = {};
-        if (req.query.name)
-            filterData.name = { $regex: req.query.name, $options: 'i' };
+        if (req.query.search) {
+            filterData.search = {
+                $or: [{ email: { $regex: req.query.search, $options: 'i' } },
+                    { name: { $regex: req.query.search, $options: 'i' } }
+                ]
+            };
+        }
         if (req.query.domain)
             filterData.domain = req.query.domain;
         console.log(filterData.domain);

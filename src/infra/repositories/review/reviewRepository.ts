@@ -1,228 +1,84 @@
-import mongoose, { ObjectId } from "mongoose"
-import { Review, reviews } from "../../../domain/entities/review/review"
-import { MongoDBReview, reviewModel } from "../../database/model/review/review"
+import mongoose, { ObjectId } from "mongoose";
+import { MongoDBReview } from "../../database/model/review/review";
+import { Review } from "../../../domain/entities/review/review";
 
 export type filterReview = {
+    _id?: ObjectId
+    week?: number
     date?: Date,
     student?: ObjectId | undefined
     reviewer?: string | undefined
     advisor?: string | undefined
     type?: string | undefined
+    status?: string | undefined
+    time?: string
 }
-export type mark = {
-    code: number;
-    theory: number
+export type taskStatus = {
+    seminar?: string 
+    progress?: string 
+    typing?: string 
 }
-export type updateValue = {
-    mark?: mark
+export type reviewUpdatedData = {
+    reviewer?: ObjectId | undefined
+    mark?: {
+        code?: number
+        theory?: number
+    }
+    day?: string
+    time?: string
+    status?: string | undefined
     pendingTask?: []
     weekStatus?: string
+    taskStatus?: taskStatus
+
 }
+
 export type ReviewRepository = {
-    createNewReview: (studentId: string, review: reviews) => Promise<Review>
-    findReview: (filterReview: filterReview) => Promise<Review | null>
-    findReviewAndUpdate: (studentId: string, week: number, reviewer: string) => Promise<Review | null>
-    findOneReview: (studentId: string, week: number) => Promise<Review | null>
-    findReviewAndUpdateMark: (id: string, week: number, data: updateValue) => Promise<Review | null>
-    findOneReviewId : (reviewsId : string) => Promise <Review | null>
+    createNewReview: (reviewData: Review) => Promise<Review | null>
+    findOneReviewByid: (id: ObjectId) => Promise<Review | null>
+    findReview: (filterReview: filterReview) => Promise<Review[] | null>
+    findReviewAndUpdate: (reviewId: ObjectId, reviewUpdatedData: reviewUpdatedData) => Promise<Review | null>
 }
 
 const ReviewRepositoryIMPL = (ReviewModel: MongoDBReview): ReviewRepository => {
 
-    const createNewReview = async (studentId: string, review: reviews): Promise<Review> => {
-        const isReviewExist = await ReviewModel.findOne({ student: studentId })
-        console.log(review);
-
-        if (!isReviewExist) {
-            const newReview = new ReviewModel({
-                student: studentId,
-                reviews: review,
-
-            })
-
-            const createReview: Review = await newReview.save()
-            return createReview
-        }
-
-        isReviewExist.reviews.push(review)
-        await isReviewExist.save()
-        return isReviewExist
+    const createNewReview = async (reviewData: Review): Promise<Review | null> => {
+        const newReview = new ReviewModel(reviewData)
+        const createReview: Review = await newReview.save()
+        return createReview
     }
-  
-    const findReview = async (filterData: filterReview): Promise<Review | null> => {
-
-
-        console.log('hell', filterData);
-
-        if (filterData.advisor && !filterData.student) {
-            if (filterData.type) {
-                console.log("type");
-
-                const reviews: any | null = await reviewModel.find({ "reviews.advisor": filterData.advisor, 'reviews.status': 'not-scheduled' }).populate({
-                    path: 'student',
-                    populate: {
-                        path: 'domain'
-                    }
-                }).populate('reviews.advisor').populate('student.domain').populate('reviews.reviewer')
-                return reviews
-
-            } else {
-                console.log("typeeee");
-
-                const rev: any | null = await reviewModel.find({ "reviews.advisor": filterData.advisor }).populate({
-                    path: 'student',
-                    populate: {
-                        path: 'domain'
-                    }
-                }).populate('reviews.advisor').populate('student.domain').populate('reviews.reviewer')
-
-                const reviews: any | null = await reviewModel.aggregate([{
-                    $unwind: '$reviews',
-                }, {
-                    $match: {
-                        'reviews.advisor': new mongoose.Types.ObjectId(filterData.advisor)
-                    }
-                }, {
-                    $lookup: {
-                        from: "students", // Assuming your student collection is named "students"
-                        localField: "student",
-                        foreignField: "_id",
-                        as: "student",
-                    },
-                },
-                {
-                    $lookup: {
-                        from: "reviewers", // Assuming your reviewer collection is named "reviewers"
-                        localField: "reviews.advisor",
-                        foreignField: "_id",
-                        as: "reviews.advisor",
-                    },
-                },
-                {
-                    $lookup: {
-                        from: "reviewers", // Assuming your reviewer collection is named "reviewers"
-                        localField: "reviews.reviewer",
-                        foreignField: "_id",
-                        as: "reviews.reviewer",
-                    },
-                }, {
-                    $unwind: "$student", // Unwind the student array
-                },
-
-                ])
-                return reviews
+    const findOneReviewByid = async (id: ObjectId): Promise<Review | null> => {
+        const review: Review | null = await ReviewModel.findById(id).populate({
+            path: 'student',
+            populate: {
+                path: 'domain'
             }
-        }
-        if (filterData.reviewer && !filterData.student) {
-            const reviews: any | null = await reviewModel.find({ "reviews.reviewer": filterData.reviewer }).populate({
-                path: 'student',
-                populate: {
-                    path: 'domain'
-                }
-            }).populate('reviews.advisor').populate('student.domain').populate('reviews.reviewer')
-
-
-
-            const rev: any | null = await reviewModel.aggregate([{
-                $unwind: '$reviews',
-            },
-            {
-                $match: {
-                    'reviews.reviewer': new mongoose.Types.ObjectId(filterData.reviewer)
-                }
-            }, {
-                $lookup: {
-                    from: "students", // Assuming your student collection is named "students"
-                    localField: "student",
-                    foreignField: "_id",
-                    as: "student",
-                },
-            },
-            {
-                $lookup: {
-                    from: "reviewers", // Assuming your reviewer collection is named "reviewers"
-                    localField: "reviews.advisor",
-                    foreignField: "_id",
-                    as: "reviews.advisor",
-                },
-            },
-            {
-                $lookup: {
-                    from: "reviewers", // Assuming your reviewer collection is named "reviewers"
-                    localField: "reviews.reviewer",
-                    foreignField: "_id",
-                    as: "reviews.reviewer",
-                },
-            }, {
-                $unwind: "$student", // Unwind the student array
-            },
-
-            ])
-            console.log(rev, '==========')
-
-            return rev
-        }
-        else {
-            console.log("hello");
-
-            const reviews: any | null = await reviewModel.find(filterData).populate({
-                path: 'student',
-                populate: {
-                    path: 'domain'
-                }
-            }).populate('reviews.advisor').populate('student.domain').populate('reviews.reviewer')
-
-            return reviews
-        }
-
+        }).populate('advisor').populate('student.domain').populate('reviewer')
+        return review
     }
 
-    const findReviewAndUpdate = async (studentId: string, week: number, reviewer: string): Promise<Review | null> => {
-        const review: Review | null = await reviewModel.findOneAndUpdate(
-            { student: studentId, 'reviews.week': week },
-            { $set: { 'reviews.$.reviewer': reviewer, 'reviews.$.status': "scheduled" } }
-        );
-        return review;
-    };
+    const findReview = async (filterReview: filterReview): Promise<Review[] | null> => {
 
-    const findReviewAndUpdateMark = async (id: string, week: number, data: updateValue): Promise<Review | null> => {
-        if (data.mark) {
-            const updatedReview: Review | null = await reviewModel.findOneAndUpdate({ student: id, 'reviews.week': week },
-                { $set: { "reviews.$.mark": data.mark, 'reviews.$.status': 'conducted', 'reviews.$.taskStatus': data.weekStatus } },
-                { new: true })
-            return updatedReview
-        } else {
-            const updatedReview: Review | null = await reviewModel.findOneAndUpdate({ student: id, 'reviews.week': week },
-                { $set: { "reviews.$.pendingTask": data.pendingTask } },
-                { new: true })
-            return updatedReview
-        }
-    }
-    const findOneReview = async (studentId: string, week: number): Promise<Review | null> => {
-        const reviews: Review | null = await reviewModel
-            .findOne({ student: studentId, "reviews.week": week })
-            .populate({
-                path: 'student',
-                populate: {
-                    path: 'domain'
-                }
-            }).populate('reviews.advisor').populate('student.domain').populate('reviews.reviewer')
-        return reviews
+
+        const review: Review[] | null = await ReviewModel.find(filterReview).populate({
+            path: 'student',
+            populate: {
+                path: 'domain'
+            }
+        }).populate('advisor').populate('student.domain').populate('reviewer')
+
+
+        return review
     }
 
-    const findOneReviewId =async (reviewId:string ) : Promise <Review | null > => {
-       console.log(reviewId);
-       
-        const reviews : any | null = await reviewModel.find({'reviews._id' : reviewId
-             },{'reviews$' : 1}).populate('reviews.advisor').populate('reviews.reviewer')
-             console.log(reviews);
-             
-        return reviews
+    const findReviewAndUpdate = async (reviewId: ObjectId, reviewUpdatedData: reviewUpdatedData): Promise<Review | null> => {
+        console.log(reviewId);
+        console.log(reviewUpdatedData);
         
+        const review: Review | null = await ReviewModel.findByIdAndUpdate(reviewId, { $set: reviewUpdatedData })
+        return review
     }
-
-    return { createNewReview, findReview, findReviewAndUpdate, findOneReview, findReviewAndUpdateMark , findOneReviewId}
+    return { createNewReview, findOneReviewByid, findReview, findReviewAndUpdate }
 }
-
 
 export default ReviewRepositoryIMPL

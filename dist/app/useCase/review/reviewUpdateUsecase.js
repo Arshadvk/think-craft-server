@@ -9,11 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllStudentUseCase = void 0;
-const getAllStudentUseCase = (studentRepository) => {
-    return (filterData) => __awaiter(void 0, void 0, void 0, function* () {
-        const allStudent = yield studentRepository.getAllStudents(filterData);
-        return allStudent;
+exports.UpdateReviewUsecase = void 0;
+const UpdateReviewUsecase = (reviewRepository) => {
+    return (reviewId, reviewUpdatedData) => __awaiter(void 0, void 0, void 0, function* () {
+        const updatedReview = yield reviewRepository.findReviewAndUpdate(reviewId, reviewUpdatedData);
+        return updatedReview;
     });
 };
-exports.getAllStudentUseCase = getAllStudentUseCase;
+exports.UpdateReviewUsecase = UpdateReviewUsecase;

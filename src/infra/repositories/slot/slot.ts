@@ -1,12 +1,13 @@
 import moment from "moment";
 import { Slot, slotes } from "../../../domain/entities/slot/slot";
 import { MongoDBSlot, slotModel } from "../../database/model/slot/slot";
+import { ObjectId } from "mongoose";
 
 export type SlotRepository = {
     createNewSlot: (reviewerId: string , slot:slotes[]) => Promise<Slot>
     findSlot : (slotDate : string , startingTime: string , endingTime :string , reviewerId:string) => Promise  <Slot | null>
     findSlotByRevId : (reviewerId : string) => Promise <Slot | null >
-    updateSlot : (reviewerId : string , slotId : string) => Promise <Slot | null >
+    updateSlot : (reviewerId : ObjectId , slotId : string) => Promise <Slot | null >
 }
 
 const slotRepositoryImpl = (SlotModel: MongoDBSlot): SlotRepository => {
@@ -66,7 +67,7 @@ const slotRepositoryImpl = (SlotModel: MongoDBSlot): SlotRepository => {
         return slot
     } 
     
-    const updateSlot =async (reviewerId : string , slotId : string):Promise <Slot | null > => {
+    const updateSlot =async (reviewerId : ObjectId , slotId : string):Promise <Slot | null > => {
         const crr = moment().format('YYYY-MM-DD');
         const currentDate = new Date(crr)
         await SlotModel.findOneAndUpdate({reviewer : reviewerId},{

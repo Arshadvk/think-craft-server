@@ -1,47 +1,50 @@
 import {Request , Response} from "express"
 import { CustomRequest } from "../../middlewares/authMiddleware"
-import ReviewRepositoryIMPL, { filterReview, mark, updateValue } from "../../../infra/repositories/review/reviewRepository"
-import { UpdateMarkUsecase, createReviewUsecase, findOneReviewDetailsUseCase, findOneReviewUsecase, findReviewAndUpdateUsecase, getReviewListUseCase } from "../../../app/usecase/review/reviewUsecase"
+import { createReviewUsecase } from "../../../app/usecase/review/reviewCreateUsecase"
 import { reviewModel } from "../../../infra/database/model/review/review"
 import studentRepositoryImpl from "../../../infra/repositories/student/studentRepository"
 import { studentModel } from "../../../infra/database/model/student/student"
 import { ObjectId } from "mongoose"
-import { json } from "body-parser"
 import AdvisorRepositoryImpl from "../../../infra/repositories/advisor/advisorRepository"
 import { advisorModel } from "../../../infra/database/model/advisor/advisor"
-import { Review, reviews } from "../../../domain/entities/review/review"
-import moment from "moment"
+import { Review } from "../../../domain/entities/review/review"
+import ReviewRepositoryIMPL, { filterReview, reviewUpdatedData } from "../../../infra/repositories/review/reviewRepository"
+import { getReviewByIdUsecase, getReviewListUseCase } from "../../../app/usecase/review/reviewFindUsecase"
+import { UpdateReviewUsecase } from "../../../app/usecase/review/reviewUpdateUsecase"
 
-
-export type updateReviewData = {
-    reviewer?: string
-    mark : object 
-    pendingTask : [string]
+export type mark = {
+    code ?: number 
+    theroy ?: number
 }
+
 const reviewRepository = ReviewRepositoryIMPL(reviewModel)
 const advisorRepository = AdvisorRepositoryImpl(advisorModel)
 const studentRepository = studentRepositoryImpl(studentModel)
 export const findReviewController =async (req:CustomRequest , res : Response) => {
     try {
-        const type : string | undefined = req.query.type as string 
-        console.log("first"+type);
-        
+        const status : string | undefined = req.query.type as string         
         const advisor : string | undefined = req.user?.advisor?._id as string
         const reviewer : string | undefined =  req.user?.reviewer?._id   as string 
-        const student : ObjectId | undefined = req.query.id as unknown as ObjectId
+        const student : ObjectId | undefined = req.query.student as unknown as ObjectId
+        const id : ObjectId | undefined = req.query.id as unknown as ObjectId
         let filterData : filterReview = {}
+       
+        if (status) {
+            filterData.status = "not-scheduled" 
+        }
         if (advisor) {
-            if (type ) {
-                filterData.type = type 
-            }
             filterData.advisor =  advisor  
-        }else if (reviewer) {
+        }
+        if (reviewer) {
             filterData.reviewer = reviewer 
         }
        if (student){
             filterData.student = student 
         }
-        console.log("filter" , filterData);
+        if (id) {
+            filterData._id = id
+        }
+
         
         const reviews = await getReviewListUseCase(reviewRepository)(filterData)        
         res.status(200).json(reviews)
@@ -55,8 +58,8 @@ export const findReviewController =async (req:CustomRequest , res : Response) =>
 export const findOneReviewController =async (req:CustomRequest , res : Response) => {
     try {
         const userId : string = req.user?.student?._id 
-        const week : number | undefined = req.query.week as unknown as number 
-        const review = await findOneReviewUsecase(reviewRepository , studentRepository)(userId , week)
+        const week : ObjectId | undefined = req.query.week as unknown as ObjectId 
+        const review = await getReviewByIdUsecase(reviewRepository )(week)
       console.log(review);
         
         res.status(200).json(review)
@@ -69,7 +72,7 @@ export const findOneReviewController =async (req:CustomRequest , res : Response)
 export const updateReviewController =async (req :Request , res : Response ) => {
     try {
         console.log(req.body);
-        let data : updateValue = {}
+        let data : reviewUpdatedData = {}
         const mark : mark | undefined = req.body?.mark 
         if (mark) {
             data.mark = mark
@@ -83,40 +86,24 @@ export const updateReviewController =async (req :Request , res : Response ) => {
             data.weekStatus = weekStatus
         }
         
-        const student  : string = req.body?.student as string
+        const reviewId  : ObjectId = req.body?.id as ObjectId
         const week : number = req.body.week as number
 
-        const updatedReview = await UpdateMarkUsecase(reviewRepository)(student , week , data )
+        const updatedReview = await UpdateReviewUsecase(reviewRepository)(reviewId , data )
         console.log(mark);
         if (updatedReview && data.weekStatus === 'Week Repeat') {
             
         }
         else {
-            const review : reviews = {
-                date :  moment().add(8, 'days').toDate() ,
+            const review : Review = {
                 week : week+1
             }
             
-            const newReview = await createReviewUsecase(reviewRepository , advisorRepository , studentRepository)(student , review )
+            const newReview = await createReviewUsecase(reviewRepository , advisorRepository , studentRepository)(reviewId , review )
         }
         res.status(200).json(updatedReview)
 
     }  catch (error:any) {
         res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' })   
     }
-}
-
-export const findOneReviewDetailsController =  async (req:Request , res : Response) => {
- try {
-    const reviewsId = req.params.id as string
-    console.log(reviewsId);
-    
-    const review : Review | null= await findOneReviewDetailsUseCase(reviewRepository)(reviewsId)
-
-    res.status(200).json(review)
-
- } catch (error : any) {
-    res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' })   
-            
- }   
 }

@@ -47,7 +47,15 @@ const passwordCreationAdvisor = (req, res) => __awaiter(void 0, void 0, void 0, 
 exports.passwordCreationAdvisor = passwordCreationAdvisor;
 const getAllAdvisorSearchFilterSortController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const advisorList = yield (0, createAdvisor_1.getAllAdvisorUsecase)(advisorRepository)();
+        let filterData = {};
+        if (req.query.search) {
+            filterData.search = {
+                $or: [{ email: { $regex: req.query.search, $options: 'i' } },
+                    { name: { $regex: req.query.search, $options: 'i' } }
+                ]
+            };
+        }
+        const advisorList = yield (0, createAdvisor_1.getAllAdvisorUsecase)(advisorRepository)(filterData);
         res.status(200).json(advisorList);
     }
     catch (error) {

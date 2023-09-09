@@ -7,7 +7,6 @@ import { getAllDomainController } from "../controller/admin/domain/domainControl
 import { StudentAuthToken } from "../middlewares/authMiddleware";
 import { studentProfileMiddleware } from "../middlewares/profileMiddleware";
 import { findTaskByDomainController } from "../controller/task/taskManagementController";
-import { uploadTaskByStudentController } from "../controller/uploadTask/uploadTask";
 import { findOneReviewController } from "../controller/review/reviewMangmentController";
 import { findStudentManifestController } from "../controller/student/studentManifest";
 
@@ -24,7 +23,7 @@ studentRoute.get('/get-domaim-info/:id' , studentProfileMiddleware ,  getAllDoma
 studentRoute.get('/weekly-review' , StudentAuthToken ,findOneReviewController )
 studentRoute.get('/weekly-task' ,StudentAuthToken , findTaskByDomainController )
 studentRoute.get('/manifest' , StudentAuthToken ,findStudentManifestController  )
-studentRoute.post('/weekly-task' , StudentAuthToken , uploadTaskByStudentController )
+studentRoute.post('/weekly-task' , StudentAuthToken  )
 
 
 export default studentRoute

@@ -1,4 +1,6 @@
+import { ObjectId } from "mongoose"
 import { AdvisorId } from "../../../domain/entities/advisor/advisor"
+import { Filter } from "../../../interface/controller/reviewer/reviewerManagment"
 import { AppError } from "../../../utils/error"
 import { MongoDBAdvisor, advisorModel, } from "../../database/model/advisor/advisor"
 
@@ -8,11 +10,11 @@ export type AdvisorRepository = {
     createAdvisor: (advisorData: any) => Promise<any>
     findAdvisorByEmail: (email: string) => Promise<any >
     setAdvisorPassword:(id:string, password:string)=>Promise<any>
-    getAllAdvisor:()=>Promise<object[]>
+    getAllAdvisor:(filterData : Filter)=>Promise<object[]>
     updateIsBlock:(userId : string , action : string) => Promise <boolean | undefined >
     updateAdvisorProfile :(userId : string , advisorData : object) => Promise <any | null >
     findAdvisorById:(userId:string)=> Promise <any>
-    findAvilableAdvisor : ()=>Promise<AdvisorId[]>
+    findAvilableAdvisor : ()=>Promise<ObjectId[]>
 }
 
 const AdvisorRepositoryImpl = (AdvisorModel: MongoDBAdvisor): AdvisorRepository => {
@@ -32,9 +34,16 @@ const AdvisorRepositoryImpl = (AdvisorModel: MongoDBAdvisor): AdvisorRepository 
         const advisor = await advisorModel.findOneAndUpdate({_id:id},{$set:{password:password}})
         return advisor
     }
-    const getAllAdvisor = async():Promise<object[]>=>{
-        const allAdvisors = await advisorModel.find()
-        return allAdvisors
+    const getAllAdvisor = async(filterData : Filter):Promise<object[]>=>{
+        if (filterData.search) {
+            const allAdvisors = await advisorModel.find(filterData.search)
+            return allAdvisors
+            
+        }else{
+            const allAdvisors = await advisorModel.find(filterData)
+            return allAdvisors
+        }
+        
     }
     const updateIsBlock = async(userId : string , action : string):Promise<boolean | undefined >=>{
         let isBlocked : boolean | undefined 
@@ -56,10 +65,10 @@ const AdvisorRepositoryImpl = (AdvisorModel: MongoDBAdvisor): AdvisorRepository 
         return advisor
         
     }
-    const findAvilableAdvisor =async ():Promise<AdvisorId[]> => {
+    const findAvilableAdvisor =async ():Promise<ObjectId[]> => {
         const advisors = await advisorModel.find({}, { _id: 1 });
 
-        const advisorIds: AdvisorId[] = advisors.map((advisor) => advisor._id);
+        const advisorIds: ObjectId[] = advisors.map((advisor) => advisor._id);
         return advisorIds;
     }
     return {

@@ -24,9 +24,15 @@ const studentRepositoryImpl = (StudentModel) => {
         const student = yield student_1.studentModel.findByIdAndUpdate({ _id: id }, { $set: { password: password } });
         return student;
     });
-    const getAllStudents = () => __awaiter(void 0, void 0, void 0, function* () {
-        const allStudent = yield StudentModel.find().populate('domain');
-        return allStudent;
+    const getAllStudents = (filterData) => __awaiter(void 0, void 0, void 0, function* () {
+        if (filterData.search) {
+            const allStudent = yield StudentModel.find(filterData.search).populate('domain');
+            return allStudent;
+        }
+        else {
+            const allStudent = yield StudentModel.find(filterData).populate('domain');
+            return allStudent;
+        }
     });
     const updateIsBlock = (userId, action) => __awaiter(void 0, void 0, void 0, function* () {
         let isBlocked;

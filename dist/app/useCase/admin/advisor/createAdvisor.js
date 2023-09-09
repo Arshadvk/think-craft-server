@@ -29,8 +29,8 @@ const createAdvisorUsecase = (advisorRepository) => {
 };
 exports.createAdvisorUsecase = createAdvisorUsecase;
 const getAllAdvisorUsecase = (advisorRepository) => {
-    return () => __awaiter(void 0, void 0, void 0, function* () {
-        const allAdvisor = yield advisorRepository.getAllAdvisor();
+    return (filterData) => __awaiter(void 0, void 0, void 0, function* () {
+        const allAdvisor = yield advisorRepository.getAllAdvisor(filterData);
         return allAdvisor;
     });
 };

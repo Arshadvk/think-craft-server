@@ -6,7 +6,7 @@ import { getReviewerProfileController, reviewerProfileController } from "../cont
 import { reviewerAuthToken } from "../middlewares/authMiddleware";
 import { reviewerProfileMiddleware } from "../middlewares/profileMiddleware";
 import { getAllDomainController } from "../controller/admin/domain/domainController";
-import { findOneReviewDetailsController, findReviewController, updateReviewController } from "../controller/review/reviewMangmentController";
+import { findReviewController, updateReviewController } from "../controller/review/reviewMangmentController";
 
 
 const reviewerRoute = express.Router()
@@ -18,7 +18,6 @@ reviewerRoute.put('/edit-profile' , reviewerAuthToken , reviewerProfileControlle
 reviewerRoute.post('/add-slot' ,reviewerAuthToken , slotCreateController )
 reviewerRoute.get('/profile', reviewerAuthToken , getReviewerProfileController )
 reviewerRoute.get('/review-list' , reviewerAuthToken , findReviewController)
-reviewerRoute.get('/review-details/:id',   findOneReviewDetailsController )
 reviewerRoute.get('/slot-list' , reviewerAuthToken , getSlotsController )
 reviewerRoute.get('/get-domaim-info/:id' , reviewerProfileMiddleware , getAllDomainController )
 reviewerRoute.put('/update-review-details' , reviewerAuthToken , updateReviewController)
