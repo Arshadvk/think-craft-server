@@ -48,6 +48,7 @@ export const getAllStudentSearchFilterSortController = async (req: Request, res:
             filterData.search = {
                 $or : [ {email : {$regex: req.query.search as string , $options : 'i' } }, 
              { name:  {$regex: req.query.search as string , $options : 'i' } },
+             {week : {$eq : req.query.search as unknown as number}}
             ]}
         } 
      

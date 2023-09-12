@@ -23,6 +23,7 @@ advisorRoute.get('/profile', authMiddleware_1.advisorAuthToken, advisorProfileMa
 advisorRoute.get('/reviewer-list', authMiddleware_1.advisorAuthToken, reviewerManagment_1.getAllReviewerSearchFilterSortController);
 advisorRoute.put('/update-review-details', authMiddleware_1.advisorAuthToken, reviewManagmentController_1.updatedReviewController);
 advisorRoute.get('/slots/:id', authMiddleware_1.advisorAuthToken, slotCreateController_1.getSlotsController);
+advisorRoute.post('/send-messages', authMiddleware_1.advisorAuthToken);
 advisorRoute.get('/reviewer-details/:id', authMiddleware_1.advisorAuthToken, reviewerProfileManagment_1.getReviewerProfileController);
 advisorRoute.get('/review-list', authMiddleware_1.advisorAuthToken, reviewMangmentController_1.findReviewController);
 advisorRoute.put('/book-slot', authMiddleware_1.advisorAuthToken, slotCreateController_1.bookSlotController);

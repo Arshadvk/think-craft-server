@@ -52,6 +52,7 @@ const getAllStudentSearchFilterSortController = (req, res) => __awaiter(void 0, 
             filterData.search = {
                 $or: [{ email: { $regex: req.query.search, $options: 'i' } },
                     { name: { $regex: req.query.search, $options: 'i' } },
+                    { week: { $eq: req.query.search } }
                 ]
             };
         }

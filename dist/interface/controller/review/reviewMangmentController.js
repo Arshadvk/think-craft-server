@@ -13,7 +13,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateReviewController = exports.findOneReviewController = exports.findReviewController = void 0;
-const reviewCreateUsecase_1 = require("../../../app/usecase/review/reviewCreateUsecase");
 const review_1 = require("../../../infra/database/model/review/review");
 const studentRepository_1 = __importDefault(require("../../../infra/repositories/student/studentRepository"));
 const student_1 = require("../../../infra/database/model/student/student");
@@ -76,30 +75,21 @@ const updateReviewController = (req, res) => __awaiter(void 0, void 0, void 0, f
     try {
         console.log(req.body);
         let data = {};
-        const mark = (_g = req.body) === null || _g === void 0 ? void 0 : _g.mark;
-        if (mark) {
-            data.mark = mark;
+        const value = (_g = req.body) === null || _g === void 0 ? void 0 : _g.value;
+        if (value === null || value === void 0 ? void 0 : value.mark) {
+            data.mark = value === null || value === void 0 ? void 0 : value.mark;
         }
         const pendingTask = req.body.pendingTopic;
         if (pendingTask) {
             data.pendingTask = pendingTask;
         }
-        const weekStatus = req.body.weekStatus;
-        if (weekStatus) {
-            data.weekStatus = weekStatus;
+        if (value === null || value === void 0 ? void 0 : value.weekStatus) {
+            data.weekStatus = value === null || value === void 0 ? void 0 : value.weekStatus;
         }
         const reviewId = (_h = req.body) === null || _h === void 0 ? void 0 : _h.id;
+        console.log(reviewId);
         const week = req.body.week;
         const updatedReview = yield (0, reviewUpdateUsecase_1.UpdateReviewUsecase)(reviewRepository)(reviewId, data);
-        console.log(mark);
-        if (updatedReview && data.weekStatus === 'Week Repeat') {
-        }
-        else {
-            const review = {
-                week: week + 1
-            };
-            const newReview = yield (0, reviewCreateUsecase_1.createReviewUsecase)(reviewRepository, advisorRepository, studentRepository)(reviewId, review);
-        }
         res.status(200).json(updatedReview);
     }
     catch (error) {

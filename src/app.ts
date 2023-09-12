@@ -37,51 +37,69 @@ app.use('/', studentRoute)
 const PORT: number = Number(4000 || process.env.PORT)
 const server: Server = app.listen(4000, () => console.log(`server is runnin on port ${PORT}`))
 
-const io = require('socket.io') (server , {
-    pingTimeout : 600000 , 
-    cors : {
-        origin : 'http://localhost:3000'
-    } 
+
+/////////////////////////////////////////////////////////
+
+
+const io=require('socket.io')(server , {
+    pingTimeout:60000,
+    cors:{
+        origin:'http://localhost:3000'
+    }
 })
 
-const emailToSocketIdMap = new Map()
-const socketidToEmailMap = new Map()
-io.on('connection' , (socket : Socket) =>{
 
-    console.log("Socket Connected" , socket.id);
+const emailToSocketIdMap = new Map();
+const socketidToEmailMap = new Map();
 
-    socket.on('room:join' , (data) =>{
-        const {email , room } = data
-        console.log(email , room);
-        
-        emailToSocketIdMap.set(email , socket.id)
-        socketidToEmailMap.set(socket.id , email)
-        io.to(socket.id).emit("user:joined", {email , id : socket.id})
-        socket.join(room)
-        io.to(socket.id).emit("room:join" , data)
-    })
-    socket.on("user:call" , ({to , offer})=>{
-        io.to(to).emit("incomming:call" , {from : socket.id , offer})
-    })
+io.on("connection", (socket:Socket) => {
+  console.log("Socket Connected," , socket.id);
+  socket.on("room:join", (data) => {
+    console.log('room:join')
+    const { email, room } = data;
+    emailToSocketIdMap.set(email, socket.id);
+    socketidToEmailMap.set(socket.id, email);
+    io.to(room).emit("user:joined", { email, id: socket.id });
+    socket.join(room);
+    io.to(socket.id).emit("room:join", data);
+  });
 
-    socket.on("call:ended" , ({to})=>{
-        io.to(to).emit("call:ended" , {from: socket.id})
-    })
+  socket.on("user:call", ({ to, offer }) => {
+    console.log('user calling ')
+    io.to(to).emit("incomming:call", { from: socket.id, offer });
+  });
 
-    socket.on("user:end" , ({to})=>{
-        console.log("user:end");
-        io.to(to).emit("incomming:end" , {from:socket.id})
-    })
 
-    socket.on("call:accepted" , ({to , ans})=>{
-        io.to(to).emit("call:accepted" , {from : socket.id , ans})
-    })
 
-    socket.on("peer:nego:needed",({to , offer})=>{
-        io.to(to).emit("peer:nego:needed" , {from : socket.id , offer})
-    })
 
-    socket.on("peer:nego:done" , ({to , ans})=>{
-        io.to(to).emit("peer:nego:final" , {from : socket.id , ans})
-    })
-})
+
+
+  socket.on("call:ended", ({ to }) => {
+    io.to(to).emit("call:ended", { from: socket.id });
+  
+    // You can also clean up any resources related to the call here
+  });
+  
+
+
+  socket.on("user:end", ({ to }) => {
+    console.log('user:end')
+    io.to(to).emit("incomming:end", { from: socket.id });
+  });
+
+
+
+
+  socket.on("call:accepted", ({ to, ans }) => {
+    io.to(to).emit("call:accepted", { from: socket.id, ans });
+  });
+
+  socket.on("peer:nego:needed", ({ to, offer }) => {
+    io.to(to).emit("peer:nego:needed", { from: socket.id, offer });
+  });
+
+  socket.on("peer:nego:done", ({ to, ans }) => {
+    io.to(to).emit("peer:nego:final", { from: socket.id, ans });
+  });
+});
+

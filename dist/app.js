@@ -33,33 +33,36 @@ app.use('/', student_1.default);
 // port setting
 const PORT = Number(4000 || process.env.PORT);
 const server = app.listen(4000, () => console.log(`server is runnin on port ${PORT}`));
+/////////////////////////////////////////////////////////
 const io = require('socket.io')(server, {
-    pingTimeout: 600000,
+    pingTimeout: 60000,
     cors: {
         origin: 'http://localhost:3000'
     }
 });
 const emailToSocketIdMap = new Map();
 const socketidToEmailMap = new Map();
-io.on('connection', (socket) => {
-    console.log("Socket Connected", socket.id);
-    socket.on('room:join', (data) => {
+io.on("connection", (socket) => {
+    console.log("Socket Connected,", socket.id);
+    socket.on("room:join", (data) => {
+        console.log('room:join');
         const { email, room } = data;
-        console.log(email, room);
         emailToSocketIdMap.set(email, socket.id);
         socketidToEmailMap.set(socket.id, email);
-        io.to(socket.id).emit("user:joined", { email, id: socket.id });
+        io.to(room).emit("user:joined", { email, id: socket.id });
         socket.join(room);
         io.to(socket.id).emit("room:join", data);
     });
     socket.on("user:call", ({ to, offer }) => {
+        console.log('user calling ');
         io.to(to).emit("incomming:call", { from: socket.id, offer });
     });
     socket.on("call:ended", ({ to }) => {
         io.to(to).emit("call:ended", { from: socket.id });
+        // You can also clean up any resources related to the call here
     });
     socket.on("user:end", ({ to }) => {
-        console.log("user:end");
+        console.log('user:end');
         io.to(to).emit("incomming:end", { from: socket.id });
     });
     socket.on("call:accepted", ({ to, ans }) => {

@@ -73,34 +73,26 @@ export const updateReviewController =async (req :Request , res : Response ) => {
     try {
         console.log(req.body);
         let data : reviewUpdatedData = {}
-        const mark : mark | undefined = req.body?.mark 
-        if (mark) {
-            data.mark = mark
+        const value : reviewUpdatedData = req.body?.value 
+       
+        if (value?.mark) {
+            data.mark = value?.mark
         }
         const pendingTask : [] | undefined = req.body.pendingTopic
         if (pendingTask) {
             data.pendingTask  = pendingTask
+        } 
+        if (value?.weekStatus){
+            data.weekStatus = value?.weekStatus
         }
-        const weekStatus: string = req.body.weekStatus as string   
-        if (weekStatus){
-            data.weekStatus = weekStatus
-        }
-        
+        data.status = "conducted"
         const reviewId  : ObjectId = req.body?.id as ObjectId
+        console.log(reviewId);
+        
         const week : number = req.body.week as number
 
         const updatedReview = await UpdateReviewUsecase(reviewRepository)(reviewId , data )
-        console.log(mark);
-        if (updatedReview && data.weekStatus === 'Week Repeat') {
-            
-        }
-        else {
-            const review : Review = {
-                week : week+1
-            }
-            
-            const newReview = await createReviewUsecase(reviewRepository , advisorRepository , studentRepository)(reviewId , review )
-        }
+        
         res.status(200).json(updatedReview)
 
     }  catch (error:any) {
