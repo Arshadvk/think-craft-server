@@ -15,9 +15,8 @@ const adminRepository = AdminRepositoryImpl(adminModel)
 export const adminLogin = async(req : Request , res : Response)=>{
     try {
         const admin  = req.body
-        console.log(admin)
+
         const adminToken = await loginAdmin(adminRepository)(admin)
-        console.log(adminToken);
         res.status(200).json({message:adminToken})
 
         
