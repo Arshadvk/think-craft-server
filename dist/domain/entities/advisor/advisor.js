@@ -14,17 +14,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.advisorLoginValidate = exports.createAdvisorToken = exports.advisorLogin = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const error_1 = require("../../../utils/error");
-const hashing_1 = require("../../service/hashing");
+const error_js_1 = require("../../../utils/error.js");
+const hashing_js_1 = require("../../service/hashing.js");
 const advisorLogin = (passwordCompare, createToken) => {
     return (advisor, advisorData) => __awaiter(void 0, void 0, void 0, function* () {
         const { email, password } = advisor;
         if (!email || !password || /^\s*$/.test(email) || /^\s*$/.test(password)) {
-            throw new error_1.AppError("All fields are requred", 400);
+            throw new error_js_1.AppError("All fields are requred", 400);
         }
         const isPasswordCorrect = yield passwordCompare(password, advisorData.password);
         if (!isPasswordCorrect) {
-            throw new error_1.AppError("Incorrect password", 401);
+            throw new error_js_1.AppError("Incorrect password", 401);
         }
         const token = (0, exports.createAdvisorToken)(advisorData);
         return token;
@@ -40,4 +40,4 @@ const createAdvisorToken = (advisor) => {
     return token;
 };
 exports.createAdvisorToken = createAdvisorToken;
-exports.advisorLoginValidate = (0, exports.advisorLogin)(hashing_1.isPasswordCorrect, exports.createAdvisorToken);
+exports.advisorLoginValidate = (0, exports.advisorLogin)(hashing_js_1.isPasswordCorrect, exports.createAdvisorToken);

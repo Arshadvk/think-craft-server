@@ -13,10 +13,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAdvisorProfileController = exports.advisorProfileController = void 0;
-const advisorProfile_1 = require("../../../app/usecase/advisor/advisorProfile");
-const advisorRepository_1 = __importDefault(require("../../../infra/repositories/advisor/advisorRepository"));
-const advisor_1 = require("../../../infra/database/model/advisor/advisor");
-const advisorRepository = (0, advisorRepository_1.default)(advisor_1.advisorModel);
+const advisor_js_1 = require("../../../infra/database/model/advisor/advisor.js");
+const advisorRepository_js_1 = __importDefault(require("../../../infra/repositories/advisor/advisorRepository.js"));
+const advisorProfile_js_1 = require("../../../app/usecase/advisor/advisorProfile.js");
+const advisorRepository = (0, advisorRepository_js_1.default)(advisor_js_1.advisorModel);
 const advisorProfileController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
     try {
@@ -31,7 +31,7 @@ const advisorProfileController = (req, res) => __awaiter(void 0, void 0, void 0,
             domain: data.domain,
             isProfileVerified: true
         };
-        const advisor = yield (0, advisorProfile_1.advisorProfileUsecase)(advisorRepository)(userId, advisorData);
+        const advisor = yield (0, advisorProfile_js_1.advisorProfileUsecase)(advisorRepository)(userId, advisorData);
         if (advisor)
             res.status(200).json(advisor);
         else
@@ -46,7 +46,7 @@ const getAdvisorProfileController = (req, res) => __awaiter(void 0, void 0, void
     var _c, _d;
     try {
         const userId = (_d = (_c = req.user) === null || _c === void 0 ? void 0 : _c.advisor) === null || _d === void 0 ? void 0 : _d._id;
-        const advisor = yield (0, advisorProfile_1.getAdvisorProfileUsecase)(advisorRepository)(userId);
+        const advisor = yield (0, advisorProfile_js_1.getAdvisorProfileUsecase)(advisorRepository)(userId);
         res.status(200).json(advisor);
     }
     catch (error) {

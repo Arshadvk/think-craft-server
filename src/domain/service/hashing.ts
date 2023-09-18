@@ -1,9 +1,8 @@
 import bcrypt from "bcrypt"
 
 export const passwordHashing:Function = async(password:string):Promise<string>=>{
-    console.log(password);
     
-    const hashedPassword = await bcrypt.hash(password,10);
+    const hashedPassword = await bcrypt.hash(password ,10);
     console.log(hashedPassword);
     
     return hashedPassword

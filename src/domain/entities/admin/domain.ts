@@ -1,5 +1,5 @@
 import { ObjectId } from "mongoose";
-import { AppError } from "../../../utils/error";
+import { AppError } from "../../../utils/error.js";
 
 export interface Domain{
     _id:ObjectId,

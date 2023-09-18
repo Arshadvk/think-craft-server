@@ -1,5 +1,5 @@
 import { ObjectId } from "mongoose"
-import { Domain } from "../admin/domain"
+import { Domain } from "../admin/domain.js"
 
 export interface Task{
     _id:string 

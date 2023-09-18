@@ -1,10 +1,9 @@
-import { ObjectId } from "mongoose";
-import { Reviewer, reviewerLoginValidate } from "../../../domain/entities/reviewer/reviewer";
-import { ReviewerRepository } from "../../../infra/repositories/reviewer/reviewerRepository";
-import { reviewerLoginType } from "../../../interface/controller/reviewer/reviewerLoginController";
-import { AppError } from "../../../utils/error";
-import { changePassType } from "../student/studentLogin";
-import { isPasswordCorrect, passwordHashing } from "../../../domain/service/hashing";
+import { AppError } from "../../../utils/error.js";
+import { changePassType } from "../student/studentLogin.js";
+import { isPasswordCorrect, passwordHashing } from "../../../domain/service/hashing.js";
+import { Reviewer, reviewerLoginValidate } from "../../../domain/entities/reviewer/reviewer.js";
+import { ReviewerRepository } from "../../../infra/repositories/reviewer/reviewerRepository.js";
+import { reviewerLoginType } from "../../../interface/controller/reviewer/reviewerLoginController.js";
 
 type reviewerReturnType = {
     token:string,

@@ -1,5 +1,5 @@
-import { StudentRepository } from "../../../../infra/repositories/student/studentRepository"
-import { Filter } from "../../../../interface/controller/reviewer/reviewerManagment"
+import { Filter } from "../../../../interface/controller/reviewer/reviewerManagment.js"
+import { StudentRepository } from "../../../../infra/repositories/student/studentRepository.js"
 
 export const getAllStudentUseCase = (studentRepository: StudentRepository)=>{
     return async (filterData : Filter):Promise <Object[]>=>{

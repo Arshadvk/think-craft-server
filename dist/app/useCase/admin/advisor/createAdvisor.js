@@ -10,19 +10,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAllAdvisorUsecase = exports.createAdvisorUsecase = void 0;
-const advisor_1 = require("../../../../domain/entities/advisor/advisor");
-const email_send_1 = require("../../../../domain/service/email_send");
-const error_1 = require("../../../../utils/error");
+const error_js_1 = require("../../../../utils/error.js");
+const email_send_js_1 = require("../../../../domain/service/email_send.js");
+const advisor_js_1 = require("../../../../domain/entities/advisor/advisor.js");
 const createAdvisorUsecase = (advisorRepository) => {
     return function (advisorData) {
         return __awaiter(this, void 0, void 0, function* () {
             const isAdvisor = yield advisorRepository.findAdvisorByEmail(advisorData.email);
             if (isAdvisor)
-                throw new error_1.AppError("Advisor is already exist", 409);
+                throw new error_js_1.AppError("Advisor is already exist", 409);
             const newAdvisor = yield advisorRepository.createAdvisor(advisorData);
             console.log(newAdvisor);
-            const token = (0, advisor_1.createAdvisorToken)(newAdvisor);
-            const sended = (0, email_send_1.sendMail)(newAdvisor, "/advisor", token);
+            const token = (0, advisor_js_1.createAdvisorToken)(newAdvisor);
+            const sended = (0, email_send_js_1.sendMail)(newAdvisor, "/advisor", token);
             console.log(sended);
         });
     };

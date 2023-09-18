@@ -1,5 +1,5 @@
-import { Domain } from "../../../domain/entities/admin/domain";
-import { MongoDBDomain, domainModel } from "../../database/model/domain/domain";
+import { Domain } from "../../../domain/entities/admin/domain.js";
+import { MongoDBDomain, domainModel } from "../../database/model/domain/domain.js";
 
 
 export type DomainRepository = {

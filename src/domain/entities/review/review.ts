@@ -1,10 +1,10 @@
-import { ObjectId } from "mongoose"
-import { Advisor, AdvisorId } from "../advisor/advisor"
 import moment from "moment"
-import { Student } from "../student/student"
-import { Reviewer } from "../reviewer/reviewer"
-import { taskStatus } from "../../../infra/repositories/review/reviewRepository"
-import { mark } from "../../../interface/controller/review/reviewMangmentController"
+import { ObjectId } from "mongoose"
+import { Student } from "../student/student.js"
+import { Advisor } from "../advisor/advisor.js"
+import { Reviewer } from "../reviewer/reviewer.js"
+import { taskStatus } from "../../../infra/repositories/review/reviewRepository.js"
+import { mark } from "../../../interface/controller/review/reviewMangmentController.js"
 
 export interface Review {
     _id?: string

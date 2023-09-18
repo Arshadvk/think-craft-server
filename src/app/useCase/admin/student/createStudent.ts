@@ -1,7 +1,7 @@
-import { createToken } from "../../../../domain/entities/student/student";
-import { sendMail } from "../../../../domain/service/email_send";
-import { StudentRepository } from "../../../../infra/repositories/student/studentRepository"
-import { AppError } from "../../../../utils/error";
+import { AppError } from "../../../../utils/error.js";
+import { sendMail } from "../../../../domain/service/email_send.js";
+import { createToken } from "../../../../domain/entities/student/student.js";
+import { StudentRepository } from "../../../../infra/repositories/student/studentRepository.js"
 
 
 export const createStudentUsecase = (studentRepository: StudentRepository) => {

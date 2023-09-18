@@ -1,7 +1,6 @@
 import { ObjectId } from "mongoose";
-import { Task, tasks } from "../../../domain/entities/task/task";
-import { MongoDBTask, taskModel } from "../../database/model/task/task";
-import { query } from "express";
+import { Task, tasks } from "../../../domain/entities/task/task.js";
+import { MongoDBTask, taskModel } from "../../database/model/task/task.js";
 
 export interface FilterTask {
   domain?: ObjectId

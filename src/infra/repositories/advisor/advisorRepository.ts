@@ -1,8 +1,7 @@
 import { ObjectId } from "mongoose"
-import { AdvisorId } from "../../../domain/entities/advisor/advisor"
-import { Filter } from "../../../interface/controller/reviewer/reviewerManagment"
-import { AppError } from "../../../utils/error"
-import { MongoDBAdvisor, advisorModel, } from "../../database/model/advisor/advisor"
+import { AppError } from "../../../utils/error.js"
+import { Filter } from "../../../interface/controller/reviewer/reviewerManagment.js"
+import { MongoDBAdvisor, advisorModel, } from "../../database/model/advisor/advisor.js"
 
 
 

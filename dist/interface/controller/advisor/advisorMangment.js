@@ -13,18 +13,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.blockAdvisorController = exports.getAllAdvisorSearchFilterSortController = exports.passwordCreationAdvisor = exports.createAdvisorController = void 0;
-const createAdvisor_1 = require("../../../app/usecase/admin/advisor/createAdvisor");
-const setPassword_1 = require("../../../app/usecase/advisor/setPassword");
-const advisor_1 = require("../../../infra/database/model/advisor/advisor");
-const advisorRepository_1 = __importDefault(require("../../../infra/repositories/advisor/advisorRepository"));
-const error_1 = require("../../../utils/error");
-const block_unblock_1 = require("../../../app/usecase/admin/advisor/block-unblock");
-const advisorRepository = (0, advisorRepository_1.default)(advisor_1.advisorModel);
+const error_js_1 = require("../../../utils/error.js");
+const advisor_js_1 = require("../../../infra/database/model/advisor/advisor.js");
+const setPassword_js_1 = require("../../../app/usecase/advisor/setPassword.js");
+const block_unblock_js_1 = require("../../../app/usecase/admin/advisor/block-unblock.js");
+const advisorRepository_js_1 = __importDefault(require("../../../infra/repositories/advisor/advisorRepository.js"));
+const createAdvisor_js_1 = require("../../../app/usecase/admin/advisor/createAdvisor.js");
+const advisorRepository = (0, advisorRepository_js_1.default)(advisor_js_1.advisorModel);
 const createAdvisorController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const advisorData = req.body;
         console.log(req.body);
-        const newAdvisor = yield (0, createAdvisor_1.createAdvisorUsecase)(advisorRepository)(advisorData);
+        const newAdvisor = yield (0, createAdvisor_js_1.createAdvisorUsecase)(advisorRepository)(advisorData);
         res.status(200).send({ message: "advisor created succussfully" });
     }
     catch (error) {
@@ -37,7 +37,7 @@ const passwordCreationAdvisor = (req, res) => __awaiter(void 0, void 0, void 0, 
     try {
         const userId = (_b = (_a = req.user) === null || _a === void 0 ? void 0 : _a.advisor) === null || _b === void 0 ? void 0 : _b._id;
         const advisorData = req.body;
-        const newPassword = yield (0, setPassword_1.setPasswordUsecaseAdvisor)(advisorRepository)(advisorData, userId);
+        const newPassword = yield (0, setPassword_js_1.setPasswordUsecaseAdvisor)(advisorRepository)(advisorData, userId);
         res.status(200).send({ message: "password change successfully" });
     }
     catch (error) {
@@ -55,7 +55,7 @@ const getAllAdvisorSearchFilterSortController = (req, res) => __awaiter(void 0, 
                 ]
             };
         }
-        const advisorList = yield (0, createAdvisor_1.getAllAdvisorUsecase)(advisorRepository)(filterData);
+        const advisorList = yield (0, createAdvisor_js_1.getAllAdvisorUsecase)(advisorRepository)(filterData);
         res.status(200).json(advisorList);
     }
     catch (error) {
@@ -69,10 +69,10 @@ const blockAdvisorController = (req, res) => __awaiter(void 0, void 0, void 0, f
         const action = req.body.action;
         console.log(userId, action);
         if (!userId || !action)
-            throw new error_1.AppError("Not found", 404);
-        const blocked = yield (0, block_unblock_1.blockAdvisorUsecase)(advisorRepository)(userId, action);
+            throw new error_js_1.AppError("Not found", 404);
+        const blocked = yield (0, block_unblock_js_1.blockAdvisorUsecase)(advisorRepository)(userId, action);
         if (blocked === null)
-            throw new error_1.AppError("somthing went wrong while fetch the users", 500);
+            throw new error_js_1.AppError("somthing went wrong while fetch the users", 500);
         if (blocked === true) {
             res.status(200).json({ message: 'User blocked succesfully' });
             return;

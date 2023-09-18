@@ -13,14 +13,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.reviewerChangePassword = exports.reviewerLoginController = void 0;
-const reviewerLogin_1 = require("../../../app/usecase/reviewer/reviewerLogin");
-const reviewer_1 = require("../../../infra/database/model/reviewer/reviewer");
-const reviewerRepository_1 = __importDefault(require("../../../infra/repositories/reviewer/reviewerRepository"));
-const reviewerRepository = (0, reviewerRepository_1.default)(reviewer_1.reviewerModel);
+const reviewer_js_1 = require("../../../infra/database/model/reviewer/reviewer.js");
+const reviewerRepository_js_1 = __importDefault(require("../../../infra/repositories/reviewer/reviewerRepository.js"));
+const reviewerLogin_js_1 = require("../../../app/usecase/reviewer/reviewerLogin.js");
+const reviewerRepository = (0, reviewerRepository_js_1.default)(reviewer_js_1.reviewerModel);
 const reviewerLoginController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const reviewer = req.body;
-        const ReviewerToken = yield (0, reviewerLogin_1.loginReviewer)(reviewerRepository)(reviewer);
+        const ReviewerToken = yield (0, reviewerLogin_js_1.loginReviewer)(reviewerRepository)(reviewer);
         res.status(200).json({ message: ReviewerToken });
     }
     catch (error) {
@@ -32,7 +32,7 @@ const reviewerChangePassword = (req, res) => __awaiter(void 0, void 0, void 0, f
     try {
         const reveiwer = req.user.reveiwer._id;
         const value = req.body.value;
-        const updateReviewer = yield (0, reviewerLogin_1.changeReviewerPassword)(reviewerRepository)(reveiwer, value);
+        const updateReviewer = yield (0, reviewerLogin_js_1.changeReviewerPassword)(reviewerRepository)(reveiwer, value);
         res.status(200).json(updateReviewer);
     }
     catch (error) {

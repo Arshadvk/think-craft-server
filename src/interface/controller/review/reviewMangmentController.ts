@@ -1,16 +1,14 @@
-import {Request , Response} from "express"
-import { CustomRequest } from "../../middlewares/authMiddleware"
-import { createReviewUsecase } from "../../../app/usecase/review/reviewCreateUsecase"
-import { reviewModel } from "../../../infra/database/model/review/review"
-import studentRepositoryImpl from "../../../infra/repositories/student/studentRepository"
-import { studentModel } from "../../../infra/database/model/student/student"
 import { ObjectId } from "mongoose"
-import AdvisorRepositoryImpl from "../../../infra/repositories/advisor/advisorRepository"
-import { advisorModel } from "../../../infra/database/model/advisor/advisor"
-import { Review } from "../../../domain/entities/review/review"
-import ReviewRepositoryIMPL, { filterReview, reviewUpdatedData } from "../../../infra/repositories/review/reviewRepository"
-import { getReviewByIdUsecase, getReviewListUseCase } from "../../../app/usecase/review/reviewFindUsecase"
-import { UpdateReviewUsecase } from "../../../app/usecase/review/reviewUpdateUsecase"
+import {Request , Response} from "express"
+import { CustomRequest } from "../../middlewares/authMiddleware.js"
+import { reviewModel } from "../../../infra/database/model/review/review.js"
+import { studentModel } from "../../../infra/database/model/student/student.js"
+import { advisorModel } from "../../../infra/database/model/advisor/advisor.js"
+import { UpdateReviewUsecase } from "../../../app/usecase/review/reviewUpdateUsecase.js"
+import studentRepositoryImpl from "../../../infra/repositories/student/studentRepository.js"
+import AdvisorRepositoryImpl from "../../../infra/repositories/advisor/advisorRepository.js"
+import { getReviewByIdUsecase, getReviewListUseCase } from "../../../app/usecase/review/reviewFindUsecase.js"
+import ReviewRepositoryIMPL, { filterReview, reviewUpdatedData } from "../../../infra/repositories/review/reviewRepository.js"
 
 export type mark = {
     code ?: number 
@@ -63,9 +61,7 @@ export const findOneReviewController =async (req:CustomRequest , res : Response)
     try {
         const userId : string = req.user?.student?._id 
         const week : ObjectId | undefined = req.query.week as unknown as ObjectId 
-        const review = await getReviewByIdUsecase(reviewRepository )(week)
-      console.log(review);
-        
+        const review = await getReviewByIdUsecase(reviewRepository )(week)     
         res.status(200).json(review)
     } catch (error:any) {
         res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' })   
@@ -88,11 +84,8 @@ export const updateReviewController =async (req :Request , res : Response ) => {
             data.pendingTask  = pendingTask
         } 
         const reviewId  : ObjectId = req.body?.id as ObjectId
-     
         const week : number = req.body.week as number
-
         const updatedReview = await UpdateReviewUsecase(reviewRepository)(reviewId , data )
-        
         res.status(200).json(updatedReview)
 
     }  catch (error:any) {

@@ -7,10 +7,10 @@ import dotenv from "dotenv";
 import { Socket } from "socket.io";
 import fileUpload from 'express-fileupload'
 import connectDB from "./infra/database/dbConfig"
-import adminRoute from "./interface/routes/admin";
-import advisorRoute from "./interface/routes/advisor";
-import reviewerRoute from "./interface/routes/reviewer";
-import studentRoute from "./interface/routes/student";
+import adminRoute from "./interface/routes/admin.js";
+import advisorRoute from "./interface/routes/advisor.js";
+import reviewerRoute from "./interface/routes/reviewer.js";
+import studentRoute from "./interface/routes/student.js";
 
 const app: Application = express()
 

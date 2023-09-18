@@ -1,5 +1,5 @@
-import { passwordHashing } from "../../../domain/service/hashing";
-import { ReviewerRepository } from "../../../infra/repositories/reviewer/reviewerRepository";
+import { passwordHashing } from "../../../domain/service/hashing.js";
+import { ReviewerRepository } from "../../../infra/repositories/reviewer/reviewerRepository.js";
 
 
 export const setPasswordUsecaseReviewer = (reviewerRepository : ReviewerRepository)=>{

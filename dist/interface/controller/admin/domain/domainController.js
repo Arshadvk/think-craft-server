@@ -13,16 +13,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAllDomainController = exports.addDomainController = void 0;
-const addDomain_1 = require("../../../../app/usecase/admin/domain/addDomain");
-const domainRepository_1 = __importDefault(require("../../../../infra/repositories/domain/domainRepository"));
-const domain_1 = require("../../../../infra/database/model/domain/domain");
-const getDomainUsecase_1 = require("../../../../app/usecase/admin/domain/getDomainUsecase");
-const domainRepository = (0, domainRepository_1.default)(domain_1.domainModel);
+const domain_js_1 = require("../../../../infra/database/model/domain/domain.js");
+const addDomain_js_1 = require("../../../../app/usecase/admin/domain/addDomain.js");
+const domainRepository_js_1 = __importDefault(require("../../../../infra/repositories/domain/domainRepository.js"));
+const getDomainUsecase_js_1 = require("../../../../app/usecase/admin/domain/getDomainUsecase.js");
+const domainRepository = (0, domainRepository_js_1.default)(domain_js_1.domainModel);
 const addDomainController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const name = req.body;
         console.log(name);
-        const newDomain = yield (0, addDomain_1.addDomainUseCase)(domainRepository)(name);
+        const newDomain = yield (0, addDomain_js_1.addDomainUseCase)(domainRepository)(name);
         if (!newDomain)
             res.status(500).json({ message: 'Somthing went wrong' });
         else
@@ -35,7 +35,7 @@ const addDomainController = (req, res) => __awaiter(void 0, void 0, void 0, func
 exports.addDomainController = addDomainController;
 const getAllDomainController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const domains = yield (0, getDomainUsecase_1.getAllDomainUsecase)(domainRepository)();
+        const domains = yield (0, getDomainUsecase_js_1.getAllDomainUsecase)(domainRepository)();
         if (!domains)
             res.status(500).json({ message: "no domain found" });
         else

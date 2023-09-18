@@ -1,17 +1,10 @@
-import { Domain, validateDomainData } from "../../../../domain/entities/admin/domain";
-import { DomainRepository } from "../../../../infra/repositories/domain/domainRepository";
-import { AppError } from "../../../../utils/error";
+import { Domain, validateDomainData } from "../../../../domain/entities/admin/domain.js";
+import { DomainRepository } from "../../../../infra/repositories/domain/domainRepository.js";
 
-export const addDomainUseCase = (domainRepository:DomainRepository)=>{
-  return  async(domainName:string):Promise<Domain |any >=>{
-    console.log("ksifj");
-    
-        const domainNameValidate:string = validateDomainData(domainName)
-        console.log(domainNameValidate);
-        
-       
-        
-        const newDomain : Domain | any  = await domainRepository.createNewDomain(domainNameValidate)
-        return newDomain
-    }
+export const addDomainUseCase = (domainRepository: DomainRepository) => {
+  return async (domainName: string): Promise<Domain | any> => {
+    const domainNameValidate: string = validateDomainData(domainName)
+    const newDomain: Domain | any = await domainRepository.createNewDomain(domainNameValidate)
+    return newDomain
+  }
 }

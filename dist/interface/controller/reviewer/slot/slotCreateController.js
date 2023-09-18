@@ -13,19 +13,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.bookSlotController = exports.getSlotsController = exports.slotCreateController = void 0;
-const slot_1 = require("../../../../infra/database/model/slot/slot");
-const slot_2 = __importDefault(require("../../../../infra/repositories/slot/slot"));
 const moment_1 = __importDefault(require("moment"));
 const error_1 = require("../../../../utils/error");
-const slotUsecase_1 = require("../../../../app/usecase/reviewer/slot/slotUsecase");
-const review_1 = require("../../../../infra/database/model/review/review");
-const studentRepository_1 = __importDefault(require("../../../../infra/repositories/student/studentRepository"));
-const student_1 = require("../../../../infra/database/model/student/student");
-const reviewRepository_1 = __importDefault(require("../../../../infra/repositories/review/reviewRepository"));
-const reviewUpdateUsecase_1 = require("../../../../app/usecase/review/reviewUpdateUsecase");
-const slotRepository = (0, slot_2.default)(slot_1.slotModel);
-const reviewRepository = (0, reviewRepository_1.default)(review_1.reviewModel);
-const studentRepository = (0, studentRepository_1.default)(student_1.studentModel);
+const slot_js_1 = require("../../../../infra/database/model/slot/slot.js");
+const slot_js_2 = __importDefault(require("../../../../infra/repositories/slot/slot.js"));
+const review_js_1 = require("../../../../infra/database/model/review/review.js");
+const student_js_1 = require("../../../../infra/database/model/student/student.js");
+const reviewUpdateUsecase_js_1 = require("../../../../app/usecase/review/reviewUpdateUsecase.js");
+const studentRepository_js_1 = __importDefault(require("../../../../infra/repositories/student/studentRepository.js"));
+const reviewRepository_js_1 = __importDefault(require("../../../../infra/repositories/review/reviewRepository.js"));
+const slotUsecase_js_1 = require("../../../../app/usecase/reviewer/slot/slotUsecase.js");
+const slotRepository = (0, slot_js_2.default)(slot_js_1.slotModel);
+const reviewRepository = (0, reviewRepository_js_1.default)(review_js_1.reviewModel);
+const studentRepository = (0, studentRepository_js_1.default)(student_js_1.studentModel);
 const slotCreateController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
     try {
@@ -51,7 +51,7 @@ const slotCreateController = (req, res) => __awaiter(void 0, void 0, void 0, fun
         if (endingTime.isBefore(startingTime)) {
             throw new error_1.AppError('Ending time cannot be less than starting time', 400);
         }
-        const newSlot = yield (0, slotUsecase_1.createSlotUsecase)(slotRepository)(userId, date, startTime, endTime, perReview);
+        const newSlot = yield (0, slotUsecase_js_1.createSlotUsecase)(slotRepository)(userId, date, startTime, endTime, perReview);
         console.log(newSlot);
         res.json(newSlot);
     }
@@ -65,7 +65,7 @@ const getSlotsController = (req, res) => __awaiter(void 0, void 0, void 0, funct
     var _m, _o, _p;
     try {
         const reviewerId = (_m = req.params.id) !== null && _m !== void 0 ? _m : (_p = (_o = req.user) === null || _o === void 0 ? void 0 : _o.reviewer) === null || _p === void 0 ? void 0 : _p._id;
-        const slot = yield (0, slotUsecase_1.getSlotUsecase)(slotRepository)(reviewerId);
+        const slot = yield (0, slotUsecase_js_1.getSlotUsecase)(slotRepository)(reviewerId);
         console.log(slot);
         res.status(200).json(slot);
     }
@@ -81,7 +81,7 @@ const bookSlotController = (req, res) => __awaiter(void 0, void 0, void 0, funct
         const slotId = values === null || values === void 0 ? void 0 : values.slot;
         const reviewerId = values === null || values === void 0 ? void 0 : values.reviewer;
         const reviewId = values === null || values === void 0 ? void 0 : values.reviewId;
-        const slot = yield (0, slotUsecase_1.updateSlotUsecase)(slotRepository)(reviewerId, slotId);
+        const slot = yield (0, slotUsecase_js_1.updateSlotUsecase)(slotRepository)(reviewerId, slotId);
         if (slot) {
             console.log(slot);
             const reviewUpdatedData = {
@@ -90,7 +90,7 @@ const bookSlotController = (req, res) => __awaiter(void 0, void 0, void 0, funct
                 day: slot.slotes[0].slot_date,
                 time: slot.slotes[0].slot_time
             };
-            const review = yield (0, reviewUpdateUsecase_1.UpdateReviewUsecase)(reviewRepository)(reviewId, reviewUpdatedData);
+            const review = yield (0, reviewUpdateUsecase_js_1.UpdateReviewUsecase)(reviewRepository)(reviewId, reviewUpdatedData);
             console.log(review);
             res.status(200).json({ review });
         }

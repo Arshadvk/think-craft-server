@@ -1,10 +1,9 @@
-import { changeAdvisorPassword, loginAdvisor } from "../../../app/usecase/advisor/advisorLogin"
-import { changePassType } from "../../../app/usecase/student/studentLogin"
-import { advisorModel } from "../../../infra/database/model/advisor/advisor"
-import AdvisorRepositoryImpl from "../../../infra/repositories/advisor/advisorRepository"
 import { Request , Response } from "express"
-import { CustomRequest } from "../../middlewares/authMiddleware"
-import { ObjectId } from "mongoose"
+import { CustomRequest } from "../../middlewares/authMiddleware.js"
+import { changePassType } from "../../../app/usecase/student/studentLogin.js"
+import { advisorModel } from "../../../infra/database/model/advisor/advisor.js"
+import AdvisorRepositoryImpl from "../../../infra/repositories/advisor/advisorRepository.js"
+import { changeAdvisorPassword, loginAdvisor } from "../../../app/usecase/advisor/advisorLogin.js"
 
 export type advisorLoginType ={
     email:string 

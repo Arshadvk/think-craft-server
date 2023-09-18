@@ -13,18 +13,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.blockStudentController = exports.getAllStudentSearchFilterSortController = exports.passwordCreation = exports.createStudentController = void 0;
-const studentRepository_1 = __importDefault(require("../../../infra/repositories/student/studentRepository"));
-const student_1 = require("../../../infra/database/model/student/student");
-const setPassword_1 = require("../../../app/usecase/student/setPassword");
-const createStudent_1 = require("../../../app/usecase/admin/student/createStudent");
-const getAllStudent_1 = require("../../../app/usecase/admin/student/getAllStudent");
-const error_1 = require("../../../utils/error");
-const block_unblock_1 = require("../../../app/usecase/admin/student/block-unblock");
-const studentRepository = (0, studentRepository_1.default)(student_1.studentModel);
+const error_js_1 = require("../../../utils/error.js");
+const student_js_1 = require("../../../infra/database/model/student/student.js");
+const setPassword_js_1 = require("../../../app/usecase/student/setPassword.js");
+const block_unblock_js_1 = require("../../../app/usecase/admin/student/block-unblock.js");
+const createStudent_js_1 = require("../../../app/usecase/admin/student/createStudent.js");
+const getAllStudent_js_1 = require("../../../app/usecase/admin/student/getAllStudent.js");
+const studentRepository_js_1 = __importDefault(require("../../../infra/repositories/student/studentRepository.js"));
+const studentRepository = (0, studentRepository_js_1.default)(student_js_1.studentModel);
 const createStudentController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const studentData = req.body;
-        const newStudent = yield (0, createStudent_1.createStudentUsecase)(studentRepository)(studentData);
+        const newStudent = yield (0, createStudent_js_1.createStudentUsecase)(studentRepository)(studentData);
         res.status(200).send({ message: "Student Created Successfully" });
     }
     catch (error) {
@@ -37,7 +37,7 @@ const passwordCreation = (req, res) => __awaiter(void 0, void 0, void 0, functio
     try {
         const userId = (_b = (_a = req.user) === null || _a === void 0 ? void 0 : _a.student) === null || _b === void 0 ? void 0 : _b._id;
         const studentData = req.body;
-        const newPassword = yield (0, setPassword_1.setPasswordUsecase)(studentRepository)(studentData, userId);
+        const newPassword = yield (0, setPassword_js_1.setPasswordUsecase)(studentRepository)(studentData, userId);
         res.status(200).send({ message: "password change successfully" });
     }
     catch (error) {
@@ -58,7 +58,7 @@ const getAllStudentSearchFilterSortController = (req, res) => __awaiter(void 0, 
         }
         if (req.query.domain)
             filterData.domain = req.query.domain;
-        const studentList = yield (0, getAllStudent_1.getAllStudentUseCase)(studentRepository)(filterData);
+        const studentList = yield (0, getAllStudent_js_1.getAllStudentUseCase)(studentRepository)(filterData);
         res.status(200).json(studentList);
     }
     catch (error) {
@@ -71,10 +71,10 @@ const blockStudentController = (req, res) => __awaiter(void 0, void 0, void 0, f
         const userId = req.body.id;
         const action = req.body.action;
         if (!userId || !action)
-            throw new error_1.AppError("Not found", 404);
-        const blocked = yield (0, block_unblock_1.blockStudentUseCase)(studentRepository)(userId, action);
+            throw new error_js_1.AppError("Not found", 404);
+        const blocked = yield (0, block_unblock_js_1.blockStudentUseCase)(studentRepository)(userId, action);
         if (blocked === null)
-            throw new error_1.AppError("somthing went wrong while fetch the users", 500);
+            throw new error_js_1.AppError("somthing went wrong while fetch the users", 500);
         if (blocked === true) {
             res.status(200).json({ message: 'User blocked succesfully' });
             return;

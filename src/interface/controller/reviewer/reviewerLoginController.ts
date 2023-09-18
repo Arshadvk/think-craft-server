@@ -1,11 +1,10 @@
-import { Reviewer } from "../../../domain/entities/reviewer/reviewer"
-import { changeReviewerPassword, loginReviewer } from "../../../app/usecase/reviewer/reviewerLogin"
-import { reviewerModel } from "../../../infra/database/model/reviewer/reviewer"
-import reviewerRepositoryImpl from "../../../infra/repositories/reviewer/reviewerRepository"
 import { Request , Response } from "express" 
-import { CustomRequest } from "../../middlewares/authMiddleware"
-import { ObjectId } from "mongoose"
-import { changePassType } from "../../../app/usecase/student/studentLogin"
+import { CustomRequest } from "../../middlewares/authMiddleware.js"
+import { Reviewer } from "../../../domain/entities/reviewer/reviewer.js"
+import { changePassType } from "../../../app/usecase/student/studentLogin.js"
+import { reviewerModel } from "../../../infra/database/model/reviewer/reviewer.js"
+import reviewerRepositoryImpl from "../../../infra/repositories/reviewer/reviewerRepository.js"
+import { changeReviewerPassword, loginReviewer } from "../../../app/usecase/reviewer/reviewerLogin.js"
 
 export type reviewerLoginType ={
     email:string

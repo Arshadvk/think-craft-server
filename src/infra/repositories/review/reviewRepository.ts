@@ -1,6 +1,6 @@
-import mongoose, { ObjectId } from "mongoose";
-import { MongoDBReview } from "../../database/model/review/review";
-import { Review } from "../../../domain/entities/review/review";
+import { ObjectId } from "mongoose";
+import { Review } from "../../../domain/entities/review/review.js";
+import { MongoDBReview } from "../../database/model/review/review.js";
 
 export type filterReview = {
     _id?: ObjectId
@@ -14,9 +14,9 @@ export type filterReview = {
     time?: string
 }
 export type taskStatus = {
-    seminar?: string 
-    progress?: string 
-    typing?: string 
+    seminar?: string
+    progress?: string
+    typing?: string
 }
 export type reviewUpdatedData = {
     reviewer?: ObjectId | undefined
@@ -71,7 +71,7 @@ const ReviewRepositoryIMPL = (ReviewModel: MongoDBReview): ReviewRepository => {
         return review
     }
 
-    const findReviewAndUpdate = async (reviewId: ObjectId, reviewUpdatedData: reviewUpdatedData): Promise<Review | null> => {        
+    const findReviewAndUpdate = async (reviewId: ObjectId, reviewUpdatedData: reviewUpdatedData): Promise<Review | null> => {
         const review: Review | null = await ReviewModel.findByIdAndUpdate(reviewId, { $set: reviewUpdatedData })
         return review
     }

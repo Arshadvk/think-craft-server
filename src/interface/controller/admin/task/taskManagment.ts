@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { taskModel } from "../../../../infra/database/model/task/task";
-import taskRepositoryIMPL from "../../../../infra/repositories/task/taskRepository";
-import { addTaskUsecase, getOneTaskAndUpdate } from "../../../../app/usecase/admin/task/taskMangmentUsecase";
-import { tasks } from "../../../../domain/entities/task/task";
+import { tasks } from "../../../../domain/entities/task/task.js";
+import { taskModel } from "../../../../infra/database/model/task/task.js";
+import taskRepositoryIMPL from "../../../../infra/repositories/task/taskRepository.js";
+import { addTaskUsecase, getOneTaskAndUpdate } from "../../../../app/usecase/admin/task/taskMangmentUsecase.js";
 
 const taskRepository = taskRepositoryIMPL(taskModel)
 export const addTaskController =async (req:Request,res:Response) => {

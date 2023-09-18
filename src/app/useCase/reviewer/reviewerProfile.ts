@@ -1,4 +1,4 @@
-import { ReviewerRepository } from "../../../infra/repositories/reviewer/reviewerRepository";
+import { ReviewerRepository } from "../../../infra/repositories/reviewer/reviewerRepository.js";
 
 export const reviewerProfileUsecase = (reviewerRepository : ReviewerRepository)=>{
     return async (userId: string , reviewerData:object):Promise <any | null >=>{

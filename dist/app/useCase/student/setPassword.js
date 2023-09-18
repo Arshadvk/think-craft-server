@@ -10,10 +10,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setPasswordUsecase = void 0;
-const hashing_1 = require("../../../domain/service/hashing");
+const hashing_js_1 = require("../../../domain/service/hashing.js");
 const setPasswordUsecase = (studentRepository) => {
     return (studentData, userId) => __awaiter(void 0, void 0, void 0, function* () {
-        const password = yield (0, hashing_1.passwordHashing)(studentData.password);
+        const password = yield (0, hashing_js_1.passwordHashing)(studentData.password);
         const student = yield studentRepository.setStudentPassword(userId, password);
         return student;
     });

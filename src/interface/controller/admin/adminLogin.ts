@@ -1,7 +1,7 @@
 import {Request , Response} from "express"
-import { changePasswordUsecase, createAdminUsecase, loginAdmin } from "../../../app/usecase/admin/adminLogin";
-import AdminRepositoryImpl from "../../../infra/repositories/admin/adminRepository";
-import { adminModel } from "../../../infra/database/model/admin/admin";
+import { adminModel } from "../../../infra/database/model/admin/admin.js";
+import AdminRepositoryImpl from "../../../infra/repositories/admin/adminRepository.js";
+import { changePasswordUsecase, createAdminUsecase, loginAdmin } from "../../../app/usecase/admin/adminLogin.js";
 
 export type adminLoginType = {
     email: string 

@@ -1,10 +1,8 @@
 import { ObjectId } from "mongoose";
-import { AdvisorId } from "../../../domain/entities/advisor/advisor";
-import { Review, } from "../../../domain/entities/review/review";
-import { AdvisorRepository } from "../../../infra/repositories/advisor/advisorRepository";
-import { StudentRepository } from "../../../infra/repositories/student/studentRepository";
-import { ReviewRepository, taskStatus } from "../../../infra/repositories/review/reviewRepository";
-import { mark } from "../../../interface/controller/review/reviewMangmentController";
+import { Review, } from "../../../domain/entities/review/review.js";
+import { AdvisorRepository } from "../../../infra/repositories/advisor/advisorRepository.js";
+import { StudentRepository } from "../../../infra/repositories/student/studentRepository.js";
+import { ReviewRepository, taskStatus } from "../../../infra/repositories/review/reviewRepository.js";
 
 
 

@@ -1,8 +1,8 @@
 import { ObjectId } from "mongoose";
-import { Student } from "../../../domain/entities/student/student";
-import { AppError } from "../../../utils/error";
-import { MongoDBStudent, studentModel } from "../../database/model/student/student";
-import { Filter } from "../../../interface/controller/reviewer/reviewerManagment";
+import { AppError } from "../../../utils/error.js";
+import { Student } from "../../../domain/entities/student/student.js";
+import { MongoDBStudent, studentModel } from "../../database/model/student/student.js";
+import { Filter } from "../../../interface/controller/reviewer/reviewerManagment.js";
 
 export type StudentRepository = {
     createStudent: (studentData: any) => Promise<any | null>
@@ -50,8 +50,6 @@ const studentRepositoryImpl = (StudentModel: MongoDBStudent): StudentRepository 
     }
     const updateStudentProfile = async (userId: ObjectId, studentData: object): Promise<any | null> => {
         const student = await studentModel.findByIdAndUpdate(userId, studentData, { new: true })
-        console.log(student);
-        
         if (!student) throw new AppError('somthing went wrong when block the user ', 500)
         return student
     }

@@ -13,17 +13,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.findStudentManifestController = void 0;
-const review_1 = require("../../../infra/database/model/review/review");
-const reviewFindUsecase_1 = require("../../../app/usecase/review/reviewFindUsecase");
-const reviewRepository_1 = __importDefault(require("../../../infra/repositories/review/reviewRepository"));
-const reviewRepository = (0, reviewRepository_1.default)(review_1.reviewModel);
+const review_js_1 = require("../../../infra/database/model/review/review.js");
+const reviewFindUsecase_js_1 = require("../../../app/usecase/review/reviewFindUsecase.js");
+const reviewRepository_js_1 = __importDefault(require("../../../infra/repositories/review/reviewRepository.js"));
+const reviewRepository = (0, reviewRepository_js_1.default)(review_js_1.reviewModel);
 const findStudentManifestController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
     try {
         const userId = (_b = (_a = req.user) === null || _a === void 0 ? void 0 : _a.student) === null || _b === void 0 ? void 0 : _b._id;
         let filterData = {};
         filterData.student = userId;
-        const reviews = yield (0, reviewFindUsecase_1.getReviewListUseCase)(reviewRepository)(filterData);
+        const reviews = yield (0, reviewFindUsecase_js_1.getReviewListUseCase)(reviewRepository)(filterData);
         res.status(200).json(reviews);
     }
     catch (error) {

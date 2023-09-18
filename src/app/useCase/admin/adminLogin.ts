@@ -1,8 +1,8 @@
-import { adminLoginValidate } from "../../../domain/entities/admin/admin";
-import { isPasswordCorrect, passwordHashing } from "../../../domain/service/hashing";
-import { AdminRepository } from "../../../infra/repositories/admin/adminRepository";
-import { adminLoginType } from "../../../interface/controller/admin/adminLogin";
-import { AppError } from "../../../utils/error";
+import { AppError } from "../../../utils/error.js";
+import {  passwordHashing } from "../../../domain/service/hashing.js";
+import { adminLoginValidate } from "../../../domain/entities/admin/admin.js";
+import { adminLoginType } from "../../../interface/controller/admin/adminLogin.js";
+import { AdminRepository } from "../../../infra/repositories/admin/adminRepository.js";
 
 type adminReturnType = {
     token:string
@@ -13,7 +13,7 @@ export const changePasswordUsecase = (adminRepository:AdminRepository)=>{
     return async (adminData:any):Promise <any>=>{
         
         
-        const newPassword:string  =  await passwordHashing(adminData.password)
+        const newPassword:string  =  await passwordHashing(adminData.password as string)
         console.log(newPassword);
         
         const changepassword = await adminRepository.setAdminPassword( adminData.email , newPassword)

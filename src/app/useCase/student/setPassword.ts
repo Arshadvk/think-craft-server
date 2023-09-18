@@ -1,6 +1,6 @@
-import { Student } from "../../../domain/entities/student/student"
-import { passwordHashing } from "../../../domain/service/hashing"
-import { StudentRepository } from "../../../infra/repositories/student/studentRepository"
+import { passwordHashing } from "../../../domain/service/hashing.js"
+import { Student } from "../../../domain/entities/student/student.js"
+import { StudentRepository } from "../../../infra/repositories/student/studentRepository.js"
 
 
 

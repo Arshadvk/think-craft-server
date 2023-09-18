@@ -10,14 +10,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateSlotUsecase = exports.getSlotUsecase = exports.createSlotUsecase = void 0;
-const error_1 = require("../../../../utils/error");
+const error_js_1 = require("../../../../utils/error.js");
 const createSlotUsecase = (slotRepository) => {
     return (reviewerId, date, startTime, endTime, slotDuration) => __awaiter(void 0, void 0, void 0, function* () {
         const isSlotExist = yield slotRepository.findSlot(date, startTime, endTime, reviewerId);
         console.log('slot data :', isSlotExist === null || isSlotExist === void 0 ? void 0 : isSlotExist.slotes.length);
         if (isSlotExist === null || isSlotExist === void 0 ? void 0 : isSlotExist.slotes.length) {
             console.log('slot data :', isSlotExist);
-            throw new error_1.AppError('Slots already exist', 409);
+            throw new error_js_1.AppError('Slots already exist', 409);
         }
         const createdSlots = generateTimeSlots(startTime, endTime, slotDuration, date);
         const newSlot = yield slotRepository.createNewSlot(reviewerId, createdSlots);

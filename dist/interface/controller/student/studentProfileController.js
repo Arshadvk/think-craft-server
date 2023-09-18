@@ -13,19 +13,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getStudentHomeController = exports.getStudentProfileController = exports.studentProfileController = void 0;
-const studentProfile_1 = require("../../../app/usecase/student/studentProfile");
-const student_1 = require("../../../infra/database/model/student/student");
-const studentRepository_1 = __importDefault(require("../../../infra/repositories/student/studentRepository"));
-const reviewCreateUsecase_1 = require("../../../app/usecase/review/reviewCreateUsecase");
-const review_1 = require("../../../infra/database/model/review/review");
-const advisorRepository_1 = __importDefault(require("../../../infra/repositories/advisor/advisorRepository"));
-const advisor_1 = require("../../../infra/database/model/advisor/advisor");
-const student_2 = require("../../../domain/entities/student/student");
-const reviewRepository_1 = __importDefault(require("../../../infra/repositories/review/reviewRepository"));
-const reviewFindUsecase_1 = require("../../../app/usecase/review/reviewFindUsecase");
-const studentRepository = (0, studentRepository_1.default)(student_1.studentModel);
-const reviewRepository = (0, reviewRepository_1.default)(review_1.reviewModel);
-const advisorRepository = (0, advisorRepository_1.default)(advisor_1.advisorModel);
+const student_js_1 = require("../../../domain/entities/student/student.js");
+const review_js_1 = require("../../../infra/database/model/review/review.js");
+const student_js_2 = require("../../../infra/database/model/student/student.js");
+const advisor_js_1 = require("../../../infra/database/model/advisor/advisor.js");
+const reviewRepository_js_1 = __importDefault(require("../../../infra/repositories/review/reviewRepository.js"));
+const reviewCreateUsecase_js_1 = require("../../../app/usecase/review/reviewCreateUsecase.js");
+const studentRepository_js_1 = __importDefault(require("../../../infra/repositories/student/studentRepository.js"));
+const advisorRepository_js_1 = __importDefault(require("../../../infra/repositories/advisor/advisorRepository.js"));
+const reviewFindUsecase_js_1 = require("../../../app/usecase/review/reviewFindUsecase.js");
+const studentProfile_js_1 = require("../../../app/usecase/student/studentProfile.js");
+const studentRepository = (0, studentRepository_js_1.default)(student_js_2.studentModel);
+const reviewRepository = (0, reviewRepository_js_1.default)(review_js_1.reviewModel);
+const advisorRepository = (0, advisorRepository_js_1.default)(advisor_js_1.advisorModel);
 const studentProfileController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
     try {
@@ -40,14 +40,14 @@ const studentProfileController = (req, res) => __awaiter(void 0, void 0, void 0,
             domain: data.domain,
             isProfileVerified: true
         };
-        const student = yield (0, studentProfile_1.studentProfileUsecase)(studentRepository)(userId, studentData);
+        const student = yield (0, studentProfile_js_1.studentProfileUsecase)(studentRepository)(userId, studentData);
         if (student) {
             const review = {
                 week: 1,
                 student: userId,
             };
-            const newReview = yield (0, reviewCreateUsecase_1.createReviewUsecase)(reviewRepository, advisorRepository, studentRepository)(userId, review);
-            const token = (0, student_2.createToken)(student);
+            const newReview = yield (0, reviewCreateUsecase_js_1.createReviewUsecase)(reviewRepository, advisorRepository, studentRepository)(userId, review);
+            const token = (0, student_js_1.createToken)(student);
             res.status(200).json({ token: token });
         }
         else
@@ -62,7 +62,7 @@ const getStudentProfileController = (req, res) => __awaiter(void 0, void 0, void
     var _c, _d;
     try {
         const studentId = (_d = (_c = req.user) === null || _c === void 0 ? void 0 : _c.student) === null || _d === void 0 ? void 0 : _d._id;
-        const student = yield (0, studentProfile_1.getStudentProfileUsecase)(studentRepository)(studentId);
+        const student = yield (0, studentProfile_js_1.getStudentProfileUsecase)(studentRepository)(studentId);
         res.status(200).json(student);
     }
     catch (error) {
@@ -75,7 +75,7 @@ const getStudentHomeController = (req, res) => __awaiter(void 0, void 0, void 0,
     try {
         const studentId = (_f = (_e = req.user) === null || _e === void 0 ? void 0 : _e.student) === null || _f === void 0 ? void 0 : _f._id;
         const reviewId = req.body.id;
-        const review = yield (0, reviewFindUsecase_1.getReviewListByWeekUseCase)(reviewRepository, studentRepository)(studentId);
+        const review = yield (0, reviewFindUsecase_js_1.getReviewListByWeekUseCase)(reviewRepository, studentRepository)(studentId);
         res.status(200).json(review);
     }
     catch (error) {

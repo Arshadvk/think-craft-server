@@ -9,19 +9,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const error_1 = require("../../../utils/error");
-const student_1 = require("../../database/model/student/student");
+const error_js_1 = require("../../../utils/error.js");
+const student_js_1 = require("../../database/model/student/student.js");
 const studentRepositoryImpl = (StudentModel) => {
     const createStudent = (studentData) => __awaiter(void 0, void 0, void 0, function* () {
-        const newStudent = yield student_1.studentModel.create(studentData);
+        const newStudent = yield student_js_1.studentModel.create(studentData);
         return newStudent;
     });
     const findStudentByEmail = (email) => __awaiter(void 0, void 0, void 0, function* () {
-        const student = yield student_1.studentModel.findOne({ email });
+        const student = yield student_js_1.studentModel.findOne({ email });
         return student;
     });
     const setStudentPassword = (id, password) => __awaiter(void 0, void 0, void 0, function* () {
-        const student = yield student_1.studentModel.findByIdAndUpdate({ _id: id }, { $set: { password: password } });
+        const student = yield student_js_1.studentModel.findByIdAndUpdate({ _id: id }, { $set: { password: password } });
         return student;
     });
     const getAllStudents = (filterData) => __awaiter(void 0, void 0, void 0, function* () {
@@ -40,31 +40,30 @@ const studentRepositoryImpl = (StudentModel) => {
             isBlocked = true;
         if (action === "unblock")
             isBlocked = false;
-        const student = yield student_1.studentModel.findByIdAndUpdate(userId, { isBlocked }, { new: true });
+        const student = yield student_js_1.studentModel.findByIdAndUpdate(userId, { isBlocked }, { new: true });
         if (!student)
-            throw new error_1.AppError('somthing went wrong when block the user ', 500);
+            throw new error_js_1.AppError('somthing went wrong when block the user ', 500);
         return isBlocked;
     });
     const updateStudentProfile = (userId, studentData) => __awaiter(void 0, void 0, void 0, function* () {
-        const student = yield student_1.studentModel.findByIdAndUpdate(userId, studentData, { new: true });
-        console.log(student);
+        const student = yield student_js_1.studentModel.findByIdAndUpdate(userId, studentData, { new: true });
         if (!student)
-            throw new error_1.AppError('somthing went wrong when block the user ', 500);
+            throw new error_js_1.AppError('somthing went wrong when block the user ', 500);
         return student;
     });
     const findStudentById = (userId) => __awaiter(void 0, void 0, void 0, function* () {
-        const student = yield student_1.studentModel.findById(userId).populate('domain');
+        const student = yield student_js_1.studentModel.findById(userId).populate('domain');
         return student;
     });
     const findStudentIsBlocked = (userId) => __awaiter(void 0, void 0, void 0, function* () {
-        const student = yield student_1.studentModel.findById(userId, { isBlocked: 1 });
+        const student = yield student_js_1.studentModel.findById(userId, { isBlocked: 1 });
         if (student === null || student === void 0 ? void 0 : student.isBlocked) {
             return true;
         }
         return false;
     });
     const updateStudentWeek = (userId, week) => __awaiter(void 0, void 0, void 0, function* () {
-        const student = yield student_1.studentModel.findByIdAndUpdate(userId, { week: week }, { new: true });
+        const student = yield student_js_1.studentModel.findByIdAndUpdate(userId, { week: week }, { new: true });
         return student;
     });
     return {

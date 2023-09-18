@@ -1,11 +1,11 @@
-import { Request, Response } from "express";
-import { CustomRequest } from "../../middlewares/authMiddleware";
-import { findAllTaskUsecase, findTaskByDomainUsecase, getOneTaskUseCase } from "../../../app/usecase/admin/task/taskMangmentUsecase";
-import taskRepositoryIMPL, { FilterTask } from "../../../infra/repositories/task/taskRepository";
-import { taskModel } from "../../../infra/database/model/task/task";
-import studentRepositoryImpl from "../../../infra/repositories/student/studentRepository";
-import { studentModel } from "../../../infra/database/model/student/student";
 import { ObjectId } from "mongoose";
+import { Request, Response } from "express";
+import { CustomRequest } from "../../middlewares/authMiddleware.js";
+import { taskModel } from "../../../infra/database/model/task/task.js";
+import { studentModel } from "../../../infra/database/model/student/student.js";
+import studentRepositoryImpl from "../../../infra/repositories/student/studentRepository.js";
+import taskRepositoryIMPL, { FilterTask } from "../../../infra/repositories/task/taskRepository.js";
+import { findAllTaskUsecase, findTaskByDomainUsecase, getOneTaskUseCase } from "../../../app/usecase/admin/task/taskMangmentUsecase.js";
 
 const taskRepository = taskRepositoryIMPL(taskModel)
 const studentRepository = studentRepositoryImpl(studentModel)

@@ -1,7 +1,7 @@
-import { reviewerLoginType } from "../../../interface/controller/reviewer/reviewerLoginController"
-import { AppError } from "../../../utils/error"
 import jwt  from "jsonwebtoken"
-import { isPasswordCorrect } from "../../service/hashing"
+import { AppError } from "../../../utils/error.js"
+import { isPasswordCorrect } from "../../service/hashing.js"
+import { reviewerLoginType } from "../../../interface/controller/reviewer/reviewerLoginController.js"
 
 export type Reviewer = {
     name:string

@@ -1,16 +1,16 @@
-import { Request, Response } from "express";
-import ReviewRepositoryIMPL, { reviewUpdatedData, taskStatus } from "../../../../infra/repositories/review/reviewRepository";
-import { reviewModel } from "../../../../infra/database/model/review/review";
-import { UpdateReviewUsecase } from "../../../../app/usecase/review/reviewUpdateUsecase";
 import { ObjectId } from "mongoose";
-import AdvisorRepositoryImpl from "../../../../infra/repositories/advisor/advisorRepository";
-import studentRepositoryImpl from "../../../../infra/repositories/student/studentRepository";
-import { advisorModel } from "../../../../infra/database/model/advisor/advisor";
-import { studentModel } from "../../../../infra/database/model/student/student";
-import { createReviewUsecase } from "../../../../app/usecase/review/reviewCreateUsecase";
-import { Review } from "../../../../domain/entities/review/review";
-import { CustomRequest } from "../../../middlewares/authMiddleware";
-import { mark } from "../reviewMangmentController";
+import { Request, Response } from "express";
+import { mark } from "../reviewMangmentController.js";
+import { Review } from "../../../../domain/entities/review/review.js";
+import { CustomRequest } from "../../../middlewares/authMiddleware.js";
+import { reviewModel } from "../../../../infra/database/model/review/review.js";
+import { advisorModel } from "../../../../infra/database/model/advisor/advisor.js";
+import { studentModel } from "../../../../infra/database/model/student/student.js";
+import { createReviewUsecase } from "../../../../app/usecase/review/reviewCreateUsecase.js";
+import { UpdateReviewUsecase } from "../../../../app/usecase/review/reviewUpdateUsecase.js";
+import AdvisorRepositoryImpl from "../../../../infra/repositories/advisor/advisorRepository.js";
+import studentRepositoryImpl from "../../../../infra/repositories/student/studentRepository.js";
+import ReviewRepositoryIMPL, { reviewUpdatedData, taskStatus } from "../../../../infra/repositories/review/reviewRepository.js";
 
 const reviewRepository = ReviewRepositoryIMPL(reviewModel)
 const advisorRepository = AdvisorRepositoryImpl(advisorModel)
@@ -49,7 +49,7 @@ export const createReviewController = async (req: CustomRequest, res: Response) 
         const student = value.student
         const status = value.status as string
         const advisorId = req.user.advisor._id as ObjectId
-       
+
         let review: Review = {}
 
         const taskStatus: taskStatus = {
@@ -63,8 +63,8 @@ export const createReviewController = async (req: CustomRequest, res: Response) 
             theroy: 0
         }
         if (status === "next-week") {
-            review.week = week+1
-        }else {
+            review.week = week + 1
+        } else {
             review.week = week
             review.advisor = advisorId
         }
@@ -72,7 +72,7 @@ export const createReviewController = async (req: CustomRequest, res: Response) 
         review.mark = mark
         review.taskStatus = taskStatus
 
-        const newReview = await createReviewUsecase(reviewRepository, advisorRepository, studentRepository)(student, review )
+        const newReview = await createReviewUsecase(reviewRepository, advisorRepository, studentRepository)(student, review)
         res.status(200).json(newReview)
 
     } catch (error: any) {

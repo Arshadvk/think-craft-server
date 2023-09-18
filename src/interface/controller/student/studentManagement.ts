@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
-import studentRepositoryImpl from "../../../infra/repositories/student/studentRepository";
-import { studentModel } from "../../../infra/database/model/student/student";
-import { setPasswordUsecase } from "../../../app/usecase/student/setPassword";
-import { createStudentUsecase } from "../../../app/usecase/admin/student/createStudent";
-import { getAllStudentUseCase } from "../../../app/usecase/admin/student/getAllStudent";
-import { AppError } from "../../../utils/error";
-import { blockStudentUseCase } from "../../../app/usecase/admin/student/block-unblock"
-import { CustomRequest } from "../../middlewares/authMiddleware";
-import { Filter } from "../reviewer/reviewerManagment";
+import { AppError } from "../../../utils/error.js";
+import { Filter } from "../reviewer/reviewerManagment.js";
+import { CustomRequest } from "../../middlewares/authMiddleware.js";
+import { studentModel } from "../../../infra/database/model/student/student.js";
+import { setPasswordUsecase } from "../../../app/usecase/student/setPassword.js";
+import { blockStudentUseCase } from "../../../app/usecase/admin/student/block-unblock.js"
+import { createStudentUsecase } from "../../../app/usecase/admin/student/createStudent.js";
+import { getAllStudentUseCase } from "../../../app/usecase/admin/student/getAllStudent.js";
+import studentRepositoryImpl from "../../../infra/repositories/student/studentRepository.js";
 
 
 

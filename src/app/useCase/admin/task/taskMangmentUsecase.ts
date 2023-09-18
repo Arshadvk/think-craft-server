@@ -1,7 +1,6 @@
-import { ObjectId } from "mongoose";
-import { Task, tasks } from "../../../../domain/entities/task/task";
-import { StudentRepository } from "../../../../infra/repositories/student/studentRepository";
-import { FilterTask, TaskRepository } from "../../../../infra/repositories/task/taskRepository";
+import { tasks } from "../../../../domain/entities/task/task.js";
+import { StudentRepository } from "../../../../infra/repositories/student/studentRepository.js";
+import { FilterTask, TaskRepository } from "../../../../infra/repositories/task/taskRepository.js";
 
 export const addTaskUsecase = (taskRepository:TaskRepository)=>{
    return async (domainId : string , Tasks : tasks )=>{

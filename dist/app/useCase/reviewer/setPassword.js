@@ -10,10 +10,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setPasswordUsecaseReviewer = void 0;
-const hashing_1 = require("../../../domain/service/hashing");
+const hashing_js_1 = require("../../../domain/service/hashing.js");
 const setPasswordUsecaseReviewer = (reviewerRepository) => {
     return (reviewerData, userId) => __awaiter(void 0, void 0, void 0, function* () {
-        const password = yield (0, hashing_1.passwordHashing)(reviewerData.password);
+        const password = yield (0, hashing_js_1.passwordHashing)(reviewerData.password);
         const reviewer = yield reviewerRepository.setReviewerPassword(userId, password);
         return reviewer;
     });

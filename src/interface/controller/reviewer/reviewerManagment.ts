@@ -1,11 +1,11 @@
 import { Request , Response } from "express"
-import reviewerRepositoryImpl from "../../../infra/repositories/reviewer/reviewerRepository"
-import { reviewerModel } from "../../../infra/database/model/reviewer/reviewer"
-import { createReviewerUsecase, getAllReviewerUsecase } from "../../../app/usecase/admin/reviewer/createReviewer"
-import { setPasswordUsecaseReviewer } from "../../../app/usecase/reviewer/setPassword"
-import { AppError } from "../../../utils/error"
-import { blockReviewerUsecase } from "../../../app/usecase/admin/reviewer/block-unblock"
-import { CustomRequest } from "../../middlewares/authMiddleware"
+import { AppError } from "../../../utils/error.js"
+import { CustomRequest } from "../../middlewares/authMiddleware.js"
+import { reviewerModel } from "../../../infra/database/model/reviewer/reviewer.js"
+import { setPasswordUsecaseReviewer } from "../../../app/usecase/reviewer/setPassword.js"
+import { blockReviewerUsecase } from "../../../app/usecase/admin/reviewer/block-unblock.js"
+import reviewerRepositoryImpl from "../../../infra/repositories/reviewer/reviewerRepository.js"
+import { createReviewerUsecase, getAllReviewerUsecase } from "../../../app/usecase/admin/reviewer/createReviewer.js"
 
 export interface Filter {
     search ?: Object

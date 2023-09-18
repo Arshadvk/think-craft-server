@@ -50,7 +50,6 @@ const adminAuthToken = (req, res, next) => {
         }
         jsonwebtoken_1.default.verify(authHeader, secretKey, (err, user) => {
             if (err) {
-                console.log(err);
                 return res.status(401).json({ success: false, message: 'not authenticated !', Auth: false });
             }
             else if (user) {
@@ -79,7 +78,6 @@ const advisorAuthToken = (req, res, next) => __awaiter(void 0, void 0, void 0, f
         jsonwebtoken_1.default.verify(authHeader, secretKey, (err, user) => {
             var _a;
             if (err) {
-                console.log(err);
                 return res.status(401).json({ success: false, message: 'not authenticated !', Auth: false });
             }
             else if (user) {
@@ -108,7 +106,6 @@ const reviewerAuthToken = (req, res, next) => __awaiter(void 0, void 0, void 0, 
         jsonwebtoken_1.default.verify(authHeader, secretKey, (err, user) => {
             var _a;
             if (err) {
-                console.log(err);
                 return res.status(401).json({ success: false, message: 'not authenticated !', Auth: false });
             }
             else if (user) {

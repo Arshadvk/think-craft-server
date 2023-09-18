@@ -1,4 +1,4 @@
-import { AdvisorRepository } from "../../../../infra/repositories/advisor/advisorRepository";
+import { AdvisorRepository } from "../../../../infra/repositories/advisor/advisorRepository.js";
 
 export const blockAdvisorUsecase = (advisorRepository : AdvisorRepository)=>{
     return async (userId : string , action : string):Promise <Boolean | undefined>=>{

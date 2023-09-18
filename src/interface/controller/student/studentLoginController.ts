@@ -1,10 +1,10 @@
-import { Request, Response } from "express"
-import { Student } from "../../../domain/entities/student/student"
-import studentRepositoryImpl from "../../../infra/repositories/student/studentRepository"
-import { studentModel } from "../../../infra/database/model/student/student"
-import { changePassType, changeStudentPassword, loginStudent } from "../../../app/usecase/student/studentLogin"
-import { CustomRequest } from "../../middlewares/authMiddleware"
 import { ObjectId } from "mongoose"
+import { Request, Response } from "express"
+import { CustomRequest } from "../../middlewares/authMiddleware.js"
+import { Student } from "../../../domain/entities/student/student.js"
+import { studentModel } from "../../../infra/database/model/student/student.js"
+import studentRepositoryImpl from "../../../infra/repositories/student/studentRepository.js"
+import { changePassType, changeStudentPassword, loginStudent } from "../../../app/usecase/student/studentLogin.js"
 
 export type studentLoginType = {
     email: string

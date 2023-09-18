@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
-import { AppError } from "../../../utils/error";
-import { adminLoginType } from "../../../interface/controller/admin/adminLogin";
-import { isPasswordCorrect } from "../../service/hashing";
+import { AppError } from "../../../utils/error.js";
+import { isPasswordCorrect } from "../../service/hashing.js";
+import { adminLoginType } from "../../../interface/controller/admin/adminLogin.js";
 
 
 
