@@ -15,11 +15,9 @@ const studentRepository = studentRepositoryImpl(studentModel)
 
 export const createStudentController = async (req: Request, res: Response) => {
     try {
-        
         const studentData = req.body
         const newStudent = await createStudentUsecase(studentRepository)(studentData)
         res.status(200).send({ message: "Student Created Successfully" })
-
     } catch (error: any) {
         res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' })
     }
@@ -27,12 +25,10 @@ export const createStudentController = async (req: Request, res: Response) => {
 
 export const passwordCreation = async (req: CustomRequest, res: Response) => {
     try {
-        const userId:string =  req.user?.student?._id 
+        const userId: string = req.user?.student?._id
         const studentData = req.body
-        const newPassword = await setPasswordUsecase(studentRepository)(studentData ,userId)
+        const newPassword = await setPasswordUsecase(studentRepository)(studentData, userId)
         res.status(200).send({ message: "password change successfully" })
-
-
     } catch (error: any) {
         res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' })
     }
@@ -40,20 +36,17 @@ export const passwordCreation = async (req: CustomRequest, res: Response) => {
 
 export const getAllStudentSearchFilterSortController = async (req: Request, res: Response) => {
     try {
-        let filterData : Filter ={}
+        let filterData: Filter = {}
+        if (req.query.search) {
 
-        
-        if(req.query.search){
-            
             filterData.search = {
-                $or : [ {email : {$regex: req.query.search as string , $options : 'i' } }, 
-             { name:  {$regex: req.query.search as string , $options : 'i' } },
-             {week : {$eq : req.query.search as unknown as number}}
-            ]}
-        } 
-     
-        
-        if(req.query.domain) filterData.domain = req.query.domain as string 
+                $or: [{ email: { $regex: req.query.search as string, $options: 'i' } },
+                { name: { $regex: req.query.search as string, $options: 'i' } },
+                { week: { $eq: req.query.search as unknown as number } }
+                ]
+            }
+        }
+        if (req.query.domain) filterData.domain = req.query.domain as string
         const studentList = await getAllStudentUseCase(studentRepository)(filterData)
         res.status(200).json(studentList)
     } catch (error: any) {

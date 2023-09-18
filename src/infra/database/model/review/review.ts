@@ -32,6 +32,10 @@ const reviewSchema = new Schema<Review>({
                 type: Number,
                 default: 0,
             },
+            weekStatus : {
+                type : String ,
+                default : '______'
+            }
         },
     },
     pendingTask: {

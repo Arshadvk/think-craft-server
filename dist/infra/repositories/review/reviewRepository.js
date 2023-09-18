@@ -34,8 +34,6 @@ const ReviewRepositoryIMPL = (ReviewModel) => {
         return review;
     });
     const findReviewAndUpdate = (reviewId, reviewUpdatedData) => __awaiter(void 0, void 0, void 0, function* () {
-        console.log(reviewId);
-        console.log(reviewUpdatedData);
         const review = yield ReviewModel.findByIdAndUpdate(reviewId, { $set: reviewUpdatedData });
         return review;
     });

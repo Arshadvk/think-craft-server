@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.advisorLogin = void 0;
+exports.advisorChangePassword = exports.advisorLogin = void 0;
 const advisorLogin_1 = require("../../../app/usecase/advisor/advisorLogin");
 const advisor_1 = require("../../../infra/database/model/advisor/advisor");
 const advisorRepository_1 = __importDefault(require("../../../infra/repositories/advisor/advisorRepository"));
@@ -28,3 +28,16 @@ const advisorLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 exports.advisorLogin = advisorLogin;
+const advisorChangePassword = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const advisor = req.user.advisor._id;
+        const value = req.body.value;
+        console.log(value);
+        const updateAdvisor = yield (0, advisorLogin_1.changeAdvisorPassword)(advisorRepository)(advisor, value);
+        res.status(200).json(updateAdvisor);
+    }
+    catch (error) {
+        res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' });
+    }
+});
+exports.advisorChangePassword = advisorChangePassword;

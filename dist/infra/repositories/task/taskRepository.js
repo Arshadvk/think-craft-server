@@ -62,6 +62,17 @@ const taskRepositoryIMPL = (TaskModel) => {
         });
         return task;
     });
-    return { createNewTask, findWeeklyTask, findAllTask, findOneTask };
+    const findOneTaskAndUpdate = (taskId, UpdatedData) => __awaiter(void 0, void 0, void 0, function* () {
+        const query = {
+            "tasks": {
+                $elemMatch: {
+                    "_id": taskId
+                }
+            }
+        };
+        const result = yield task_1.taskModel.findOneAndUpdate(query, { $set: { "tasks.$": UpdatedData } }, { new: true });
+        return result;
+    });
+    return { createNewTask, findWeeklyTask, findAllTask, findOneTask, findOneTaskAndUpdate };
 };
 exports.default = taskRepositoryIMPL;

@@ -26,10 +26,10 @@ export const reviewerLogin = (passwordCompare:Function , createToken:Function)=>
         if (!isPasswordCorrect) {
             throw new AppError("Incorrect password",401)
         }
-        console.log(isPasswordCorrect);
+      
         
         const token:string = createReviewerToken(reviewerData)
-        console.log(token);
+     
         
         return token
     }

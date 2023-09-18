@@ -24,7 +24,6 @@ const findStudentManifestController = (req, res) => __awaiter(void 0, void 0, vo
         let filterData = {};
         filterData.student = userId;
         const reviews = yield (0, reviewFindUsecase_1.getReviewListUseCase)(reviewRepository)(filterData);
-        console.log(reviews);
         res.status(200).json(reviews);
     }
     catch (error) {

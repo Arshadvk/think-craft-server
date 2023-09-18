@@ -30,9 +30,7 @@ const studentProfileController = (req, res) => __awaiter(void 0, void 0, void 0,
     var _a, _b;
     try {
         const userId = (_b = (_a = req.user) === null || _a === void 0 ? void 0 : _a.student) === null || _b === void 0 ? void 0 : _b._id;
-        console.log(userId);
         const data = req.body.userData;
-        console.log(data);
         const studentData = {
             number: data.number,
             address: data.address,

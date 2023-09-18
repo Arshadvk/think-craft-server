@@ -71,10 +71,7 @@ const ReviewRepositoryIMPL = (ReviewModel: MongoDBReview): ReviewRepository => {
         return review
     }
 
-    const findReviewAndUpdate = async (reviewId: ObjectId, reviewUpdatedData: reviewUpdatedData): Promise<Review | null> => {
-        console.log(reviewId);
-        console.log(reviewUpdatedData);
-        
+    const findReviewAndUpdate = async (reviewId: ObjectId, reviewUpdatedData: reviewUpdatedData): Promise<Review | null> => {        
         const review: Review | null = await ReviewModel.findByIdAndUpdate(reviewId, { $set: reviewUpdatedData })
         return review
     }

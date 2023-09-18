@@ -22,13 +22,17 @@ const advisorRepository = AdvisorRepositoryImpl(advisorModel)
 const studentRepository = studentRepositoryImpl(studentModel)
 export const findReviewController =async (req:CustomRequest , res : Response) => {
     try {
-        const status : string | undefined = req.query.type as string         
+        const status : string | undefined = req.query.type as string
+        const home : string | undefined = req.query.home as string         
         const advisor : string | undefined = req.user?.advisor?._id as string
         const reviewer : string | undefined =  req.user?.reviewer?._id   as string 
         const student : ObjectId | undefined = req.query.student as unknown as ObjectId
         const id : ObjectId | undefined = req.query.id as unknown as ObjectId
         let filterData : filterReview = {}
-       
+        if (home) {
+            filterData.status = "review-scheduled"
+        }
+
         if (status) {
             filterData.status = "not-scheduled" 
         }
@@ -77,18 +81,14 @@ export const updateReviewController =async (req :Request , res : Response ) => {
        
         if (value?.mark) {
             data.mark = value?.mark
+            data.status = "conducted"
         }
         const pendingTask : [] | undefined = req.body.pendingTopic
         if (pendingTask) {
             data.pendingTask  = pendingTask
         } 
-        if (value?.weekStatus){
-            data.weekStatus = value?.weekStatus
-        }
-        data.status = "conducted"
         const reviewId  : ObjectId = req.body?.id as ObjectId
-        console.log(reviewId);
-        
+     
         const week : number = req.body.week as number
 
         const updatedReview = await UpdateReviewUsecase(reviewRepository)(reviewId , data )

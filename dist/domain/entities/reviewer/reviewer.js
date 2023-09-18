@@ -26,9 +26,7 @@ const reviewerLogin = (passwordCompare, createToken) => {
         if (!isPasswordCorrect) {
             throw new error_1.AppError("Incorrect password", 401);
         }
-        console.log(isPasswordCorrect);
         const token = (0, exports.createReviewerToken)(reviewerData);
-        console.log(token);
         return token;
     });
 };

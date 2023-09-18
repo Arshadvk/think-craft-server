@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getOneTaskUseCase = exports.findAllTaskUsecase = exports.findTaskByDomainUsecase = exports.addTaskUsecase = void 0;
+exports.getOneTaskAndUpdate = exports.getOneTaskUseCase = exports.findAllTaskUsecase = exports.findTaskByDomainUsecase = exports.addTaskUsecase = void 0;
 const addTaskUsecase = (taskRepository) => {
     return (domainId, Tasks) => __awaiter(void 0, void 0, void 0, function* () {
         const newTask = yield taskRepository.createNewTask(domainId, Tasks);
@@ -41,3 +41,10 @@ const getOneTaskUseCase = (taskRepository) => {
     });
 };
 exports.getOneTaskUseCase = getOneTaskUseCase;
+const getOneTaskAndUpdate = (taskRepository) => {
+    return (id, UpdatedData) => __awaiter(void 0, void 0, void 0, function* () {
+        const task = yield taskRepository.findOneTaskAndUpdate(id, UpdatedData);
+        return task;
+    });
+};
+exports.getOneTaskAndUpdate = getOneTaskAndUpdate;

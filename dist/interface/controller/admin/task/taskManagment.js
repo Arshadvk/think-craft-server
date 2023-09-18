@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addTaskController = void 0;
+exports.editOneTaskController = exports.addTaskController = void 0;
 const task_1 = require("../../../../infra/database/model/task/task");
 const taskRepository_1 = __importDefault(require("../../../../infra/repositories/task/taskRepository"));
 const taskMangmentUsecase_1 = require("../../../../app/usecase/admin/task/taskMangmentUsecase");
@@ -38,3 +38,25 @@ const addTaskController = (req, res) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.addTaskController = addTaskController;
+const editOneTaskController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const value = req.body.value[0];
+        const id = value._id;
+        console.log("hello", value);
+        console.log(req.body);
+        const UpdatedData = {
+            miscellaneousWorkouts: value.miscellaneousWorkouts,
+            personalDevelopmentWorkout: value.personalDevelopmentWorkout,
+            technicalWorkouts: value.technicalWorkouts,
+            week: value.week
+        };
+        console.log(UpdatedData);
+        const UpdatedTask = yield (0, taskMangmentUsecase_1.getOneTaskAndUpdate)(taskRepository)(id, UpdatedData);
+        console.log(UpdatedTask, "helloo");
+        res.status(200).json({ message: "task Updated succesfully" });
+    }
+    catch (error) {
+        res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' });
+    }
+});
+exports.editOneTaskController = editOneTaskController;

@@ -9,8 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.loginAdvisor = void 0;
+exports.changeAdvisorPassword = exports.loginAdvisor = void 0;
 const advisor_1 = require("../../../domain/entities/advisor/advisor");
+const hashing_1 = require("../../../domain/service/hashing");
 const error_1 = require("../../../utils/error");
 const loginAdvisor = (advisorRepository) => {
     return (advisor) => __awaiter(void 0, void 0, void 0, function* () {
@@ -26,3 +27,21 @@ const loginAdvisor = (advisorRepository) => {
     });
 };
 exports.loginAdvisor = loginAdvisor;
+const changeAdvisorPassword = (advisorRepository) => {
+    return (advisor, value) => __awaiter(void 0, void 0, void 0, function* () {
+        const isAdvisorExist = yield advisorRepository.findAdvisorById(advisor);
+        console.log(isAdvisorExist);
+        if (!isAdvisorExist)
+            throw new error_1.AppError("user is not exist", 404);
+        const IsPasswordCorrect = yield (0, hashing_1.isPasswordCorrect)(value.oldpass, isAdvisorExist.password);
+        console.log(IsPasswordCorrect);
+        if (!IsPasswordCorrect)
+            throw new error_1.AppError("Old password is not same", 404);
+        console.log("hello");
+        const hashedPassword = yield (0, hashing_1.passwordHashing)(value.newpass);
+        console.log(hashedPassword);
+        const updateAdvisor = yield advisorRepository.updateAdvisorProfile(advisor, { password: hashedPassword });
+        return updateAdvisor;
+    });
+};
+exports.changeAdvisorPassword = changeAdvisorPassword;

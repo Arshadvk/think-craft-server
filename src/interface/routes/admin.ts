@@ -4,7 +4,7 @@ import { blockStudentController, createStudentController, getAllStudentSearchFil
 import { blockReviewerController, createReviewerController, getAllReviewerSearchFilterSortController } from "../controller/reviewer/reviewerManagment"
 import { blockAdvisorController, createAdvisorController, getAllAdvisorSearchFilterSortController } from "../controller/advisor/advisorMangment"
 import { addDomainController, getAllDomainController } from "../controller/admin/domain/domainController"
-import { addTaskController } from "../controller/admin/task/taskManagment"
+import { addTaskController, editOneTaskController } from "../controller/admin/task/taskManagment"
 import { adminAuthToken } from "../middlewares/authMiddleware"
 import { getAllTaskController, getOneTaskController } from "../controller/task/taskManagementController"
 
@@ -33,6 +33,7 @@ adminRoute.put('/change-password' , adminAuthToken ,passwordChangeController )
 adminRoute.post('/add-admin' ,adminAuthToken , createAdminController)
 
 adminRoute.post('/add-task',adminAuthToken ,  addTaskController)
+adminRoute.put('/edit-task' , adminAuthToken , editOneTaskController)
 adminRoute.get('/all-task' , adminAuthToken ,  getAllTaskController)
 adminRoute.get('/task' , adminAuthToken ,  getOneTaskController)
 export default adminRoute

@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.isPasswordCorrect = exports.passwordHashing = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const passwordHashing = (password) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(password);
     const hashedPassword = yield bcrypt_1.default.hash(password, 10);
     console.log(hashedPassword);
     return hashedPassword;

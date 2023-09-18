@@ -1,10 +1,12 @@
-const cloudinary = require('cloudinary').v2 
+import cloudinaryModule from 'cloudinary';
+
+const cloudinary = cloudinaryModule.v2
+
 cloudinary.config({ 
-    cloud_name: 'sample', 
-    api_key: '874837483274837', 
-    api_secret: 'a676b67565c6767a6767d6767f676fe1',
+    cloud_name: process.env.CLOUDINARY_NAME , 
+    api_key: process.env.CLOUDINARY_API_KEY, 
+    api_secret: process.env.CLOUDINARY_API_SECRET,
     secure: true
   }); 
 
-export const fileUpload = async () => {
-}
+export default  cloudinary

@@ -35,3 +35,10 @@ export const getOneTaskUseCase = (taskRepository : TaskRepository) =>{
       return task
    }
 }
+
+export const getOneTaskAndUpdate = (taskRepository : TaskRepository)=>{
+   return async (id : string  , UpdatedData : Object) =>{
+      const task = await taskRepository.findOneTaskAndUpdate(id , UpdatedData)
+      return task 
+   }
+}

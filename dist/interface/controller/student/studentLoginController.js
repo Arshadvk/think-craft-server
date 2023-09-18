@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.studentLogin = void 0;
+exports.studentChangePassword = exports.studentLogin = void 0;
 const studentRepository_1 = __importDefault(require("../../../infra/repositories/student/studentRepository"));
 const student_1 = require("../../../infra/database/model/student/student");
 const studentLogin_1 = require("../../../app/usecase/student/studentLogin");
@@ -21,7 +21,6 @@ const studentLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     try {
         const student = req.body;
         const studentToken = yield (0, studentLogin_1.loginStudent)(studentRepository)(student);
-        console.log(studentToken);
         res.status(200).json({ studentToken });
     }
     catch (error) {
@@ -29,3 +28,15 @@ const studentLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 exports.studentLogin = studentLogin;
+const studentChangePassword = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const student = req.user.student._id;
+        const value = req.body.value;
+        const updateStudent = yield (0, studentLogin_1.changeStudentPassword)(studentRepository)(student, value);
+        res.status(200).json(updateStudent);
+    }
+    catch (error) {
+        res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' });
+    }
+});
+exports.studentChangePassword = studentChangePassword;

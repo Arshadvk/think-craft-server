@@ -41,7 +41,6 @@ const getAllTaskController = (req, res) => __awaiter(void 0, void 0, void 0, fun
             filterData.domain = req.query.domain;
         if (req.query.id)
             filterData.task = req.query.id;
-        console.log(filterData);
         const task = yield (0, taskMangmentUsecase_1.findAllTaskUsecase)(taskRepository)(filterData);
         res.status(200).json(task);
     }
@@ -54,7 +53,6 @@ const getOneTaskController = (req, res) => __awaiter(void 0, void 0, void 0, fun
     try {
         const id = req.query.id;
         const task = yield (0, taskMangmentUsecase_1.getOneTaskUseCase)(taskRepository)(id);
-        console.log("hwllo" + task);
         res.status(200).json(task);
     }
     catch (error) {

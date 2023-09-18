@@ -28,11 +28,15 @@ const findReviewController = (req, res) => __awaiter(void 0, void 0, void 0, fun
     var _a, _b, _c, _d;
     try {
         const status = req.query.type;
+        const home = req.query.home;
         const advisor = (_b = (_a = req.user) === null || _a === void 0 ? void 0 : _a.advisor) === null || _b === void 0 ? void 0 : _b._id;
         const reviewer = (_d = (_c = req.user) === null || _c === void 0 ? void 0 : _c.reviewer) === null || _d === void 0 ? void 0 : _d._id;
         const student = req.query.student;
         const id = req.query.id;
         let filterData = {};
+        if (home) {
+            filterData.status = "review-scheduled";
+        }
         if (status) {
             filterData.status = "not-scheduled";
         }
@@ -78,17 +82,13 @@ const updateReviewController = (req, res) => __awaiter(void 0, void 0, void 0, f
         const value = (_g = req.body) === null || _g === void 0 ? void 0 : _g.value;
         if (value === null || value === void 0 ? void 0 : value.mark) {
             data.mark = value === null || value === void 0 ? void 0 : value.mark;
+            data.status = "conducted";
         }
         const pendingTask = req.body.pendingTopic;
         if (pendingTask) {
             data.pendingTask = pendingTask;
         }
-        if (value === null || value === void 0 ? void 0 : value.weekStatus) {
-            data.weekStatus = value === null || value === void 0 ? void 0 : value.weekStatus;
-        }
-        data.status = "conducted";
         const reviewId = (_h = req.body) === null || _h === void 0 ? void 0 : _h.id;
-        console.log(reviewId);
         const week = req.body.week;
         const updatedReview = yield (0, reviewUpdateUsecase_1.UpdateReviewUsecase)(reviewRepository)(reviewId, data);
         res.status(200).json(updatedReview);

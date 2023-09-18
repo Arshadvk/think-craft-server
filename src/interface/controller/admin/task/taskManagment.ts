@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { taskModel } from "../../../../infra/database/model/task/task";
 import taskRepositoryIMPL from "../../../../infra/repositories/task/taskRepository";
-import { addTaskUsecase } from "../../../../app/usecase/admin/task/taskMangmentUsecase";
+import { addTaskUsecase, getOneTaskAndUpdate } from "../../../../app/usecase/admin/task/taskMangmentUsecase";
 import { tasks } from "../../../../domain/entities/task/task";
 
 const taskRepository = taskRepositoryIMPL(taskModel)
@@ -29,4 +29,30 @@ export const addTaskController =async (req:Request,res:Response) => {
         
     }
     
+}
+
+export const editOneTaskController =async (req:Request , res : Response ) => {
+  try {
+    const value = req.body.value[0]
+    const id =  value._id
+    console.log("hello" , value);
+    
+    console.log(req.body);
+    
+    const UpdatedData = {
+      miscellaneousWorkouts : value.miscellaneousWorkouts ,
+      personalDevelopmentWorkout : value.personalDevelopmentWorkout , 
+      technicalWorkouts : value.technicalWorkouts ,
+      week : value.week
+    }
+    console.log(UpdatedData);
+    
+    const UpdatedTask = await getOneTaskAndUpdate(taskRepository)(id ,UpdatedData )
+    console.log(UpdatedTask,"helloo");
+    
+     res.status(200).json({message:"task Updated succesfully"})
+  } catch (error:any) {
+    res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' })
+  }
+  
 }

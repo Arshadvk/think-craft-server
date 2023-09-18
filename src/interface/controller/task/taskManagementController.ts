@@ -9,43 +9,35 @@ import { ObjectId } from "mongoose";
 
 const taskRepository = taskRepositoryIMPL(taskModel)
 const studentRepository = studentRepositoryImpl(studentModel)
-export const findTaskByDomainController =async (req:CustomRequest , res : Response) => {
+export const findTaskByDomainController = async (req: CustomRequest, res: Response) => {
     try {
-        const userId:string =  req.user?.student?._id 
-        const task = await findTaskByDomainUsecase(taskRepository ,studentRepository )(userId)        
+        const userId: string = req.user?.student?._id
+        const task = await findTaskByDomainUsecase(taskRepository, studentRepository)(userId)
         res.status(200).json(task)
-    } catch (error:any) {
+    } catch (error: any) {
         res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' })
-
     }
 }
 
-export const getAllTaskController =async (req:Request , res : Response) => {
+export const getAllTaskController = async (req: Request, res: Response) => {
     try {
-        let filterData : FilterTask = {}
-        if (req.query.week) filterData.week = {'task.week' : req.query.week  } 
+        let filterData: FilterTask = {}
+        if (req.query.week) filterData.week = { 'task.week': req.query.week }
         if (req.query.domain) filterData.domain = req.query.domain as unknown as ObjectId
-        if (req.query.id) filterData.task =  req.query.id as string
-        console.log(filterData);
-        
+        if (req.query.id) filterData.task = req.query.id as string
         const task = await findAllTaskUsecase(taskRepository)(filterData)
         res.status(200).json(task)
-    } catch (error:any) {
-        res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' }) 
+    } catch (error: any) {
+        res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' })
     }
 }
 
-export const getOneTaskController =async (req:Request , res : Response ) => {
+export const getOneTaskController = async (req: Request, res: Response) => {
     try {
-        const id = req.query.id  as string
-
+        const id = req.query.id as string
         const task = await getOneTaskUseCase(taskRepository)(id)
-        console.log("hwllo"+task);
-        
         res.status(200).json(task)
-
-    } catch (error:any) {
-        res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' }) 
+    } catch (error: any) {
+        res.status(error.statusCode || 500).json({ message: error.message || 'Somthing went wrong' })
     }
-    
 }

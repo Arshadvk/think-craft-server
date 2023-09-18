@@ -9,8 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.loginStudent = void 0;
+exports.changeStudentPassword = exports.loginStudent = void 0;
 const student_1 = require("../../../domain/entities/student/student");
+const hashing_1 = require("../../../domain/service/hashing");
 const error_1 = require("../../../utils/error");
 const loginStudent = (studentRepository) => {
     return (student) => __awaiter(void 0, void 0, void 0, function* () {
@@ -26,3 +27,17 @@ const loginStudent = (studentRepository) => {
     });
 };
 exports.loginStudent = loginStudent;
+const changeStudentPassword = (studentRepository) => {
+    return (studentId, value) => __awaiter(void 0, void 0, void 0, function* () {
+        const isStudentExist = yield studentRepository.findStudentById(studentId);
+        if (!isStudentExist)
+            throw new error_1.AppError("user is not exist", 404);
+        const IsPasswordCorrect = yield (0, hashing_1.isPasswordCorrect)(value.oldpass, isStudentExist.password);
+        if (!IsPasswordCorrect)
+            throw new error_1.AppError("Old password is not same", 404);
+        const hashedPassword = yield (0, hashing_1.passwordHashing)(value.newpass);
+        const updateStudent = yield studentRepository.updateStudentProfile(studentId, { password: hashedPassword });
+        return updateStudent;
+    });
+};
+exports.changeStudentPassword = changeStudentPassword;

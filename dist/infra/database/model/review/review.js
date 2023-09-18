@@ -57,6 +57,10 @@ const reviewSchema = new mongoose_1.Schema({
                 type: Number,
                 default: 0,
             },
+            weekStatus: {
+                type: String,
+                default: '______'
+            }
         },
     },
     pendingTask: {

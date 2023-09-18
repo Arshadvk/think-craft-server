@@ -1,7 +1,10 @@
-import { reviewerLoginValidate } from "../../../domain/entities/reviewer/reviewer";
+import { ObjectId } from "mongoose";
+import { Reviewer, reviewerLoginValidate } from "../../../domain/entities/reviewer/reviewer";
 import { ReviewerRepository } from "../../../infra/repositories/reviewer/reviewerRepository";
 import { reviewerLoginType } from "../../../interface/controller/reviewer/reviewerLoginController";
 import { AppError } from "../../../utils/error";
+import { changePassType } from "../student/studentLogin";
+import { isPasswordCorrect, passwordHashing } from "../../../domain/service/hashing";
 
 type reviewerReturnType = {
     token:string,
@@ -18,5 +21,17 @@ export const loginReviewer = (reviewerRepository:ReviewerRepository)=>{
             status:"Login success"
         }
         return verifiedReviewer
+    }
+}
+
+export const changeReviewerPassword = (reviewerRepository : ReviewerRepository)=>{
+    return async (reviewerId : string , value :changePassType)=>{
+        const isReviewerExist : Reviewer | null = await reviewerRepository.findReviewerById(reviewerId)
+        if(!isReviewerExist) throw new AppError("user is not exist",404)
+        const IsPasswordCorrect = await isPasswordCorrect(value.oldpass , isReviewerExist.password )
+        if(!IsPasswordCorrect) throw new AppError("Old password is not same",404)
+        const hashedPassword = await passwordHashing(value.newpass)
+        const updateReviewer  = await reviewerRepository.updateReviewerProfile(reviewerId , {password: hashedPassword})
+        return updateReviewer 
     }
 }

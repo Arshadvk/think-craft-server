@@ -17,6 +17,7 @@ reviewerRoute.post('/login', reviewerLoginController_1.reviewerLoginController);
 reviewerRoute.put('/set-password/:id', profileMiddleware_1.reviewerProfileMiddleware, reviewerManagment_1.passwordCreationReviewer);
 reviewerRoute.put('/set-profile/:id', profileMiddleware_1.reviewerProfileMiddleware, reviewerProfileManagment_1.reviewerProfileController);
 reviewerRoute.put('/edit-profile', authMiddleware_1.reviewerAuthToken, reviewerProfileManagment_1.reviewerProfileController);
+reviewerRoute.put('/update-password', authMiddleware_1.reviewerAuthToken, reviewerLoginController_1.reviewerChangePassword);
 reviewerRoute.post('/add-slot', authMiddleware_1.reviewerAuthToken, slotCreateController_1.slotCreateController);
 reviewerRoute.get('/profile', authMiddleware_1.reviewerAuthToken, reviewerProfileManagment_1.getReviewerProfileController);
 reviewerRoute.get('/review-list', authMiddleware_1.reviewerAuthToken, reviewMangmentController_1.findReviewController);

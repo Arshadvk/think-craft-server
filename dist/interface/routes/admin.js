@@ -28,6 +28,7 @@ adminRoute.get('/all-domain', authMiddleware_1.adminAuthToken, domainController_
 adminRoute.put('/change-password', authMiddleware_1.adminAuthToken, adminLogin_1.passwordChangeController);
 adminRoute.post('/add-admin', authMiddleware_1.adminAuthToken, adminLogin_1.createAdminController);
 adminRoute.post('/add-task', authMiddleware_1.adminAuthToken, taskManagment_1.addTaskController);
+adminRoute.put('/edit-task', authMiddleware_1.adminAuthToken, taskManagment_1.editOneTaskController);
 adminRoute.get('/all-task', authMiddleware_1.adminAuthToken, taskManagementController_1.getAllTaskController);
 adminRoute.get('/task', authMiddleware_1.adminAuthToken, taskManagementController_1.getOneTaskController);
 exports.default = adminRoute;
