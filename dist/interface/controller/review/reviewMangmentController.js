@@ -86,6 +86,7 @@ const updateReviewController = (req, res) => __awaiter(void 0, void 0, void 0, f
         if (value === null || value === void 0 ? void 0 : value.weekStatus) {
             data.weekStatus = value === null || value === void 0 ? void 0 : value.weekStatus;
         }
+        data.status = "conducted";
         const reviewId = (_h = req.body) === null || _h === void 0 ? void 0 : _h.id;
         console.log(reviewId);
         const week = req.body.week;
