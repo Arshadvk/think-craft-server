@@ -1,14 +1,14 @@
 import express from "express";
-import { advisorAuthToken } from "../middlewares/authMiddleware.js";
-import { advisorProfileMiddleware } from "../middlewares/profileMiddleware.js";
-import { passwordCreationAdvisor } from "../controller/advisor/advisorMangment.js";
-import { findReviewController } from "../controller/review/reviewMangmentController.js";
-import { getReviewerProfileController } from "../controller/reviewer/reviewerProfileManagment.js";
-import { advisorChangePassword, advisorLogin } from "../controller/advisor/advisorLoginController.js";
-import { getAllReviewerSearchFilterSortController } from "../controller/reviewer/reviewerManagment.js";
-import { bookSlotController, getSlotsController } from "../controller/reviewer/slot/slotCreateController.js";
-import { advisorProfileController, getAdvisorProfileController } from "../controller/advisor/advisorProfileManagment.js";
-import { createReviewController, updatedReviewController } from "../controller/review/advisor/reviewManagmentController.js";
+import { advisorAuthToken } from "../middlewares/authMiddleware";
+import { advisorProfileMiddleware } from "../middlewares/profileMiddleware";
+import { passwordCreationAdvisor } from "../controller/advisor/advisorMangment";
+import { findReviewController } from "../controller/review/reviewMangmentController";
+import { getReviewerProfileController } from "../controller/reviewer/reviewerProfileManagment";
+import { advisorChangePassword, advisorLogin } from "../controller/advisor/advisorLoginController";
+import { getAllReviewerSearchFilterSortController } from "../controller/reviewer/reviewerManagment";
+import { bookSlotController, getSlotsController } from "../controller/reviewer/slot/slotCreateController";
+import { advisorProfileController, getAdvisorProfileController } from "../controller/advisor/advisorProfileManagment";
+import { createReviewController, updatedReviewController } from "../controller/review/advisor/reviewManagmentController";
 
 const advisorRoute = express.Router()
 

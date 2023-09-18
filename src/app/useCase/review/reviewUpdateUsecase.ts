@@ -1,6 +1,6 @@
 import { ObjectId } from "mongoose";
-import { Review } from "../../../domain/entities/review/review.js";
-import { ReviewRepository, reviewUpdatedData } from "../../../infra/repositories/review/reviewRepository.js";
+import { Review } from "../../../domain/entities/review/review";
+import { ReviewRepository, reviewUpdatedData } from "../../../infra/repositories/review/reviewRepository";
 
 export const UpdateReviewUsecase = (reviewRepository: ReviewRepository) => {
     return async (reviewId: ObjectId, reviewUpdatedData: reviewUpdatedData) => {

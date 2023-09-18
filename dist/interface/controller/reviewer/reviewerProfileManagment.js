@@ -13,10 +13,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getReviewerProfileController = exports.reviewerProfileController = void 0;
-const reviewer_js_1 = require("../../../infra/database/model/reviewer/reviewer.js");
-const reviewerRepository_js_1 = __importDefault(require("../../../infra/repositories/reviewer/reviewerRepository.js"));
-const reviewerProfile_js_1 = require("../../../app/usecase/reviewer/reviewerProfile.js");
-const reviewerRepository = (0, reviewerRepository_js_1.default)(reviewer_js_1.reviewerModel);
+const reviewer_1 = require("../../../infra/database/model/reviewer/reviewer");
+const reviewerRepository_1 = __importDefault(require("../../../infra/repositories/reviewer/reviewerRepository"));
+const reviewerProfile_1 = require("../../../app/usecase/reviewer/reviewerProfile");
+const reviewerRepository = (0, reviewerRepository_1.default)(reviewer_1.reviewerModel);
 const reviewerProfileController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
     try {
@@ -32,7 +32,7 @@ const reviewerProfileController = (req, res) => __awaiter(void 0, void 0, void 0
             domain: data === null || data === void 0 ? void 0 : data.domains,
             isProfileVerified: true
         };
-        const reviewer = yield (0, reviewerProfile_js_1.reviewerProfileUsecase)(reviewerRepository)(userId, reviewerData);
+        const reviewer = yield (0, reviewerProfile_1.reviewerProfileUsecase)(reviewerRepository)(userId, reviewerData);
         if (reviewer)
             res.status(200).json(reviewer);
         else
@@ -49,7 +49,7 @@ const getReviewerProfileController = (req, res) => __awaiter(void 0, void 0, voi
         const reviewerId = (_e = (_d = (_c = req.user) === null || _c === void 0 ? void 0 : _c.reviewer) === null || _d === void 0 ? void 0 : _d._id) !== null && _e !== void 0 ? _e : (_f = req.params) === null || _f === void 0 ? void 0 : _f.id;
         console.log("reviewer", req.params.id);
         console.log(reviewerId);
-        const reviewer = yield (0, reviewerProfile_js_1.getReviewerProfileUsecase)(reviewerRepository)(reviewerId);
+        const reviewer = yield (0, reviewerProfile_1.getReviewerProfileUsecase)(reviewerRepository)(reviewerId);
         console.log(reviewer);
         res.status(200).json(reviewer);
     }

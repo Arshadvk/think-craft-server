@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { CustomRequest } from "../../middlewares/authMiddleware.js";
-import { reviewerModel } from "../../../infra/database/model/reviewer/reviewer.js";
-import reviewerRepositoryImpl from "../../../infra/repositories/reviewer/reviewerRepository.js";
-import { getReviewerProfileUsecase, reviewerProfileUsecase } from "../../../app/usecase/reviewer/reviewerProfile.js";
+import { CustomRequest } from "../../middlewares/authMiddleware";
+import { reviewerModel } from "../../../infra/database/model/reviewer/reviewer";
+import reviewerRepositoryImpl from "../../../infra/repositories/reviewer/reviewerRepository";
+import { getReviewerProfileUsecase, reviewerProfileUsecase } from "../../../app/usecase/reviewer/reviewerProfile";
 
 const reviewerRepository = reviewerRepositoryImpl(reviewerModel)
 

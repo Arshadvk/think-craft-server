@@ -10,10 +10,10 @@ const morgan_1 = __importDefault(require("morgan")); // Middleware to log incomi
 const dotenv_1 = __importDefault(require("dotenv"));
 const express_fileupload_1 = __importDefault(require("express-fileupload"));
 const dbConfig_1 = __importDefault(require("./infra/database/dbConfig"));
-const admin_js_1 = __importDefault(require("./interface/routes/admin.js"));
-const advisor_js_1 = __importDefault(require("./interface/routes/advisor.js"));
-const reviewer_js_1 = __importDefault(require("./interface/routes/reviewer.js"));
-const student_js_1 = __importDefault(require("./interface/routes/student.js"));
+const admin_1 = __importDefault(require("./interface/routes/admin"));
+const advisor_1 = __importDefault(require("./interface/routes/advisor"));
+const reviewer_1 = __importDefault(require("./interface/routes/reviewer"));
+const student_1 = __importDefault(require("./interface/routes/student"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 // Enable CORS for all routes
@@ -26,10 +26,10 @@ dotenv_1.default.config({ path: path_1.default.resolve(__dirname, '../.env') });
 //mogodb connection
 (0, dbConfig_1.default)(process.env.MONGODB_CONNECTION_URL || "");
 //setup routes
-app.use('/admin', admin_js_1.default);
-app.use('/advisor', advisor_js_1.default);
-app.use('/reviewer', reviewer_js_1.default);
-app.use('/', student_js_1.default);
+app.use('/admin', admin_1.default);
+app.use('/advisor', advisor_1.default);
+app.use('/reviewer', reviewer_1.default);
+app.use('/', student_1.default);
 // port setting
 const PORT = Number(4000 || process.env.PORT);
 const server = app.listen(4000, () => console.log(`server is runnin on port ${PORT}`));
@@ -37,7 +37,7 @@ const server = app.listen(4000, () => console.log(`server is runnin on port ${PO
 const io = require('socket.io')(server, {
     pingTimeout: 60000,
     cors: {
-        origin: 'http://localhost:3000'
+        origin: 'https://think-craft.vercel.app/'
     }
 });
 const emailToSocketIdMap = new Map();

@@ -1,12 +1,12 @@
 import express from "express";
-import { reviewerAuthToken } from "../middlewares/authMiddleware.js";
-import { reviewerProfileMiddleware } from "../middlewares/profileMiddleware.js";
-import { getAllDomainController } from "../controller/admin/domain/domainController.js";
-import { passwordCreationReviewer, } from "../controller/reviewer/reviewerManagment.js";
-import { getSlotsController, slotCreateController } from "../controller/reviewer/slot/slotCreateController.js";
-import { findReviewController, updateReviewController } from "../controller/review/reviewMangmentController.js";
-import { reviewerChangePassword, reviewerLoginController } from "../controller/reviewer/reviewerLoginController.js";
-import { getReviewerProfileController, reviewerProfileController } from "../controller/reviewer/reviewerProfileManagment.js";
+import { reviewerAuthToken } from "../middlewares/authMiddleware";
+import { reviewerProfileMiddleware } from "../middlewares/profileMiddleware";
+import { getAllDomainController } from "../controller/admin/domain/domainController";
+import { passwordCreationReviewer, } from "../controller/reviewer/reviewerManagment";
+import { getSlotsController, slotCreateController } from "../controller/reviewer/slot/slotCreateController";
+import { findReviewController, updateReviewController } from "../controller/review/reviewMangmentController";
+import { reviewerChangePassword, reviewerLoginController } from "../controller/reviewer/reviewerLoginController";
+import { getReviewerProfileController, reviewerProfileController } from "../controller/reviewer/reviewerProfileManagment";
 
 
 const reviewerRoute = express.Router()

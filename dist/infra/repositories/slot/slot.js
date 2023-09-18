@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const moment_1 = __importDefault(require("moment"));
-const slot_js_1 = require("../../database/model/slot/slot.js");
+const slot_1 = require("../../database/model/slot/slot");
 const slotRepositoryImpl = (SlotModel) => {
     const createNewSlot = (reviewerId, slotes) => __awaiter(void 0, void 0, void 0, function* () {
         const isSlotExist = yield SlotModel.findOne({ reviewer: reviewerId });
@@ -32,7 +32,7 @@ const slotRepositoryImpl = (SlotModel) => {
         return isSlotExist;
     });
     const findSlot = (slotDate, startingTime, endingTime, reviewerId) => __awaiter(void 0, void 0, void 0, function* () {
-        const slot = yield slot_js_1.slotModel.findOne({
+        const slot = yield slot_1.slotModel.findOne({
             reviewer: reviewerId,
             'slotes.date': new Date(slotDate),
             $or: [

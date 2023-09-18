@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const task_js_1 = require("../../database/model/task/task.js");
+const task_1 = require("../../database/model/task/task");
 const taskRepositoryIMPL = (TaskModel) => {
     const createNewTask = (domainId, tasks) => __awaiter(void 0, void 0, void 0, function* () {
         const isDomainExist = yield TaskModel.findOne({ domain: domainId });
@@ -49,11 +49,11 @@ const taskRepositoryIMPL = (TaskModel) => {
                 },
             };
         }
-        const tasks = task_js_1.taskModel.find(query).populate('domain');
+        const tasks = task_1.taskModel.find(query).populate('domain');
         return tasks;
     });
     const findOneTask = (id) => __awaiter(void 0, void 0, void 0, function* () {
-        const task = task_js_1.taskModel.find({
+        const task = task_1.taskModel.find({
             "tasks": {
                 $elemMatch: { "_id": id }
             }
@@ -70,7 +70,7 @@ const taskRepositoryIMPL = (TaskModel) => {
                 }
             }
         };
-        const result = yield task_js_1.taskModel.findOneAndUpdate(query, { $set: { "tasks.$": UpdatedData } }, { new: true });
+        const result = yield task_1.taskModel.findOneAndUpdate(query, { $set: { "tasks.$": UpdatedData } }, { new: true });
         return result;
     });
     return { createNewTask, findWeeklyTask, findAllTask, findOneTask, findOneTaskAndUpdate };

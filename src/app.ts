@@ -7,10 +7,10 @@ import dotenv from "dotenv";
 import { Socket } from "socket.io";
 import fileUpload from 'express-fileupload'
 import connectDB from "./infra/database/dbConfig"
-import adminRoute from "./interface/routes/admin.js";
-import advisorRoute from "./interface/routes/advisor.js";
-import reviewerRoute from "./interface/routes/reviewer.js";
-import studentRoute from "./interface/routes/student.js";
+import adminRoute from "./interface/routes/admin";
+import advisorRoute from "./interface/routes/advisor";
+import reviewerRoute from "./interface/routes/reviewer";
+import studentRoute from "./interface/routes/student";
 
 const app: Application = express()
 
@@ -44,7 +44,7 @@ const server: Server = app.listen(4000, () => console.log(`server is runnin on p
 const io=require('socket.io')(server , {
     pingTimeout:60000,
     cors:{
-        origin:'http://localhost:3000'
+        origin:'https://think-craft.vercel.app/'
     }
 })
 

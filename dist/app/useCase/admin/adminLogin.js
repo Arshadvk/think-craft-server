@@ -10,12 +10,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.loginAdmin = exports.createAdminUsecase = exports.changePasswordUsecase = void 0;
-const error_js_1 = require("../../../utils/error.js");
-const hashing_js_1 = require("../../../domain/service/hashing.js");
-const admin_js_1 = require("../../../domain/entities/admin/admin.js");
+const error_1 = require("../../../utils/error");
+const hashing_1 = require("../../../domain/service/hashing");
+const admin_1 = require("../../../domain/entities/admin/admin");
 const changePasswordUsecase = (adminRepository) => {
     return (adminData) => __awaiter(void 0, void 0, void 0, function* () {
-        const newPassword = yield (0, hashing_js_1.passwordHashing)(adminData.password);
+        const newPassword = yield (0, hashing_1.passwordHashing)(adminData.password);
         console.log(newPassword);
         const changepassword = yield adminRepository.setAdminPassword(adminData.email, newPassword);
         return changepassword;
@@ -33,8 +33,8 @@ const loginAdmin = (adminRepository) => {
     return (admin) => __awaiter(void 0, void 0, void 0, function* () {
         const isAdminExist = yield adminRepository.findAdminByEmail(admin.email);
         if (!isAdminExist)
-            throw new error_js_1.AppError("admin is not exist", 404);
-        const adminToken = yield (0, admin_js_1.adminLoginValidate)(admin, isAdminExist);
+            throw new error_1.AppError("admin is not exist", 404);
+        const adminToken = yield (0, admin_1.adminLoginValidate)(admin, isAdminExist);
         const verifiedAdmin = {
             token: adminToken,
             status: "Login success"

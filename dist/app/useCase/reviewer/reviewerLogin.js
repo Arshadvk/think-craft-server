@@ -10,15 +10,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.changeReviewerPassword = exports.loginReviewer = void 0;
-const error_js_1 = require("../../../utils/error.js");
-const hashing_js_1 = require("../../../domain/service/hashing.js");
-const reviewer_js_1 = require("../../../domain/entities/reviewer/reviewer.js");
+const error_1 = require("../../../utils/error");
+const hashing_1 = require("../../../domain/service/hashing");
+const reviewer_1 = require("../../../domain/entities/reviewer/reviewer");
 const loginReviewer = (reviewerRepository) => {
     return (reviewer) => __awaiter(void 0, void 0, void 0, function* () {
         const isReviewerExist = yield reviewerRepository.findReviewerByEmail(reviewer.email);
         if (!isReviewerExist)
-            throw new error_js_1.AppError("user is not exist", 404);
-        const ReviewerToken = yield (0, reviewer_js_1.reviewerLoginValidate)(reviewer, isReviewerExist);
+            throw new error_1.AppError("user is not exist", 404);
+        const ReviewerToken = yield (0, reviewer_1.reviewerLoginValidate)(reviewer, isReviewerExist);
         const verifiedReviewer = {
             token: ReviewerToken,
             status: "Login success"
@@ -31,11 +31,11 @@ const changeReviewerPassword = (reviewerRepository) => {
     return (reviewerId, value) => __awaiter(void 0, void 0, void 0, function* () {
         const isReviewerExist = yield reviewerRepository.findReviewerById(reviewerId);
         if (!isReviewerExist)
-            throw new error_js_1.AppError("user is not exist", 404);
-        const IsPasswordCorrect = yield (0, hashing_js_1.isPasswordCorrect)(value.oldpass, isReviewerExist.password);
+            throw new error_1.AppError("user is not exist", 404);
+        const IsPasswordCorrect = yield (0, hashing_1.isPasswordCorrect)(value.oldpass, isReviewerExist.password);
         if (!IsPasswordCorrect)
-            throw new error_js_1.AppError("Old password is not same", 404);
-        const hashedPassword = yield (0, hashing_js_1.passwordHashing)(value.newpass);
+            throw new error_1.AppError("Old password is not same", 404);
+        const hashedPassword = yield (0, hashing_1.passwordHashing)(value.newpass);
         const updateReviewer = yield reviewerRepository.updateReviewerProfile(reviewerId, { password: hashedPassword });
         return updateReviewer;
     });

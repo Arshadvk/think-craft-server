@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken"
-import { AppError } from "../../../utils/error.js";
-import { isPasswordCorrect } from "../../service/hashing.js";
-import { studentLoginType } from "../../../interface/controller/student/studentLoginController.js";
+import { AppError } from "../../../utils/error";
+import { isPasswordCorrect } from "../../service/hashing";
+import { studentLoginType } from "../../../interface/controller/student/studentLoginController";
 
 export type Student ={
     _id : string

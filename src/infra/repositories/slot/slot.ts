@@ -1,7 +1,7 @@
 import moment from "moment";
 import { ObjectId } from "mongoose";
-import { Slot, slotes } from "../../../domain/entities/slot/slot.js";
-import { MongoDBSlot, slotModel } from "../../database/model/slot/slot.js";
+import { Slot, slotes } from "../../../domain/entities/slot/slot";
+import { MongoDBSlot, slotModel } from "../../database/model/slot/slot";
 
 export type SlotRepository = {
     createNewSlot: (reviewerId: string , slot:slotes[]) => Promise<Slot>

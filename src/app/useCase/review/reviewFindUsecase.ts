@@ -1,8 +1,8 @@
 import { ObjectId } from "mongoose";
-import { Review } from "../../../domain/entities/review/review.js";
-import { Student } from "../../../domain/entities/student/student.js";
-import { StudentRepository } from "../../../infra/repositories/student/studentRepository.js";
-import { ReviewRepository, filterReview } from "../../../infra/repositories/review/reviewRepository.js";
+import { Review } from "../../../domain/entities/review/review";
+import { Student } from "../../../domain/entities/student/student";
+import { StudentRepository } from "../../../infra/repositories/student/studentRepository";
+import { ReviewRepository, filterReview } from "../../../infra/repositories/review/reviewRepository";
 
 
 export const getReviewByIdUsecase = (reviewRepository: ReviewRepository) => {

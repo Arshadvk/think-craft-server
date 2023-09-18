@@ -1,14 +1,14 @@
 import { ObjectId } from "mongoose"
 import {Request , Response} from "express"
-import { CustomRequest } from "../../middlewares/authMiddleware.js"
-import { reviewModel } from "../../../infra/database/model/review/review.js"
-import { studentModel } from "../../../infra/database/model/student/student.js"
-import { advisorModel } from "../../../infra/database/model/advisor/advisor.js"
-import { UpdateReviewUsecase } from "../../../app/usecase/review/reviewUpdateUsecase.js"
-import studentRepositoryImpl from "../../../infra/repositories/student/studentRepository.js"
-import AdvisorRepositoryImpl from "../../../infra/repositories/advisor/advisorRepository.js"
-import { getReviewByIdUsecase, getReviewListUseCase } from "../../../app/usecase/review/reviewFindUsecase.js"
-import ReviewRepositoryIMPL, { filterReview, reviewUpdatedData } from "../../../infra/repositories/review/reviewRepository.js"
+import { CustomRequest } from "../../middlewares/authMiddleware"
+import { reviewModel } from "../../../infra/database/model/review/review"
+import { studentModel } from "../../../infra/database/model/student/student"
+import { advisorModel } from "../../../infra/database/model/advisor/advisor"
+import { UpdateReviewUsecase } from "../../../app/usecase/review/reviewUpdateUsecase"
+import studentRepositoryImpl from "../../../infra/repositories/student/studentRepository"
+import AdvisorRepositoryImpl from "../../../infra/repositories/advisor/advisorRepository"
+import { getReviewByIdUsecase, getReviewListUseCase } from "../../../app/usecase/review/reviewFindUsecase"
+import ReviewRepositoryIMPL, { filterReview, reviewUpdatedData } from "../../../infra/repositories/review/reviewRepository"
 
 export type mark = {
     code ?: number 

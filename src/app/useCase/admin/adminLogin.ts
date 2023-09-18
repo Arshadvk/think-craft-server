@@ -1,8 +1,8 @@
-import { AppError } from "../../../utils/error.js";
-import {  passwordHashing } from "../../../domain/service/hashing.js";
-import { adminLoginValidate } from "../../../domain/entities/admin/admin.js";
-import { adminLoginType } from "../../../interface/controller/admin/adminLogin.js";
-import { AdminRepository } from "../../../infra/repositories/admin/adminRepository.js";
+import { AppError } from "../../../utils/error";
+import {  passwordHashing } from "../../../domain/service/hashing";
+import { adminLoginValidate } from "../../../domain/entities/admin/admin";
+import { adminLoginType } from "../../../interface/controller/admin/adminLogin";
+import { AdminRepository } from "../../../infra/repositories/admin/adminRepository";
 
 type adminReturnType = {
     token:string

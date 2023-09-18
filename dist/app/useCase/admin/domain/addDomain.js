@@ -10,10 +10,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.addDomainUseCase = void 0;
-const domain_js_1 = require("../../../../domain/entities/admin/domain.js");
+const domain_1 = require("../../../../domain/entities/admin/domain");
 const addDomainUseCase = (domainRepository) => {
     return (domainName) => __awaiter(void 0, void 0, void 0, function* () {
-        const domainNameValidate = (0, domain_js_1.validateDomainData)(domainName);
+        const domainNameValidate = (0, domain_1.validateDomainData)(domainName);
         const newDomain = yield domainRepository.createNewDomain(domainNameValidate);
         return newDomain;
     });

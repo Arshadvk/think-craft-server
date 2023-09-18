@@ -14,17 +14,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.reviewerLoginValidate = exports.createReviewerToken = exports.reviewerLogin = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const error_js_1 = require("../../../utils/error.js");
-const hashing_js_1 = require("../../service/hashing.js");
+const error_1 = require("../../../utils/error");
+const hashing_1 = require("../../service/hashing");
 const reviewerLogin = (passwordCompare, createToken) => {
     return (reviewer, reviewerData) => __awaiter(void 0, void 0, void 0, function* () {
         const { email, password } = reviewer;
         if (!email || !password || /^\s*$/.test(email) || /^\s*$/.test(password)) {
-            throw new error_js_1.AppError("All fields are requred", 400);
+            throw new error_1.AppError("All fields are requred", 400);
         }
         const isPasswordCorrect = yield passwordCompare(password, reviewerData.password);
         if (!isPasswordCorrect) {
-            throw new error_js_1.AppError("Incorrect password", 401);
+            throw new error_1.AppError("Incorrect password", 401);
         }
         const token = (0, exports.createReviewerToken)(reviewerData);
         return token;
@@ -40,4 +40,4 @@ const createReviewerToken = (reviewer) => {
     return token;
 };
 exports.createReviewerToken = createReviewerToken;
-exports.reviewerLoginValidate = (0, exports.reviewerLogin)(hashing_js_1.isPasswordCorrect, exports.createReviewerToken);
+exports.reviewerLoginValidate = (0, exports.reviewerLogin)(hashing_1.isPasswordCorrect, exports.createReviewerToken);

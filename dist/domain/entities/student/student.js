@@ -14,16 +14,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.studentLoginUserValidate = exports.createToken = exports.studentLogin = exports.vaildateStudent = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const error_js_1 = require("../../../utils/error.js");
-const hashing_js_1 = require("../../service/hashing.js");
+const error_1 = require("../../../utils/error");
+const hashing_1 = require("../../service/hashing");
 const vaildateStudent = (passwordHashing) => {
     return (student) => __awaiter(void 0, void 0, void 0, function* () {
         if (student.name)
-            throw new error_js_1.AppError("name is required", 400);
+            throw new error_1.AppError("name is required", 400);
         if (student.email)
-            throw new error_js_1.AppError("email is required", 400);
+            throw new error_1.AppError("email is required", 400);
         if (student.number)
-            throw new error_js_1.AppError("phone is required", 400);
+            throw new error_1.AppError("phone is required", 400);
     });
 };
 exports.vaildateStudent = vaildateStudent;
@@ -31,11 +31,11 @@ const studentLogin = (passwordCompare, createToken) => {
     return (student, studentData) => __awaiter(void 0, void 0, void 0, function* () {
         const { email, password } = student;
         if (!email || !password || /^\s*$/.test(email) || /^\s*$/.test(password)) {
-            throw new error_js_1.AppError("All fields are requred", 400);
+            throw new error_1.AppError("All fields are requred", 400);
         }
         const isPasswordCorrect = yield passwordCompare(password, studentData.password);
         if (!isPasswordCorrect) {
-            throw new error_js_1.AppError("Incorrect password", 401);
+            throw new error_1.AppError("Incorrect password", 401);
         }
         const token = createToken(studentData);
         return token;
@@ -51,4 +51,4 @@ const createToken = (student) => {
     return token;
 };
 exports.createToken = createToken;
-exports.studentLoginUserValidate = (0, exports.studentLogin)(hashing_js_1.isPasswordCorrect, exports.createToken);
+exports.studentLoginUserValidate = (0, exports.studentLogin)(hashing_1.isPasswordCorrect, exports.createToken);

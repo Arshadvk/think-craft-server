@@ -1,9 +1,9 @@
 import { ObjectId } from "mongoose"
 import {  Response } from "express"
-import { CustomRequest } from "../../middlewares/authMiddleware.js"
-import { advisorModel } from "../../../infra/database/model/advisor/advisor.js"
-import AdvisorRepositoryImpl from "../../../infra/repositories/advisor/advisorRepository.js"
-import { advisorProfileUsecase, getAdvisorProfileUsecase } from "../../../app/usecase/advisor/advisorProfile.js"
+import { CustomRequest } from "../../middlewares/authMiddleware"
+import { advisorModel } from "../../../infra/database/model/advisor/advisor"
+import AdvisorRepositoryImpl from "../../../infra/repositories/advisor/advisorRepository"
+import { advisorProfileUsecase, getAdvisorProfileUsecase } from "../../../app/usecase/advisor/advisorProfile"
 
 const advisorRepository = AdvisorRepositoryImpl(advisorModel)
 

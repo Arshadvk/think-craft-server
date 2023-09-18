@@ -1,9 +1,9 @@
 import { ObjectId } from "mongoose";
-import { AppError } from "../../../utils/error.js";
-import { isPasswordCorrect, passwordHashing } from "../../../domain/service/hashing.js";
-import { StudentRepository } from "../../../infra/repositories/student/studentRepository.js";
-import { Student, studentLoginUserValidate } from "../../../domain/entities/student/student.js";
-import { studentLoginType } from "../../../interface/controller/student/studentLoginController.js";
+import { AppError } from "../../../utils/error";
+import { isPasswordCorrect, passwordHashing } from "../../../domain/service/hashing";
+import { StudentRepository } from "../../../infra/repositories/student/studentRepository";
+import { Student, studentLoginUserValidate } from "../../../domain/entities/student/student";
+import { studentLoginType } from "../../../interface/controller/student/studentLoginController";
 
 type studentReturnType={
     token:string

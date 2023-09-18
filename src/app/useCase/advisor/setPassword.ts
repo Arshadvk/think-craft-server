@@ -1,5 +1,5 @@
-import { passwordHashing } from "../../../domain/service/hashing.js";
-import { AdvisorRepository } from "../../../infra/repositories/advisor/advisorRepository.js";
+import { passwordHashing } from "../../../domain/service/hashing";
+import { AdvisorRepository } from "../../../infra/repositories/advisor/advisorRepository";
 
 
 export const setPasswordUsecaseAdvisor = (advisorRepository : AdvisorRepository)=>{

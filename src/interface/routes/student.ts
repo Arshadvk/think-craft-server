@@ -1,13 +1,13 @@
 import express  from "express";
-import { StudentAuthToken } from "../middlewares/authMiddleware.js";
-import { passwordCreation} from "../controller/student/studentManagement.js";
-import { studentProfileMiddleware } from "../middlewares/profileMiddleware.js";
-import { getAllDomainController } from "../controller/admin/domain/domainController.js";
-import { findStudentManifestController } from "../controller/student/studentManifest.js";
-import { findOneReviewController } from "../controller/review/reviewMangmentController.js";
-import { findTaskByDomainController } from "../controller/task/taskManagementController.js";
-import { studentChangePassword, studentLogin } from "../controller/student/studentLoginController.js";
-import {  getStudentHomeController, getStudentProfileController, studentProfileController } from "../controller/student/studentProfileController.js";
+import { StudentAuthToken } from "../middlewares/authMiddleware";
+import { passwordCreation} from "../controller/student/studentManagement";
+import { studentProfileMiddleware } from "../middlewares/profileMiddleware";
+import { getAllDomainController } from "../controller/admin/domain/domainController";
+import { findStudentManifestController } from "../controller/student/studentManifest";
+import { findOneReviewController } from "../controller/review/reviewMangmentController";
+import { findTaskByDomainController } from "../controller/task/taskManagementController";
+import { studentChangePassword, studentLogin } from "../controller/student/studentLoginController";
+import {  getStudentHomeController, getStudentProfileController, studentProfileController } from "../controller/student/studentProfileController";
 
 
 

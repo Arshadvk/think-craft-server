@@ -1,8 +1,8 @@
-import { AppError } from "../../../../utils/error.js";
-import { sendMail } from "../../../../domain/service/email_send.js";
-import { createAdvisorToken } from "../../../../domain/entities/advisor/advisor.js";
-import { AdvisorRepository } from "../../../../infra/repositories/advisor/advisorRepository.js";
-import { Filter } from "../../../../interface/controller/reviewer/reviewerManagment.js";
+import { AppError } from "../../../../utils/error";
+import { sendMail } from "../../../../domain/service/email_send";
+import { createAdvisorToken } from "../../../../domain/entities/advisor/advisor";
+import { AdvisorRepository } from "../../../../infra/repositories/advisor/advisorRepository";
+import { Filter } from "../../../../interface/controller/reviewer/reviewerManagment";
 
 
 

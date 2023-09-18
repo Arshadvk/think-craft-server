@@ -1,5 +1,5 @@
-import { Domain } from "../../../../domain/entities/admin/domain.js";
-import { DomainRepository } from "../../../../infra/repositories/domain/domainRepository.js";
+import { Domain } from "../../../../domain/entities/admin/domain";
+import { DomainRepository } from "../../../../infra/repositories/domain/domainRepository";
 
 export const getAllDomainUsecase = (domainRepository:DomainRepository)=>{
     return async ():Promise<Domain | any>=>{

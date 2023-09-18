@@ -1,17 +1,17 @@
 import { Date, ObjectId } from "mongoose";
 import { Request, Response } from "express";
-import { Review } from "../../../domain/entities/review/review.js";
-import { CustomRequest } from "../../middlewares/authMiddleware.js";
-import { createToken } from "../../../domain/entities/student/student.js";
-import { reviewModel } from "../../../infra/database/model/review/review.js";
-import { studentModel } from "../../../infra/database/model/student/student.js";
-import { advisorModel } from "../../../infra/database/model/advisor/advisor.js";
-import ReviewRepositoryIMPL from "../../../infra/repositories/review/reviewRepository.js";
-import { createReviewUsecase, } from "../../../app/usecase/review/reviewCreateUsecase.js";
-import studentRepositoryImpl from "../../../infra/repositories/student/studentRepository.js";
-import AdvisorRepositoryImpl from "../../../infra/repositories/advisor/advisorRepository.js";
-import { getReviewListByWeekUseCase } from "../../../app/usecase/review/reviewFindUsecase.js";
-import { getStudentProfileUsecase, studentProfileUsecase } from "../../../app/usecase/student/studentProfile.js";
+import { Review } from "../../../domain/entities/review/review";
+import { CustomRequest } from "../../middlewares/authMiddleware";
+import { createToken } from "../../../domain/entities/student/student";
+import { reviewModel } from "../../../infra/database/model/review/review";
+import { studentModel } from "../../../infra/database/model/student/student";
+import { advisorModel } from "../../../infra/database/model/advisor/advisor";
+import ReviewRepositoryIMPL from "../../../infra/repositories/review/reviewRepository";
+import { createReviewUsecase, } from "../../../app/usecase/review/reviewCreateUsecase";
+import studentRepositoryImpl from "../../../infra/repositories/student/studentRepository";
+import AdvisorRepositoryImpl from "../../../infra/repositories/advisor/advisorRepository";
+import { getReviewListByWeekUseCase } from "../../../app/usecase/review/reviewFindUsecase";
+import { getStudentProfileUsecase, studentProfileUsecase } from "../../../app/usecase/student/studentProfile";
 
 const studentRepository = studentRepositoryImpl(studentModel)
 const reviewRepository = ReviewRepositoryIMPL(reviewModel)

@@ -9,20 +9,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const domain_js_1 = require("../../database/model/domain/domain.js");
+const domain_1 = require("../../database/model/domain/domain");
 const domainRepositoryIMPL = (DomainModel) => {
     const createNewDomain = (name) => __awaiter(void 0, void 0, void 0, function* () {
         console.log("mgjfsngj");
-        const newDomain = yield domain_js_1.domainModel.create(name);
+        const newDomain = yield domain_1.domainModel.create(name);
         console.log(newDomain);
         return newDomain;
     });
     const findDomainByName = (name) => __awaiter(void 0, void 0, void 0, function* () {
-        const domainExist = yield domain_js_1.domainModel.findOne();
+        const domainExist = yield domain_1.domainModel.findOne();
         return domainExist;
     });
     const findAllDomain = () => __awaiter(void 0, void 0, void 0, function* () {
-        const domain = yield domain_js_1.domainModel.find();
+        const domain = yield domain_1.domainModel.find();
         return domain;
     });
     return { createNewDomain, findDomainByName, findAllDomain };

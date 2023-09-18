@@ -1,9 +1,9 @@
 import { Request , Response } from "express"
-import { CustomRequest } from "../../middlewares/authMiddleware.js"
-import { changePassType } from "../../../app/usecase/student/studentLogin.js"
-import { advisorModel } from "../../../infra/database/model/advisor/advisor.js"
-import AdvisorRepositoryImpl from "../../../infra/repositories/advisor/advisorRepository.js"
-import { changeAdvisorPassword, loginAdvisor } from "../../../app/usecase/advisor/advisorLogin.js"
+import { CustomRequest } from "../../middlewares/authMiddleware"
+import { changePassType } from "../../../app/usecase/student/studentLogin"
+import { advisorModel } from "../../../infra/database/model/advisor/advisor"
+import AdvisorRepositoryImpl from "../../../infra/repositories/advisor/advisorRepository"
+import { changeAdvisorPassword, loginAdvisor } from "../../../app/usecase/advisor/advisorLogin"
 
 export type advisorLoginType ={
     email:string 

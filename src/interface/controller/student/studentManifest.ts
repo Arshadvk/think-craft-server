@@ -1,9 +1,9 @@
 import { ObjectId } from "mongoose";
 import { Request, Response } from "express";
-import { CustomRequest } from "../../middlewares/authMiddleware.js";
-import { reviewModel } from "../../../infra/database/model/review/review.js";
-import { getReviewListUseCase } from "../../../app/usecase/review/reviewFindUsecase.js";
-import ReviewRepositoryIMPL, { filterReview } from "../../../infra/repositories/review/reviewRepository.js";
+import { CustomRequest } from "../../middlewares/authMiddleware";
+import { reviewModel } from "../../../infra/database/model/review/review";
+import { getReviewListUseCase } from "../../../app/usecase/review/reviewFindUsecase";
+import ReviewRepositoryIMPL, { filterReview } from "../../../infra/repositories/review/reviewRepository";
 
 const reviewRepository = ReviewRepositoryIMPL(reviewModel)
 export const findStudentManifestController = async (req: CustomRequest, res: Response) => {

@@ -1,8 +1,8 @@
-import { AppError } from "../../../../utils/error.js";
-import { sendMail } from "../../../../domain/service/email_send.js";
-import { Filter } from "../../../../interface/controller/reviewer/reviewerManagment.js";
-import { ReviewerRepository } from "../../../../infra/repositories/reviewer/reviewerRepository.js";
-import { Reviewer, createReviewerToken } from "../../../../domain/entities/reviewer/reviewer.js";
+import { AppError } from "../../../../utils/error";
+import { sendMail } from "../../../../domain/service/email_send";
+import { Filter } from "../../../../interface/controller/reviewer/reviewerManagment";
+import { ReviewerRepository } from "../../../../infra/repositories/reviewer/reviewerRepository";
+import { Reviewer, createReviewerToken } from "../../../../domain/entities/reviewer/reviewer";
 
 
 

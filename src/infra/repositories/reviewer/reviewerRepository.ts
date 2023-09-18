@@ -1,6 +1,6 @@
-import { AppError } from "../../../utils/error.js";
-import { Filter } from "../../../interface/controller/reviewer/reviewerManagment.js";
-import { MongoDBReviewer,reviewerModel } from "../../database/model/reviewer/reviewer.js";
+import { AppError } from "../../../utils/error";
+import { Filter } from "../../../interface/controller/reviewer/reviewerManagment";
+import { MongoDBReviewer,reviewerModel } from "../../database/model/reviewer/reviewer";
 
 export type ReviewerRepository ={
     createReviewer:(reviewerData:any)=>Promise<any | null>

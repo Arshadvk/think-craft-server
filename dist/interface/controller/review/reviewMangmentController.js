@@ -13,17 +13,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateReviewController = exports.findOneReviewController = exports.findReviewController = void 0;
-const review_js_1 = require("../../../infra/database/model/review/review.js");
-const student_js_1 = require("../../../infra/database/model/student/student.js");
-const advisor_js_1 = require("../../../infra/database/model/advisor/advisor.js");
-const reviewUpdateUsecase_js_1 = require("../../../app/usecase/review/reviewUpdateUsecase.js");
-const studentRepository_js_1 = __importDefault(require("../../../infra/repositories/student/studentRepository.js"));
-const advisorRepository_js_1 = __importDefault(require("../../../infra/repositories/advisor/advisorRepository.js"));
-const reviewFindUsecase_js_1 = require("../../../app/usecase/review/reviewFindUsecase.js");
-const reviewRepository_js_1 = __importDefault(require("../../../infra/repositories/review/reviewRepository.js"));
-const reviewRepository = (0, reviewRepository_js_1.default)(review_js_1.reviewModel);
-const advisorRepository = (0, advisorRepository_js_1.default)(advisor_js_1.advisorModel);
-const studentRepository = (0, studentRepository_js_1.default)(student_js_1.studentModel);
+const review_1 = require("../../../infra/database/model/review/review");
+const student_1 = require("../../../infra/database/model/student/student");
+const advisor_1 = require("../../../infra/database/model/advisor/advisor");
+const reviewUpdateUsecase_1 = require("../../../app/usecase/review/reviewUpdateUsecase");
+const studentRepository_1 = __importDefault(require("../../../infra/repositories/student/studentRepository"));
+const advisorRepository_1 = __importDefault(require("../../../infra/repositories/advisor/advisorRepository"));
+const reviewFindUsecase_1 = require("../../../app/usecase/review/reviewFindUsecase");
+const reviewRepository_1 = __importDefault(require("../../../infra/repositories/review/reviewRepository"));
+const reviewRepository = (0, reviewRepository_1.default)(review_1.reviewModel);
+const advisorRepository = (0, advisorRepository_1.default)(advisor_1.advisorModel);
+const studentRepository = (0, studentRepository_1.default)(student_1.studentModel);
 const findReviewController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b, _c, _d;
     try {
@@ -52,7 +52,7 @@ const findReviewController = (req, res) => __awaiter(void 0, void 0, void 0, fun
         if (id) {
             filterData._id = id;
         }
-        const reviews = yield (0, reviewFindUsecase_js_1.getReviewListUseCase)(reviewRepository)(filterData);
+        const reviews = yield (0, reviewFindUsecase_1.getReviewListUseCase)(reviewRepository)(filterData);
         res.status(200).json(reviews);
     }
     catch (error) {
@@ -65,7 +65,7 @@ const findOneReviewController = (req, res) => __awaiter(void 0, void 0, void 0, 
     try {
         const userId = (_f = (_e = req.user) === null || _e === void 0 ? void 0 : _e.student) === null || _f === void 0 ? void 0 : _f._id;
         const week = req.query.week;
-        const review = yield (0, reviewFindUsecase_js_1.getReviewByIdUsecase)(reviewRepository)(week);
+        const review = yield (0, reviewFindUsecase_1.getReviewByIdUsecase)(reviewRepository)(week);
         res.status(200).json(review);
     }
     catch (error) {
@@ -89,7 +89,7 @@ const updateReviewController = (req, res) => __awaiter(void 0, void 0, void 0, f
         }
         const reviewId = (_h = req.body) === null || _h === void 0 ? void 0 : _h.id;
         const week = req.body.week;
-        const updatedReview = yield (0, reviewUpdateUsecase_js_1.UpdateReviewUsecase)(reviewRepository)(reviewId, data);
+        const updatedReview = yield (0, reviewUpdateUsecase_1.UpdateReviewUsecase)(reviewRepository)(reviewId, data);
         res.status(200).json(updatedReview);
     }
     catch (error) {

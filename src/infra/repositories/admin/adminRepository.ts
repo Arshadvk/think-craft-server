@@ -1,4 +1,4 @@
-import { MongoDbAdmin, adminModel } from "../../database/model/admin/admin.js";
+import { MongoDbAdmin, adminModel } from "../../database/model/admin/admin";
 
 export type AdminRepository={
     setAdminPassword:(emaildminId:string , password:string)=>Promise<Object|null>

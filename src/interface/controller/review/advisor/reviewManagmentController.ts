@@ -1,16 +1,16 @@
 import { ObjectId } from "mongoose";
 import { Request, Response } from "express";
-import { mark } from "../reviewMangmentController.js";
-import { Review } from "../../../../domain/entities/review/review.js";
-import { CustomRequest } from "../../../middlewares/authMiddleware.js";
-import { reviewModel } from "../../../../infra/database/model/review/review.js";
-import { advisorModel } from "../../../../infra/database/model/advisor/advisor.js";
-import { studentModel } from "../../../../infra/database/model/student/student.js";
-import { createReviewUsecase } from "../../../../app/usecase/review/reviewCreateUsecase.js";
-import { UpdateReviewUsecase } from "../../../../app/usecase/review/reviewUpdateUsecase.js";
-import AdvisorRepositoryImpl from "../../../../infra/repositories/advisor/advisorRepository.js";
-import studentRepositoryImpl from "../../../../infra/repositories/student/studentRepository.js";
-import ReviewRepositoryIMPL, { reviewUpdatedData, taskStatus } from "../../../../infra/repositories/review/reviewRepository.js";
+import { mark } from "../reviewMangmentController";
+import { Review } from "../../../../domain/entities/review/review";
+import { CustomRequest } from "../../../middlewares/authMiddleware";
+import { reviewModel } from "../../../../infra/database/model/review/review";
+import { advisorModel } from "../../../../infra/database/model/advisor/advisor";
+import { studentModel } from "../../../../infra/database/model/student/student";
+import { createReviewUsecase } from "../../../../app/usecase/review/reviewCreateUsecase";
+import { UpdateReviewUsecase } from "../../../../app/usecase/review/reviewUpdateUsecase";
+import AdvisorRepositoryImpl from "../../../../infra/repositories/advisor/advisorRepository";
+import studentRepositoryImpl from "../../../../infra/repositories/student/studentRepository";
+import ReviewRepositoryIMPL, { reviewUpdatedData, taskStatus } from "../../../../infra/repositories/review/reviewRepository";
 
 const reviewRepository = ReviewRepositoryIMPL(reviewModel)
 const advisorRepository = AdvisorRepositoryImpl(advisorModel)

@@ -2,16 +2,16 @@ import moment from 'moment'
 import {  Response } from "express";
 import { ObjectId } from "mongoose";
 import { AppError } from "../../../../utils/error";
-import { CustomRequest } from "../../../middlewares/authMiddleware.js";
-import { Slot, slotes } from "../../../../domain/entities/slot/slot.js";
-import { slotModel } from "../../../../infra/database/model/slot/slot.js";
-import slotRepositoryImpl from "../../../../infra/repositories/slot/slot.js";
-import { reviewModel } from "../../../../infra/database/model/review/review.js";
-import { studentModel } from "../../../../infra/database/model/student/student.js";
-import { UpdateReviewUsecase } from "../../../../app/usecase/review/reviewUpdateUsecase.js";
-import studentRepositoryImpl from "../../../../infra/repositories/student/studentRepository.js";
-import ReviewRepositoryIMPL, { reviewUpdatedData } from "../../../../infra/repositories/review/reviewRepository.js";
-import { createSlotUsecase, getSlotUsecase, updateSlotUsecase } from "../../../../app/usecase/reviewer/slot/slotUsecase.js";
+import { CustomRequest } from "../../../middlewares/authMiddleware";
+import { Slot, slotes } from "../../../../domain/entities/slot/slot";
+import { slotModel } from "../../../../infra/database/model/slot/slot";
+import slotRepositoryImpl from "../../../../infra/repositories/slot/slot";
+import { reviewModel } from "../../../../infra/database/model/review/review";
+import { studentModel } from "../../../../infra/database/model/student/student";
+import { UpdateReviewUsecase } from "../../../../app/usecase/review/reviewUpdateUsecase";
+import studentRepositoryImpl from "../../../../infra/repositories/student/studentRepository";
+import ReviewRepositoryIMPL, { reviewUpdatedData } from "../../../../infra/repositories/review/reviewRepository";
+import { createSlotUsecase, getSlotUsecase, updateSlotUsecase } from "../../../../app/usecase/reviewer/slot/slotUsecase";
 
 const slotRepository = slotRepositoryImpl(slotModel)
 const reviewRepository = ReviewRepositoryIMPL(reviewModel)

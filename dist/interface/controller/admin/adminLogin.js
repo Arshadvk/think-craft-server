@@ -13,14 +13,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createAdminController = exports.passwordChangeController = exports.adminLogin = void 0;
-const admin_js_1 = require("../../../infra/database/model/admin/admin.js");
-const adminRepository_js_1 = __importDefault(require("../../../infra/repositories/admin/adminRepository.js"));
-const adminLogin_js_1 = require("../../../app/usecase/admin/adminLogin.js");
-const adminRepository = (0, adminRepository_js_1.default)(admin_js_1.adminModel);
+const admin_1 = require("../../../infra/database/model/admin/admin");
+const adminRepository_1 = __importDefault(require("../../../infra/repositories/admin/adminRepository"));
+const adminLogin_1 = require("../../../app/usecase/admin/adminLogin");
+const adminRepository = (0, adminRepository_1.default)(admin_1.adminModel);
 const adminLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const admin = req.body;
-        const adminToken = yield (0, adminLogin_js_1.loginAdmin)(adminRepository)(admin);
+        const adminToken = yield (0, adminLogin_1.loginAdmin)(adminRepository)(admin);
         res.status(200).json({ message: adminToken });
     }
     catch (error) {
@@ -33,7 +33,7 @@ const passwordChangeController = (req, res) => __awaiter(void 0, void 0, void 0,
     try {
         const adminData = req.body;
         console.log(adminData);
-        const newPassword = yield (0, adminLogin_js_1.changePasswordUsecase)(adminRepository)(adminData);
+        const newPassword = yield (0, adminLogin_1.changePasswordUsecase)(adminRepository)(adminData);
         res.status(200).send({ message: "password change successfully" });
     }
     catch (error) {
@@ -43,7 +43,7 @@ exports.passwordChangeController = passwordChangeController;
 const createAdminController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const adminData = req.body;
-        const newAdmin = yield (0, adminLogin_js_1.createAdminUsecase)(adminRepository)(adminData);
+        const newAdmin = yield (0, adminLogin_1.createAdminUsecase)(adminRepository)(adminData);
         console.log(newAdmin);
         res.status(200).send({ message: "admin Created Successfully" });
     }

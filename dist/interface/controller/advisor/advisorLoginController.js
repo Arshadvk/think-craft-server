@@ -13,14 +13,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.advisorChangePassword = exports.advisorLogin = void 0;
-const advisor_js_1 = require("../../../infra/database/model/advisor/advisor.js");
-const advisorRepository_js_1 = __importDefault(require("../../../infra/repositories/advisor/advisorRepository.js"));
-const advisorLogin_js_1 = require("../../../app/usecase/advisor/advisorLogin.js");
-const advisorRepository = (0, advisorRepository_js_1.default)(advisor_js_1.advisorModel);
+const advisor_1 = require("../../../infra/database/model/advisor/advisor");
+const advisorRepository_1 = __importDefault(require("../../../infra/repositories/advisor/advisorRepository"));
+const advisorLogin_1 = require("../../../app/usecase/advisor/advisorLogin");
+const advisorRepository = (0, advisorRepository_1.default)(advisor_1.advisorModel);
 const advisorLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const advisor = req.body;
-        const advisorToken = yield (0, advisorLogin_js_1.loginAdvisor)(advisorRepository)(advisor);
+        const advisorToken = yield (0, advisorLogin_1.loginAdvisor)(advisorRepository)(advisor);
         res.status(200).json({ token: advisorToken });
     }
     catch (error) {
@@ -33,7 +33,7 @@ const advisorChangePassword = (req, res) => __awaiter(void 0, void 0, void 0, fu
         const advisor = req.user.advisor._id;
         const value = req.body.value;
         console.log(value);
-        const updateAdvisor = yield (0, advisorLogin_js_1.changeAdvisorPassword)(advisorRepository)(advisor, value);
+        const updateAdvisor = yield (0, advisorLogin_1.changeAdvisorPassword)(advisorRepository)(advisor, value);
         res.status(200).json(updateAdvisor);
     }
     catch (error) {

@@ -1,8 +1,8 @@
 import { ObjectId } from "mongoose";
-import { AppError } from "../../../utils/error.js";
-import { Student } from "../../../domain/entities/student/student.js";
-import { MongoDBStudent, studentModel } from "../../database/model/student/student.js";
-import { Filter } from "../../../interface/controller/reviewer/reviewerManagment.js";
+import { AppError } from "../../../utils/error";
+import { Student } from "../../../domain/entities/student/student";
+import { MongoDBStudent, studentModel } from "../../database/model/student/student";
+import { Filter } from "../../../interface/controller/reviewer/reviewerManagment";
 
 export type StudentRepository = {
     createStudent: (studentData: any) => Promise<any | null>

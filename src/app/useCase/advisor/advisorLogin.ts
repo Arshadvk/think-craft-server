@@ -1,9 +1,9 @@
-import { AppError } from "../../../utils/error.js"
-import { changePassType } from "../student/studentLogin.js"
-import { isPasswordCorrect, passwordHashing } from "../../../domain/service/hashing.js"
-import { Advisor, advisorLoginValidate } from "../../../domain/entities/advisor/advisor.js"
-import { AdvisorRepository } from "../../../infra/repositories/advisor/advisorRepository.js"
-import { advisorLoginType } from "../../../interface/controller/advisor/advisorLoginController.js"
+import { AppError } from "../../../utils/error"
+import { changePassType } from "../student/studentLogin"
+import { isPasswordCorrect, passwordHashing } from "../../../domain/service/hashing"
+import { Advisor, advisorLoginValidate } from "../../../domain/entities/advisor/advisor"
+import { AdvisorRepository } from "../../../infra/repositories/advisor/advisorRepository"
+import { advisorLoginType } from "../../../interface/controller/advisor/advisorLoginController"
 
 type advisorReturnType = {
     token: string

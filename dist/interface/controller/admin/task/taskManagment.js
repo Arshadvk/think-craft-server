@@ -13,10 +13,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.editOneTaskController = exports.addTaskController = void 0;
-const task_js_1 = require("../../../../infra/database/model/task/task.js");
-const taskRepository_js_1 = __importDefault(require("../../../../infra/repositories/task/taskRepository.js"));
-const taskMangmentUsecase_js_1 = require("../../../../app/usecase/admin/task/taskMangmentUsecase.js");
-const taskRepository = (0, taskRepository_js_1.default)(task_js_1.taskModel);
+const task_1 = require("../../../../infra/database/model/task/task");
+const taskRepository_1 = __importDefault(require("../../../../infra/repositories/task/taskRepository"));
+const taskMangmentUsecase_1 = require("../../../../app/usecase/admin/task/taskMangmentUsecase");
+const taskRepository = (0, taskRepository_1.default)(task_1.taskModel);
 const addTaskController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const domainId = req.body.domain;
@@ -27,7 +27,7 @@ const addTaskController = (req, res) => __awaiter(void 0, void 0, void 0, functi
             personalDevelopmentWorkout: req.body.personalDevelopmentWorkout,
             technicalWorkouts: req.body.technicalWorkouts
         };
-        const newTask = yield (0, taskMangmentUsecase_js_1.addTaskUsecase)(taskRepository)(domainId, task);
+        const newTask = yield (0, taskMangmentUsecase_1.addTaskUsecase)(taskRepository)(domainId, task);
         if (!newTask)
             res.status(500).json({ message: "Somthing went worng" });
         else
@@ -51,7 +51,7 @@ const editOneTaskController = (req, res) => __awaiter(void 0, void 0, void 0, fu
             week: value.week
         };
         console.log(UpdatedData);
-        const UpdatedTask = yield (0, taskMangmentUsecase_js_1.getOneTaskAndUpdate)(taskRepository)(id, UpdatedData);
+        const UpdatedTask = yield (0, taskMangmentUsecase_1.getOneTaskAndUpdate)(taskRepository)(id, UpdatedData);
         console.log(UpdatedTask, "helloo");
         res.status(200).json({ message: "task Updated succesfully" });
     }

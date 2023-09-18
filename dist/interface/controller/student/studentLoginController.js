@@ -13,14 +13,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.studentChangePassword = exports.studentLogin = void 0;
-const student_js_1 = require("../../../infra/database/model/student/student.js");
-const studentRepository_js_1 = __importDefault(require("../../../infra/repositories/student/studentRepository.js"));
-const studentLogin_js_1 = require("../../../app/usecase/student/studentLogin.js");
-const studentRepository = (0, studentRepository_js_1.default)(student_js_1.studentModel);
+const student_1 = require("../../../infra/database/model/student/student");
+const studentRepository_1 = __importDefault(require("../../../infra/repositories/student/studentRepository"));
+const studentLogin_1 = require("../../../app/usecase/student/studentLogin");
+const studentRepository = (0, studentRepository_1.default)(student_1.studentModel);
 const studentLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const student = req.body;
-        const studentToken = yield (0, studentLogin_js_1.loginStudent)(studentRepository)(student);
+        const studentToken = yield (0, studentLogin_1.loginStudent)(studentRepository)(student);
         res.status(200).json({ studentToken });
     }
     catch (error) {
@@ -32,7 +32,7 @@ const studentChangePassword = (req, res) => __awaiter(void 0, void 0, void 0, fu
     try {
         const student = req.user.student._id;
         const value = req.body.value;
-        const updateStudent = yield (0, studentLogin_js_1.changeStudentPassword)(studentRepository)(student, value);
+        const updateStudent = yield (0, studentLogin_1.changeStudentPassword)(studentRepository)(student, value);
         res.status(200).json(updateStudent);
     }
     catch (error) {

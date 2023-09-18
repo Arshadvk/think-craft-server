@@ -1,6 +1,6 @@
 import { ObjectId } from "mongoose";
-import { Review } from "../../../domain/entities/review/review.js";
-import { MongoDBReview } from "../../database/model/review/review.js";
+import { Review } from "../../../domain/entities/review/review";
+import { MongoDBReview } from "../../database/model/review/review";
 
 export type filterReview = {
     _id?: ObjectId

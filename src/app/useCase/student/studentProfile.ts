@@ -1,5 +1,5 @@
 import { ObjectId } from "mongoose";
-import { StudentRepository } from "../../../infra/repositories/student/studentRepository.js";
+import { StudentRepository } from "../../../infra/repositories/student/studentRepository";
 
  export const studentProfileUsecase = (studentRepository : StudentRepository)=>{
     return async (userId : ObjectId , studentData:object):Promise<any | null >=>{

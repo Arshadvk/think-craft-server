@@ -1,5 +1,5 @@
-import { Domain, validateDomainData } from "../../../../domain/entities/admin/domain.js";
-import { DomainRepository } from "../../../../infra/repositories/domain/domainRepository.js";
+import { Domain, validateDomainData } from "../../../../domain/entities/admin/domain";
+import { DomainRepository } from "../../../../infra/repositories/domain/domainRepository";
 
 export const addDomainUseCase = (domainRepository: DomainRepository) => {
   return async (domainName: string): Promise<Domain | any> => {

@@ -10,15 +10,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.changeStudentPassword = exports.loginStudent = void 0;
-const error_js_1 = require("../../../utils/error.js");
-const hashing_js_1 = require("../../../domain/service/hashing.js");
-const student_js_1 = require("../../../domain/entities/student/student.js");
+const error_1 = require("../../../utils/error");
+const hashing_1 = require("../../../domain/service/hashing");
+const student_1 = require("../../../domain/entities/student/student");
 const loginStudent = (studentRepository) => {
     return (student) => __awaiter(void 0, void 0, void 0, function* () {
         const isStudentExist = yield studentRepository.findStudentByEmail(student.email);
         if (!isStudentExist)
-            throw new error_js_1.AppError("user is not exist", 404);
-        const StudentToken = yield (0, student_js_1.studentLoginUserValidate)(student, isStudentExist);
+            throw new error_1.AppError("user is not exist", 404);
+        const StudentToken = yield (0, student_1.studentLoginUserValidate)(student, isStudentExist);
         const verifiedStudent = {
             token: StudentToken,
             status: "Login success"
@@ -31,11 +31,11 @@ const changeStudentPassword = (studentRepository) => {
     return (studentId, value) => __awaiter(void 0, void 0, void 0, function* () {
         const isStudentExist = yield studentRepository.findStudentById(studentId);
         if (!isStudentExist)
-            throw new error_js_1.AppError("user is not exist", 404);
-        const IsPasswordCorrect = yield (0, hashing_js_1.isPasswordCorrect)(value.oldpass, isStudentExist.password);
+            throw new error_1.AppError("user is not exist", 404);
+        const IsPasswordCorrect = yield (0, hashing_1.isPasswordCorrect)(value.oldpass, isStudentExist.password);
         if (!IsPasswordCorrect)
-            throw new error_js_1.AppError("Old password is not same", 404);
-        const hashedPassword = yield (0, hashing_js_1.passwordHashing)(value.newpass);
+            throw new error_1.AppError("Old password is not same", 404);
+        const hashedPassword = yield (0, hashing_1.passwordHashing)(value.newpass);
         const updateStudent = yield studentRepository.updateStudentProfile(studentId, { password: hashedPassword });
         return updateStudent;
     });

@@ -13,18 +13,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.blockReviewerController = exports.getAllReviewerSearchFilterSortController = exports.passwordCreationReviewer = exports.createReviewerController = void 0;
-const error_js_1 = require("../../../utils/error.js");
-const reviewer_js_1 = require("../../../infra/database/model/reviewer/reviewer.js");
-const setPassword_js_1 = require("../../../app/usecase/reviewer/setPassword.js");
-const block_unblock_js_1 = require("../../../app/usecase/admin/reviewer/block-unblock.js");
-const reviewerRepository_js_1 = __importDefault(require("../../../infra/repositories/reviewer/reviewerRepository.js"));
-const createReviewer_js_1 = require("../../../app/usecase/admin/reviewer/createReviewer.js");
-const reviewerRepository = (0, reviewerRepository_js_1.default)(reviewer_js_1.reviewerModel);
+const error_1 = require("../../../utils/error");
+const reviewer_1 = require("../../../infra/database/model/reviewer/reviewer");
+const setPassword_1 = require("../../../app/usecase/reviewer/setPassword");
+const block_unblock_1 = require("../../../app/usecase/admin/reviewer/block-unblock");
+const reviewerRepository_1 = __importDefault(require("../../../infra/repositories/reviewer/reviewerRepository"));
+const createReviewer_1 = require("../../../app/usecase/admin/reviewer/createReviewer");
+const reviewerRepository = (0, reviewerRepository_1.default)(reviewer_1.reviewerModel);
 const createReviewerController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const reviewerData = req.body;
         console.log(reviewerData);
-        const newReviewer = yield (0, createReviewer_js_1.createReviewerUsecase)(reviewerRepository)(reviewerData);
+        const newReviewer = yield (0, createReviewer_1.createReviewerUsecase)(reviewerRepository)(reviewerData);
         console.log(newReviewer);
         res.status(200).send({ message: "reviewer created succussfully" });
     }
@@ -37,7 +37,7 @@ const passwordCreationReviewer = (req, res) => __awaiter(void 0, void 0, void 0,
     try {
         const reviewerId = (_b = (_a = req.user) === null || _a === void 0 ? void 0 : _a.reviewer) === null || _b === void 0 ? void 0 : _b._id;
         const reviewerData = req.body;
-        const newPassword = yield (0, setPassword_js_1.setPasswordUsecaseReviewer)(reviewerRepository)(reviewerData, reviewerId);
+        const newPassword = yield (0, setPassword_1.setPasswordUsecaseReviewer)(reviewerRepository)(reviewerData, reviewerId);
         res.status(200).send({ message: "password change successfully" });
     }
     catch (error) {
@@ -59,7 +59,7 @@ const getAllReviewerSearchFilterSortController = (req, res) => __awaiter(void 0,
         if (req.query.domain)
             filterData.domain = req.query.domain;
         console.log(filterData.domain);
-        const reviewerList = yield (0, createReviewer_js_1.getAllReviewerUsecase)(reviewerRepository)(filterData);
+        const reviewerList = yield (0, createReviewer_1.getAllReviewerUsecase)(reviewerRepository)(filterData);
         res.status(200).json(reviewerList);
     }
     catch (error) {
@@ -72,10 +72,10 @@ const blockReviewerController = (req, res) => __awaiter(void 0, void 0, void 0, 
         const userId = req.body.id;
         const action = req.body.action;
         if (!userId || !action)
-            throw new error_js_1.AppError("not found", 404);
-        const blocked = yield (0, block_unblock_js_1.blockReviewerUsecase)(reviewerRepository)(userId, action);
+            throw new error_1.AppError("not found", 404);
+        const blocked = yield (0, block_unblock_1.blockReviewerUsecase)(reviewerRepository)(userId, action);
         if (blocked === null)
-            throw new error_js_1.AppError("somthing went wrong while fetch the users", 500);
+            throw new error_1.AppError("somthing went wrong while fetch the users", 500);
         if (blocked === true) {
             res.status(200).json({ message: 'User blocked succesfully' });
             return;

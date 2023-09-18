@@ -1,4 +1,4 @@
-import { StudentRepository } from "../../../../infra/repositories/student/studentRepository.js"
+import { StudentRepository } from "../../../../infra/repositories/student/studentRepository"
 
 export const blockStudentUseCase =(studentRepository : StudentRepository)=>{
     return async (userId : string , action : string):Promise <Boolean | undefined >=>{

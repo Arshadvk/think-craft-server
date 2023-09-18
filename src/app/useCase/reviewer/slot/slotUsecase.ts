@@ -1,7 +1,7 @@
 import { ObjectId } from "mongoose";
-import { AppError } from "../../../../utils/error.js";
-import { Slot, slotes } from "../../../../domain/entities/slot/slot.js";
-import { SlotRepository } from "../../../../infra/repositories/slot/slot.js";
+import { AppError } from "../../../../utils/error";
+import { Slot, slotes } from "../../../../domain/entities/slot/slot";
+import { SlotRepository } from "../../../../infra/repositories/slot/slot";
 
 
 export const createSlotUsecase = (slotRepository: SlotRepository) => {

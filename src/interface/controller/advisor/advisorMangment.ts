@@ -1,12 +1,12 @@
 import { Request,Response } from "express"
-import { AppError } from "../../../utils/error.js"
-import { Filter } from "../reviewer/reviewerManagment.js"
-import { CustomRequest } from "../../middlewares/authMiddleware.js"
-import { advisorModel } from "../../../infra/database/model/advisor/advisor.js"
-import { setPasswordUsecaseAdvisor } from "../../../app/usecase/advisor/setPassword.js"
-import { blockAdvisorUsecase } from "../../../app/usecase/admin/advisor/block-unblock.js"
-import AdvisorRepositoryImpl from "../../../infra/repositories/advisor/advisorRepository.js"
-import { createAdvisorUsecase, getAllAdvisorUsecase } from "../../../app/usecase/admin/advisor/createAdvisor.js"
+import { AppError } from "../../../utils/error"
+import { Filter } from "../reviewer/reviewerManagment"
+import { CustomRequest } from "../../middlewares/authMiddleware"
+import { advisorModel } from "../../../infra/database/model/advisor/advisor"
+import { setPasswordUsecaseAdvisor } from "../../../app/usecase/advisor/setPassword"
+import { blockAdvisorUsecase } from "../../../app/usecase/admin/advisor/block-unblock"
+import AdvisorRepositoryImpl from "../../../infra/repositories/advisor/advisorRepository"
+import { createAdvisorUsecase, getAllAdvisorUsecase } from "../../../app/usecase/admin/advisor/createAdvisor"
 
 
 const advisorRepository = AdvisorRepositoryImpl(advisorModel)

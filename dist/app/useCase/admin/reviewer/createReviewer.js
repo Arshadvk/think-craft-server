@@ -10,19 +10,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAllReviewerUsecase = exports.createReviewerUsecase = void 0;
-const error_js_1 = require("../../../../utils/error.js");
-const email_send_js_1 = require("../../../../domain/service/email_send.js");
-const reviewer_js_1 = require("../../../../domain/entities/reviewer/reviewer.js");
+const error_1 = require("../../../../utils/error");
+const email_send_1 = require("../../../../domain/service/email_send");
+const reviewer_1 = require("../../../../domain/entities/reviewer/reviewer");
 const createReviewerUsecase = (reviewerRepository) => {
     return (reviwerData) => __awaiter(void 0, void 0, void 0, function* () {
         console.log("fgasdvg");
         const isReviewer = yield reviewerRepository.findReviewerByEmail(reviwerData.email);
         if (isReviewer)
-            throw new error_js_1.AppError("Revieweer is already exist", 409);
+            throw new error_1.AppError("Revieweer is already exist", 409);
         const newReviewer = yield reviewerRepository.createReviewer(reviwerData);
         console.log(newReviewer);
-        const token = (0, reviewer_js_1.createReviewerToken)(newReviewer);
-        const sended = (0, email_send_js_1.sendMail)(newReviewer, "/reviewer", token);
+        const token = (0, reviewer_1.createReviewerToken)(newReviewer);
+        const sended = (0, email_send_1.sendMail)(newReviewer, "/reviewer", token);
     });
 };
 exports.createReviewerUsecase = createReviewerUsecase;

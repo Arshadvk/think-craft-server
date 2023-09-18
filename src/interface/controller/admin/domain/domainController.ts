@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { domainModel } from "../../../../infra/database/model/domain/domain.js";
-import { addDomainUseCase } from "../../../../app/usecase/admin/domain/addDomain.js";
-import domainRepositoryIMPL from "../../../../infra/repositories/domain/domainRepository.js";
-import { getAllDomainUsecase } from "../../../../app/usecase/admin/domain/getDomainUsecase.js";
+import { domainModel } from "../../../../infra/database/model/domain/domain";
+import { addDomainUseCase } from "../../../../app/usecase/admin/domain/addDomain";
+import domainRepositoryIMPL from "../../../../infra/repositories/domain/domainRepository";
+import { getAllDomainUsecase } from "../../../../app/usecase/admin/domain/getDomainUsecase";
 
 
 const domainRepository = domainRepositoryIMPL(domainModel)

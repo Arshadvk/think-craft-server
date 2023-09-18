@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken"
-import { AppError } from "../../../utils/error.js"
-import { isPasswordCorrect } from "../../service/hashing.js"
-import { advisorLoginType } from "../../../interface/controller/advisor/advisorLoginController.js"
+import { AppError } from "../../../utils/error"
+import { isPasswordCorrect } from "../../service/hashing"
+import { advisorLoginType } from "../../../interface/controller/advisor/advisorLoginController"
 
 export type AdvisorId ={
     _id : string

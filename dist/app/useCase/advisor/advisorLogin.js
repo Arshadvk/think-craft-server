@@ -10,15 +10,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.changeAdvisorPassword = exports.loginAdvisor = void 0;
-const error_js_1 = require("../../../utils/error.js");
-const hashing_js_1 = require("../../../domain/service/hashing.js");
-const advisor_js_1 = require("../../../domain/entities/advisor/advisor.js");
+const error_1 = require("../../../utils/error");
+const hashing_1 = require("../../../domain/service/hashing");
+const advisor_1 = require("../../../domain/entities/advisor/advisor");
 const loginAdvisor = (advisorRepository) => {
     return (advisor) => __awaiter(void 0, void 0, void 0, function* () {
         const isAdvisorExist = yield advisorRepository.findAdvisorByEmail(advisor.email);
         if (!isAdvisorExist)
-            throw new error_js_1.AppError("user is not exist", 404);
-        const AdvisorToken = yield (0, advisor_js_1.advisorLoginValidate)(advisor, isAdvisorExist);
+            throw new error_1.AppError("user is not exist", 404);
+        const AdvisorToken = yield (0, advisor_1.advisorLoginValidate)(advisor, isAdvisorExist);
         const verifiedAdvisor = {
             token: AdvisorToken,
             status: "advisor login successfully"
@@ -32,13 +32,13 @@ const changeAdvisorPassword = (advisorRepository) => {
         const isAdvisorExist = yield advisorRepository.findAdvisorById(advisor);
         console.log(isAdvisorExist);
         if (!isAdvisorExist)
-            throw new error_js_1.AppError("user is not exist", 404);
-        const IsPasswordCorrect = yield (0, hashing_js_1.isPasswordCorrect)(value.oldpass, isAdvisorExist.password);
+            throw new error_1.AppError("user is not exist", 404);
+        const IsPasswordCorrect = yield (0, hashing_1.isPasswordCorrect)(value.oldpass, isAdvisorExist.password);
         console.log(IsPasswordCorrect);
         if (!IsPasswordCorrect)
-            throw new error_js_1.AppError("Old password is not same", 404);
+            throw new error_1.AppError("Old password is not same", 404);
         console.log("hello");
-        const hashedPassword = yield (0, hashing_js_1.passwordHashing)(value.newpass);
+        const hashedPassword = yield (0, hashing_1.passwordHashing)(value.newpass);
         console.log(hashedPassword);
         const updateAdvisor = yield advisorRepository.updateAdvisorProfile(advisor, { password: hashedPassword });
         return updateAdvisor;

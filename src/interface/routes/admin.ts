@@ -1,12 +1,12 @@
 import express from "express"
-import { adminAuthToken } from "../middlewares/authMiddleware.js"
-import { addTaskController, editOneTaskController } from "../controller/admin/task/taskManagment.js"
-import { getAllTaskController, getOneTaskController } from "../controller/task/taskManagementController.js"
-import { addDomainController, getAllDomainController } from "../controller/admin/domain/domainController.js"
-import { adminLogin, createAdminController, passwordChangeController } from "../controller/admin/adminLogin.js"
-import { blockAdvisorController, createAdvisorController, getAllAdvisorSearchFilterSortController } from "../controller/advisor/advisorMangment.js"
-import { blockStudentController, createStudentController, getAllStudentSearchFilterSortController } from "../controller/student/studentManagement.js"
-import { blockReviewerController, createReviewerController, getAllReviewerSearchFilterSortController } from "../controller/reviewer/reviewerManagment.js"
+import { adminAuthToken } from "../middlewares/authMiddleware"
+import { addTaskController, editOneTaskController } from "../controller/admin/task/taskManagment"
+import { getAllTaskController, getOneTaskController } from "../controller/task/taskManagementController"
+import { addDomainController, getAllDomainController } from "../controller/admin/domain/domainController"
+import { adminLogin, createAdminController, passwordChangeController } from "../controller/admin/adminLogin"
+import { blockAdvisorController, createAdvisorController, getAllAdvisorSearchFilterSortController } from "../controller/advisor/advisorMangment"
+import { blockStudentController, createStudentController, getAllStudentSearchFilterSortController } from "../controller/student/studentManagement"
+import { blockReviewerController, createReviewerController, getAllReviewerSearchFilterSortController } from "../controller/reviewer/reviewerManagment"
 
 
 const adminRoute = express.Router()
