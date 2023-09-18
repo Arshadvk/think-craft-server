@@ -1,5 +1,5 @@
 import express from "express"
-import { adminLogin, createAdminController, passwordChangeController } from "../controller/admin/adminLogin"
+// import { adminLogin, createAdminController, passwordChangeController } from "../controller/admin/adminLogin"
 import { blockStudentController, createStudentController, getAllStudentSearchFilterSortController } from "../controller/student/studentManagement"
 import { blockReviewerController, createReviewerController, getAllReviewerSearchFilterSortController } from "../controller/reviewer/reviewerManagment"
 import { blockAdvisorController, createAdvisorController, getAllAdvisorSearchFilterSortController } from "../controller/advisor/advisorMangment"
@@ -11,7 +11,7 @@ import { getAllTaskController, getOneTaskController } from "../controller/task/t
 
 const adminRoute = express.Router()
 
-adminRoute.post('/login', adminLogin)
+// adminRoute.post('/login', adminLogin)
 
 adminRoute.post('/add-student' , adminAuthToken ,createStudentController )
 adminRoute.post('/add-reviewer' , adminAuthToken  ,createReviewerController)
@@ -29,8 +29,8 @@ adminRoute.patch('/block-unblock-advisor',adminAuthToken, blockAdvisorController
 adminRoute.post('/add-domain' ,adminAuthToken , addDomainController)
 adminRoute.get('/all-domain' , adminAuthToken, getAllDomainController )
 
-adminRoute.put('/change-password' , adminAuthToken ,passwordChangeController )
-adminRoute.post('/add-admin' ,adminAuthToken , createAdminController)
+// adminRoute.put('/change-password' , adminAuthToken ,passwordChangeController )
+// adminRoute.post('/add-admin' ,adminAuthToken , createAdminController)
 
 adminRoute.post('/add-task',adminAuthToken ,  addTaskController)
 adminRoute.put('/edit-task' , adminAuthToken , editOneTaskController)
