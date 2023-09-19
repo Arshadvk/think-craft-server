@@ -21,7 +21,6 @@ const findTaskByDomainUsecase = (taskRepository, studentRepository) => {
     return (userId) => __awaiter(void 0, void 0, void 0, function* () {
         var _a;
         const student = yield studentRepository.findStudentById(userId);
-        console.log(student);
         const task = yield taskRepository.findWeeklyTask((_a = student === null || student === void 0 ? void 0 : student.domain) === null || _a === void 0 ? void 0 : _a._id, student === null || student === void 0 ? void 0 : student.week);
         return task;
     });
